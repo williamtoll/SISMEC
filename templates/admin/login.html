@@ -1,0 +1,36 @@
+{% extends "admin/login_base.html" %}
+{% block header_scripts %}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#id_username').attr('autocapitalize', 'off').focus();
+        })
+    </script>
+{% endblock %}
+{% block content %}
+    <form name="form-signin" id="login-form" class="form-horizontal" enctype="multipart/form-data" method="post"
+          action="{{ app_path }}">
+        {% csrf_token %}
+        <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-user"> </i></span>
+            <input id="id_username" maxlength="254" name="username" type="text" class="form-control" value=""
+                   placeholder="Usuario">
+        </div>
+        <br>
+        <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-lock"> </i></span>
+            <input id="id_password" name="password" type="password" class="form-control" name="password"
+                   placeholder="Contraseña">
+        </div>
+        <br>
+        <div class="form-group">
+            <!-- Button -->
+            <div class="form-actions clearfix controls">
+                <button type="submit" class="btn btn-outline-primary pull-right btn-block"><i
+                        class="glyphicon glyphicon-log-in"> </i> Log
+                    in
+                </button>
+            </div>
+        </div>
+    </form>
+
+{% endblock %}

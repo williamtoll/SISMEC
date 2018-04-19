@@ -1,0 +1,35 @@
+{% block header_scripts %}
+    {% load new_filter %}
+{% endblock %}
+<div id="items_info" role="status" aria-live="polite">{{ pagination | pagination_data:object_list }}</div>
+<nav style="margin-left: 15px">
+    {% if pagination.has_other_pages %}
+        <ul class="pagination justify-content-center">
+            {% if pagination.has_previous %}
+                <li class="page-item">
+                    <a class="page-link"
+                       href="{{ query_params }}&page={{ pagination.previous_page_number }}">&laquo;</a>
+                </li>
+            {% else %}
+                <li class="page-item disabled"><a class="page-link" href="#"><span>&laquo;</span></a></li>
+            {% endif %}
+            {% for i in pagination.range %}
+                {% if pagination.page == i %}
+                    <li class="page-item active"><a class="page-link"><span>{{ i }} <span
+                            class="sr-only">(current)</span></span></a>
+                    </li>
+                {% else %}
+                    <li class="page-item"><a class="page-link" href="{{ query_params }}&page={{ i }}">{{ i }}</a>
+                    </li>
+                {% endif %}
+            {% endfor %}
+            {% if pagination.has_next %}
+                <li class="page-item"><a class="page-link"
+                                         href="{{ query_params }}&page={{ pagination.next_page_number }}">&raquo;</a>
+                </li>
+            {% else %}
+                <li class="page-item disabled"><a class="page-link" href="#"><span>&raquo;</span></a></li>
+            {% endif %}
+        </ul>
+    {% endif %}
+</nav>

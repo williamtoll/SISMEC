@@ -1,0 +1,102 @@
+{% load i18n admin_static %}
+<!DOCTYPE html>
+{% get_current_language as LANGUAGE_CODE %}
+{% get_current_language_bidi as LANGUAGE_BIDI %}
+<html lang="{{ LANGUAGE_CODE|default:"en-us" }}" {% if LANGUAGE_BIDI %}dir="rtl"{% endif %}>
+<head>
+    {% load static %}
+    {% load staticfiles %}
+    <!-- Mobile Specific Meta -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Favicon-->
+    <link rel="shortcut icon" href="{% static "alianza/img/fav.png" %}">
+    <!-- Author Meta -->
+    <meta name="author" content="Mercedes Rebull">
+    <!-- Meta Description -->
+    <meta name="description" content="">
+    <!-- Meta Keyword -->
+    <meta name="keywords" content="">
+    <!-- meta character set -->
+    <meta charset="UTF-8">
+    <!-- Site Title -->
+    <title>En Alianza Editorial</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,500,600" rel="stylesheet">
+    <!--
+    CSS
+    ============================================= -->
+    <link rel="stylesheet" href="{% static "alianza/css/linearicons.css" %}">
+    <link rel="stylesheet" href="{% static "alianza/css/owl.carousel.css" %}">
+    <link rel="stylesheet" href="{% static "alianza/css/font-awesome.min.css" %}">
+    <link rel="stylesheet" href="{% static "alianza/css/animate.css" %}">
+    <link rel="stylesheet" href="{% static "alianza/css/bootstrap.css" %}">
+    <link rel="stylesheet" href="{% static "alianza/css/main.css" %}">
+
+
+    {% block header_resources %}
+    {% endblock %}
+
+</head>
+
+<body>
+<div id="top"></div>
+<header class="default-header">
+    <div class="sticky-header">
+        <div class="container">
+            <div class="header-content d-flex justify-content-between align-items-center">
+                <div class="logo">
+                    <a href="{% url 'frontend_home_web_publica' %}#top" class="smooth"><img
+                            src="{% static "alianza/img/logo.png" %}" alt=""></a>
+                </div>
+                <div class="right-bar d-flex align-items-center">
+                    <nav class="d-flex align-items-center">
+                        <ul class="main-menu">
+                            <li><a href="{% url 'frontend_home_web_publica' %}#top">Inicio</a></li>
+                            <li><a href="{% url 'frontend_home_web_publica' %}#quienes">Quienes Somos</a></li>
+                            <li><a href="{% url 'frontend_home_web_publica' %}#catalogo">Catalogo</a></li>
+                            {#                            <li><a href="{% url 'frontend_home_web_publica' %}#team">Lista de Precios</a></li>#}
+                            <li><a href="{% url 'frontend_home_web_publica' %}#contact">Contacto</a></li>
+                        </ul>
+                        <a href="#" class="mobile-btn"><span class="lnr lnr-menu"></span></a>
+                    </nav>
+                    <div class="search relative">
+                        <span class="lnr lnr-magnifier"></span>
+                        <form action="{% url 'frontend_home_web_publica_search' %}" class="search-field">
+                            <input type="text" placeholder="Buscar" onfocus="this.placeholder = ''"
+                                   onblur="this.placeholder = 'Buscar'" name="search" value="{{ filtros.search }}">
+                            <button class="search-submit"><span class="lnr lnr-magnifier"></span></button>
+                        </form>
+                    </div>
+                    <div class="header-social d-flex align-items-center">
+                        <a href="https://www.facebook.com/enalianzapy"><i class="fa fa-facebook"></i></a>
+                        <a href="https://twitter.com/EnAlianzaPy"><i class="fa fa-twitter"></i></a>
+                        <a href="#"><i class="fa fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+{% block content %}
+{% endblock %}
+
+<!-- jQuery -->
+<script src="{% static "alianza/js/vendor/jquery-2.2.4.min.js" %}"></script>
+<script src="{% static "alianza/js/vendor/popper.js" %}"></script>
+<script src="{% static "alianza/js/vendor/bootstrap.min.js" %}"></script>
+
+<script src="{% static "alianza/js/jquery.ajaxchimp.min.js" %}"></script>
+<script src="{% static "alianza/js/jquery.sticky.js" %}"></script>
+<script src="{% static "alianza/js/owl.carousel.min.js" %}"></script>
+<script src="{% static "alianza/js/mixitup.min.js" %}"></script>
+<script src="{% static "alianza/js/main.js" %}"></script>
+<script>
+    $('#order_by').change(function () {
+        $('#form-filtros').submit();
+    });
+</script>
+{% block header_scripts %}
+{% endblock %}
+</body>
+
+</html>

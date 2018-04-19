@@ -1,0 +1,15 @@
+{% extends "alianza/base.html" %}
+{% block header_scripts %}
+    {% load static %}
+{% endblock %}
+{% block content %}
+    <div class="panel panel-default">
+        <div class="panel-heading" style="height: 70px;">
+            <div class="panel-title">
+                <div class="navbar" style="display: inline-block;">
+                    <span class="navbar-brand">{{ data_item.object_item.titulo }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

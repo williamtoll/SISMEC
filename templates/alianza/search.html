@@ -1,0 +1,55 @@
+{% extends "alianza/base.html" %}
+{% block header_scripts %}
+    {% load static %}
+{% endblock %}
+{% block content %}
+    <form action="{% url 'frontend_home_web_publica_search' %}" method="get" id="form-filtros">
+        <div class="col-lg-12 mt-20">
+            <div class="form-group input-group">
+                <input type="text" class="form-control" name="search" placeholder="Buscar..."
+                       value="{{ filtros.search }}">
+                <span class="input-group-btn">
+                <button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
+            </span>
+            </div>
+        </div>
+    </form>
+    <div class="row justify-content-center  mb-20 mr-10 ml-10">
+        <label for="product_grid_sort" class="col-lg-2"> Título ordenado por</label>
+        <div class="col-lg-2">
+            <select class="form-control" id="order_by" name="order_by">
+                {% if filtros.order_by == 'asc' %}
+                    <option value="asc" selected>A-Z</option>
+                    <option value="desc">Z-A</option>
+                {% elif filtros.order_by == 'desc' %}
+                    <option value="asc">A-Z</option>
+                    <option value="desc" selected>Z-A</option>
+                {% else %}
+                    <option value="asc" selected>A-Z</option>
+                    <option value="desc">Z-A</option>
+                {% endif %}
+            </select>
+        </div>
+        {% include "alianza/paginacion_top.html" %}
+    </div>
+    <div id="filter-catalogo-content" class="row no-gutters mt-20 mb-20 mr-10 ml-10">
+        {% for item in object_list %}
+            <div class="mix category-1 col-lg-3 col-md-4 col-sm-6 single-filter-content content-1"
+                 data-myorder="1" style="background: url(/imagen/item/{{ item.id }})">
+                <div class="overlay overlay-bg-content d-flex align-items-center justify-content-center flex-column">
+                    <p class="text-white">Item</p>
+                    <div class="line"></div>
+                    <h5 class="text-white text-uppercase">{{ item.nombre }}</h5>
+                    <div class="text-white">
+                        <p>{{ item.sello_editorial.nombre }}</p>
+                        <p>{{ item.dimensiones }}</p></div>
+                    <a href="{% url 'frontend_home_web_publica' %}item/{{ item.id }}"
+                       class="primary-btn banner-btn">Ver</a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <div class="row justify-content-center mt-20 mb-20 mr-10 ml-10">
+        {% include "alianza/paginacion.html" %}
+    </div>
+{% endblock %}
