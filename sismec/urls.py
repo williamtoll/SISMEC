@@ -15,16 +15,11 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
-from django.urls import path
-from django.conf.urls.static import static
-from django.conf import settings
-import django.contrib.auth.views as views_autth
+from django.urls import path, include
+from django.contrib.auth.views import login
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    url(r'^login/$', views_autth.login, {'template_name': 'admin/login.html'},
-        name='frontend_login'),
-    url(r'^logout/$', views_autth.logout, {'template_name': 'admin/logout.html'},
-        name='frontend_logout'),
-    url(r'^', include('apps.frontend.urls'))
+    path('sismec/', include('django.contrib.auth.urls')),
 ]

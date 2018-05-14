@@ -9,7 +9,6 @@ https://docs.djangoproject.com/en/2.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.0/ref/settings/
 """
-from sismec.configuraciones import PATH_ESTATICO
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -31,7 +30,6 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'bootstrap_admin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -76,16 +74,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'sismec.wsgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/2.0/ref/settings/#databases
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#     }
-# }
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.oracle',
@@ -134,10 +122,10 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-LOGIN_REDIRECT_URL = 'frontend_home'
-LOGOUT_REDIRECT_URL = 'frontend_home'
+LOGIN_REDIRECT_URL = '/'
+#LOGOUT_REDIRECT_URL = 'frontend_home'
 
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static"),
-    PATH_ESTATICO,
-]
+#STATICFILES_DIRS = [
+ #   os.path.join(BASE_DIR, "static"),
+  #  PATH_ESTATICO,
+#]
