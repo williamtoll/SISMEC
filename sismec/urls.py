@@ -16,10 +16,13 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 from django.urls import path, include
-from django.contrib.auth.views import login
+from django.contrib.auth import views as auth_views
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('sismec/', include('django.contrib.auth.urls')),
+    url(r'^sismec/login/$', auth_views.login, {'template_name': 'login.html'}, name='login'),
+    url(r'^sismec/logout/$', auth_views.logout, name='logout'),
+    url(r'^', include('apps.frontend.urls'))
+    #path('sismec/', include('django.contrib.auth.urls')),
 ]
