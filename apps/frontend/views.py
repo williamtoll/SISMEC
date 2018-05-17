@@ -10,7 +10,7 @@ from django.template import RequestContext
 def index(request):
     #if request.user.is_authenticated():
         if request.user.is_active:
-            t = loader.get_template('frontend/dashboard.html')
+            t = loader.get_template('index.html')
             c = {}
             return HttpResponse(t.render(c, request))
         else:
