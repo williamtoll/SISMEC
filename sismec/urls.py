@@ -23,6 +23,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     url(r'^sismec/login/$', auth_views.login, {'template_name': 'login.html'}, name='login'),
     url(r'^sismec/logout/$', auth_views.logout, name='logout'),
-    url(r'^', include('apps.frontend.urls'))
+    url(r'^', include('apps.frontend.urls')),
+    url(r'^', include('apps.productos.urls')),
     #path('static/', include('django.contrib.auth.urls')),
 ]
