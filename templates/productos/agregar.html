@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block header_scripts %}
+    {% load staticfiles %}
+    <!--script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script-->
+    <script src="{% static "js/producto/agregar.js" %}" type="text/javascript"></script>
+{% endblock %}
+
+{% block content %}
+        <div id="page-wrapper">
+            <div class="container-fluid">
+                <div class="row bg-title">
+                    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                        <h4 class="page-title">AGREGAR PRODUCTO</h4> </div>
+                    <!-- /.col-lg-12 -->
+                </div>
+            </div>
+            <form action="" method="post" id="form_add_" enctype="multipart/form-data">
+                <table width="94%" border="0" cellpadding="0" cellspacing="0" id="forms" align="center">
+                    {% csrf_token %}
+                    {% for field in form %}
+                        {{ field.errors }}
+                        <tr>
+                            <td><strong>{{ field.label_tag }}</strong></td>
+                            {%if field.html_name == 'exentas' or field.html_name == 'iva10' or field.html_name == 'iva5' %}
+                                <td class="noimage">
+                                    <input type="checkbox" name="impuestos[1][]" value="1">
+                                    {{ field.errors }}
+                                </td>
+                            {%else%}
+                                <td class="noimage">{{ field }}</td>
+                            {%endif%}
+                        </tr>
+                    {% endfor %}
+	            </table>
+                <div class="-pull-left">
+                    <input name="" type="submit" value="Guardar" class="btn btn-primary default"
+                           style=" margin-bottom: 10px; cursor: pointer;"/>
+                </div>
+            </form>
+            <div class="card-footer small text-muted"></div>
+            <!-- /.container-fluid -->
+            <footer class="footer text-center"> 2018 &copy; Lourdes Escurra </footer>
+        </div>
+{% endblock %}

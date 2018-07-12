@@ -5,51 +5,50 @@ from django.template import loader
 #El home principal de productos
 from django.views.decorators.http import require_http_methods
 
+from apps.productos.forms import ProductoForm
+from apps.productos.models import Producto
+
 
 def index(request):
-    #if request.user.is_authenticated():
-     #   if request.user.is_active:
+    if request.user.is_authenticated:
             t = loader.get_template('productos/home_productos.html')
             c = {}
             return HttpResponse(t.render(c, request))
-      #  else:
-       #     return HttpResponseRedirect(reverse('login'))
-    #else:
-     #   return HttpResponseRedirect(reverse('login'))
+    else:
+       return HttpResponseRedirect(reverse('login'))
 
 
-# @require_http_methods(["GET", "POST"])
-# # Funcion para agregar un autor.
-# def agregarProducto(request):
-#     if request.user.is_authenticated():
-#         t = loader.get_template('autor/agregar.html')
-#         if request.method == 'POST':
-#             form = P
-#             form = AutorForm(request.POST)
-#             tipo_autor_list = request.POST.getlist('id_tipo_autor_select', '')
-#             try:
-#                 if form.is_valid():
-#                     for tipo_autor_o in tipo_autor_list:
-#                         tipo_autor = TipoAutor.objects.get(id=tipo_autor_o)
-#                         form.instance.tipo_autor = tipo_autor
-#                     form.save()
-#                     messages.add_message(request, messages.INFO, 'Autor agregado exitosamente')
-#                     return HttpResponseRedirect(reverse('frontend_listado_autor'))
-#                 else:
-#                     messages.add_message(request, messages.ERROR, form.errors)
-#                     c = {'form': form}
-#                     return HttpResponse(t.render(c, request))
-#             except Exception as e:
-#                 traceback.print_exc(e.args)
-#                 messages.add_message(request, messages.ERROR, e.args)
-#                 c = {'form': form}
-#                 return HttpResponse(t.render(c, request))
-#         else:
-#             form = AutorForm()
-#         c = {'form': form}
-#         return HttpResponse(t.render(c, request))
-#     else:
-#         return HttpResponseRedirect(reverse('frontend_login'))
+@require_http_methods(["GET", "POST"])
+# # Funcion para agregar un producto.
+def agregarProducto(request):
+    if request.user.is_authenticated:
+        t = loader.get_template('productos/agregar.html')
+        # if request.method == 'POST':
+        #form = Producto(request.POST)
+        #     #tipo_autor_list = request.POST.getlist('id_tipo_autor_select', '')
+        #     try:
+        #         if form.is_valid():
+        #             # for tipo_autor_o in tipo_autor_list:
+        #             #     tipo_autor = TipoAutor.objects.get(id=tipo_autor_o)
+        #             #     form.instance.tipo_autor = tipo_autor
+        #             form.save()
+        #             messages.add_message(request, messages.INFO, 'Autor agregado exitosamente')
+        #             return HttpResponseRedirect(reverse('frontend_listado_autor'))
+        #         else:
+        #             messages.add_message(request, messages.ERROR, form.errors)
+        #             c = {'form': form}
+        #             return HttpResponse(t.render(c, request))
+        #     except Exception as e:
+        #         traceback.print_exc(e.args)
+        #         messages.add_message(request, messages.ERROR, e.args)
+        #         c = {'form': form}
+        #         return HttpResponse(t.render(c, request))
+        # else:
+        form = ProductoForm()
+        c = {'form': form}
+        return HttpResponse(t.render(c, request))
+    else:
+        return HttpResponseRedirect(reverse('frontend_login'))
 #
 #
 # @require_http_methods(["GET"])

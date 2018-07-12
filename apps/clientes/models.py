@@ -30,7 +30,6 @@ class Cliente(models.Model):
             id=self.id)
 
     class Meta:
-        permissions = (
-            ('ver_listado_clientes', 'Ver listado de clientes'),
-            ('ver_opciones_cliente', 'Ver opciones de clientes'),
-        )
+        """Establece las configuraciones del modelo de base de datos"""
+        managed = True
+        db_table = 'cliente'
