@@ -22,15 +22,22 @@
                         <tr>
                             <td><strong>{{ field.label_tag }}</strong></td>
                             {%if field.html_name == 'exentas' or field.html_name == 'iva10' or field.html_name == 'iva5' %}
-                                <td class="noimage">
+                                <td class="noimage vTextField">
                                     <input type="checkbox" name="impuestos[1][]" value="1">
                                     {{ field.errors }}
                                 </td>
                             {%else%}
-                                <td class="noimage">{{ field }}</td>
+                                <td class="noimage vTextField">{{ field }}</td>
                             {%endif%}
                         </tr>
                     {% endfor %}
+                    <tr>
+                        <td><strong><label>Tipo Producto</label></strong></td>
+                        <td class="noimage vTextField">
+                            <!--select id="id_tipo_producto_select" name="id_tipo_producto_select" class="form-control"></select-->
+                            <select id="id_tipo_producto_select" name="id_tipo_producto_select" class="form-control"></select>
+                        </td>
+                    </tr>
 	            </table>
                 <div class="-pull-left">
                     <input name="" type="submit" value="Guardar" class="btn btn-primary default"

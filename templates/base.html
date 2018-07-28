@@ -40,6 +40,10 @@
         <script src="{% static "js/waves.js"%}"></script>
         <!-- Custom Theme JavaScript -->
         <script src="{% static "js/custom.min.js"%}"></script>
+         <!-- dualbootstrap-->
+         <script src="{% static "bootstrap-duallistbox-master/src/jquery.bootstrap-duallistbox.js" %}"></script>
+         <link href="{% static "select2/select2.min.css" %}" rel="stylesheet"/>
+         <script src="{% static "select2/select2.min.js" %}"></script>
         {% block header_scripts %}{% endblock %}
     {% endblock %}
 </head>
@@ -76,13 +80,8 @@
                     <!-- /Logo -->
                     <ul class="nav navbar-top-links navbar-right pull-right">
                         <li>
-                            <form role="search" class="app-search hidden-sm hidden-xs m-r-10">
-                                <input type="text" placeholder="Search..." class="form-control"> <a href=""><i class="fa fa-search"></i></a> </form>
+                            <a class="profile-pic" href="{% url 'logout' %}"><b class="hidden-xs">Salir</b></a>
                         </li>
-                        <li>
-                            <a class="profile-pic" href="#"> <img src="{% static "plugins/images/users/varun.jpg"%}" alt="user-img" width="36" class="img-circle"><b class="hidden-xs">Steave</b></a>
-                        </li>
-                    </ul>
                 </div>
             <!-- /.navbar-header -->
             <!-- /.navbar-top-links -->

@@ -10,7 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 import os
-from sismec.configuraciones import PATH_ESTATICO
+from sismec.configuraciones import PATH_ESTATICO,TIEMPO_LOGOUT
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 
@@ -44,7 +44,8 @@ INSTALLED_APPS = [
     'apps.clientes',
     'apps.proveedores',
     'apps.servicios',
-    'apps.principal'
+    'apps.principal',
+    'apps.ajax',
 ]
 
 MIDDLEWARE = [
@@ -77,14 +78,25 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'sismec.wsgi.application'
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.oracle',
+#         'NAME': 'sismec',
+#         'USER': 'sismec',
+#         'PASSWORD': 'Oracle123',
+#         'HOST': '192.168.4.15',
+#         'PORT': '1521',
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.oracle',
-        'NAME': 'sismec',
-        'USER': 'sismec',
-        'PASSWORD': 'Oracle123',
-        'HOST': '192.168.4.15',
-        'PORT': '1521',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',  # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'
+        'HOST': 'localhost',  # Set to empty string for localhost. Not used with sqlite3
+        'NAME': 'sismec',  # Or path to database file if using sqlite3.
+        'USER': 'postgres',  # Not used with sqlite3.
+        'PASSWORD': 'postgres',  # Not used with sqlite3.
+        'PORT': '5432',  # Set to empty string for default. Not used with sqlite3.
     }
 }
 
@@ -124,10 +136,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
-
+BOOTSTRAP_ADMIN_SIDEBAR_MENU = False
 LOGIN_REDIRECT_URL= 'frontend_home'
 #LOGOUT_REDIRECT_URL = 'frontend_home'
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),PATH_ESTATICO,
 ]
+
+AUTO_LOGOUT_DELAY = TIEMPO_LOGOUT

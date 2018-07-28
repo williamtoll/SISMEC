@@ -1,18 +1,32 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>SISMEC</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script></head>
-<body>
-<h2>Login</h2>
-<form method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">Login</button>
-</form>
-</body>
-</html>
+{% extends "login_base.html" %}
+{% load static %}
+{% block content %}
+    <div class="wrapper">
+        <form name="form-signin" class="form-signin" id="login-form" class="form-horizontal" enctype="multipart/form-data" method="post" action="{{ app_path }}">
+            <h2 class="form-signin-heading">Please login</h2>
+              {% csrf_token %}
+              <div class="input-group">
+                  <span class="input-group-addon"><i class="glyphicon glyphicon-user"> </i></span>
+                  <input id="id_username" maxlength="254" name="username" type="text" class="form-control" value=""
+                           placeholder="Usuario">
+              </div>
+              <br>
+              <div class="input-group">
+                  <span class="input-group-addon"><i class="glyphicon glyphicon-lock"> </i></span>
+                  <input id="id_password" name="password" type="password" class="form-control" name="password"
+                           placeholder="Contraseña">
+              </div>
+              <br>
+              <div class="form-group">
+                  <!-- Button -->
+                  <div class="form-actions clearfix controls">
+                      <button type="submit" class="btn btn-outline-primary pull-right btn-block"><i
+                                    class="glyphicon glyphicon-log-in"> </i> Login
+                      </button>
+                  </div>
+              </div>
+        </form>
+        <!-- /.container-fluid -->
+        <footer class="footer text-center"> 2018 &copy; Lourdes Escurra </footer>
+     </div>
+{% endblock %}

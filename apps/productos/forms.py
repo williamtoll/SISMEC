@@ -28,8 +28,9 @@ class ProductoForm(ModelForm):
     class Meta:
 
         model = Producto
-        fields = ['nombre', 'descripcion', 'marca', 'cantidad', 'precio_venta',
-                  'exentas','iva10','iva5', 'tipo_producto','direccion']
+        fields = ['nombre', 'descripcion', 'marca', 'cantidad', 'precio_venta','precio_compra',
+                  'exentas','iva10','iva5']
+        exclude = ['tipo_producto']
 
     def __init__(self, *args, **kwargs):
         super(ProductoForm, self).__init__(*args, **kwargs)

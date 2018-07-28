@@ -1,0 +1,62 @@
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    {% load static %}
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static "plugins/images/favicon.png"%}">
+    <title>SISMEC - TALLER MÉCANICO</title>
+    <!-- Bootstrap Core CSS -->
+    {% block extrastyle %}
+        <link href="{% static "bootstrap/dist/css/bootstrap.min.css"%}" rel="stylesheet">
+        <!-- Custom CSS -->
+        <link href="{% static "css/style.css"%}" rel="stylesheet">
+        <!-- color CSS -->
+        <link href="{% static "css/colors/default.css"%}" id="theme" rel="stylesheet">
+        <!-- Custom CSS -->
+        <link href="{% static "css/sb-admin.css" %}" rel="stylesheet">
+        <!-- jQuery -->
+        <script src="{% static "plugins/bower_components/jquery/dist/jquery.min.js"%}"></script>
+        <!-- Bootstrap Core JavaScript -->
+        <script src="{% static "bootstrap/dist/js/bootstrap.min.js"%}"></script>
+         <!-- dualbootstrap-->
+         <script src="{% static "bootstrap-duallistbox-master/src/jquery.bootstrap-duallistbox.js" %}"></script>
+
+       <!-- Custom CSS SISMEC -->
+        <link href="{% static "css/style-sismec.css" %}" rel="stylesheet">
+
+         {% block header_scripts %}{% endblock %}
+    {% endblock %}
+</head>
+
+<body class="bg-dark">
+        <div id="container">
+				<div class="card card-login mx-auto mt-5">
+					<div class="card-body">
+						<div class="row">
+							 {% if form.errors %}
+                                <p style="color: red; margin-left: 10px"> Su nombre de usuario y contraseña no coinciden. Por favor,
+                                    inténtelo de
+                                    nuevo.</p>
+                            {% endif %}
+
+                            {% if next %}
+                                {% if user.is_authenticated %}
+                                    <p>Your account doesn't have access to this page. To proceed,
+                                        please login with an account that has access.</p>
+                                {% else %}
+                                    <p>Please login to see this page.</p>
+                                {% endif %}
+                            {% endif %}
+						</div>
+					</div>
+					<!-- /.container-fluid -->
+					<footer class="footer text-center"> 2018 &copy; Lourdes Escurra </footer>
+				</div>
+				{% block content %}{% endblock %}
+		</div>
+</body>
+</html>

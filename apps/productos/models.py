@@ -3,14 +3,14 @@ from django.db import models
 #
 class TipoProducto(models.Model):
     id = models.BigAutoField(primary_key=True)
-    nombre = models.CharField(max_length=200, blank=False)
+    descripcion = models.CharField(max_length=200, blank=False)
     fecha_hora_creacion = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.nombre
+        return self.descripcion
 
     def __unicode__(self):
-        return self.nombre
+        return self.descripcion
 
     class Meta:
         """Establece las configuraciones del modelo de base de datos"""
@@ -41,6 +41,7 @@ class Producto(models.Model):
     marca = models.CharField(max_length=200, blank=True)
     cantidad = models.IntegerField(blank=True, null=True)
     precio_venta = models.IntegerField(blank=True, null=True)
+    precio_compra = models.IntegerField(blank=True, null=True)
     #unidad_de_medida = models.ForeignKey(UnidadMedida, on_delete=models.PROTECT, blank=True, null=True)
     estado = models.BooleanField(default=False)
     #provedor = models.CharField(max_length=20, blank=True) #Crear Clase Proveedor
@@ -48,8 +49,6 @@ class Producto(models.Model):
     exentas =  models.BooleanField(blank=False, null=False)
     iva10 = models.BooleanField(blank=False, null=False)
     iva5 = models.BooleanField(blank=False, null=False)
-    tipo_impuesto = models.IntegerField(blank=True, null=True)
-    direccion = models.CharField(max_length=200, blank=True)
 
     def __str__(self):
         return self.nombre
