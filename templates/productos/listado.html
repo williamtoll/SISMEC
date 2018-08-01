@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+{% block header_scripts %}
+    {% load static %}
+    {% load staticfiles %}
+    {% load humanize %}
+    <script type="text/javascript">
+        var id_menu = "6";
+    </script>
+{% endblock %}
+{% block content %}
+{#    <ol class="breadcrumb">#}
+{#        <li class="breadcrumb-item">#}
+{#            <a href="{% url 'frontend_home' %}" title="Inicio"><i class="fa fa-fw fa-home"></i></a>#}
+{#        </li>#}
+{#        <li class="breadcrumb-item">#}
+{#            <a href="{% url 'frontend_admin_item' %}">Admin Item</a>#}
+{#        </li>#}
+{#        <li class="breadcrumb-item active">Listado Autores</li>#}
+{#    </ol>#}
+
+{#    <div class="card mb-3">#}
+{#        <div class="card-header">#}
+{#            <span>Listado Autores</span>#}
+{#            <a href="{% url 'frontend_listado_tipo_autor' %}"#}
+{#               class="btn btn-outline-warning btn-df"><i#}
+{#                    class="fa fa-fw fa-list"></i> Ver Tipos</a>#}
+{#            <div class="pull-right">#}
+{#                <a href="{% url 'frontend_agregar_autor' %}"#}
+{#                   class="btn btn-outline-primary btn-df"><i#}
+{#                        class="fa fa-fw fa-plus"></i> Agregar</a>#}
+{#            </div>#}
+{#        </div>#}
+        <div id="page-wrapper">
+             <div class="container-fluid">
+                <div class="row bg-title">
+                    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                        <h4 class="page-title">LISTADO PRODUCTOS</h4> </div>
+
+                    <!-- /.col-lg-12 -->
+                </div>
+            <div class="row">
+                <div class="col-lg-4">
+                    <form action="{% url 'productos_listado' %}" method="get">
+                        <div class="form-group input-group">
+                            <input type="text" class="form-control" name="search" placeholder="Buscar..."
+                                   value="{{ filtros.search }}">
+                            <span class="input-group-btn">
+                                                <button class="btn btn-default" type="submit"><i
+                                                        class="fa fa-search"></i>
+                                                </button>
+                                            </span>
+                        </div>
+                    </form>
+                    <form id="form_eliminar" action="{% url 'eliminar_producto' %}" method="post">
+                        {% csrf_token %}
+                        <input id="id_eliminar" name="id_eliminar" type="hidden">
+                    </form>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <div class="dataTables_wrapper container-fluid dt-bootstrap4">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <table class="table dataTable" id="dataTable" width="100%" cellspacing="0"
+                                   role="grid" aria-describedby="dataTable_info" style="width: 100%;">
+                                <thead>
+                                <tr>
+                                    <th width="8%">ID</th>
+                                    <th width="12%">Nombre</th>
+                                    <th width="12%">Marca</th>
+                                    <th width="8%">Cantidad</th>
+                                    <th width="8%">Precio Venta</th>
+                                    <th width="8%">Precio Compra</th>
+                                    <th width="8%">Tipo Producto</th>
+                                    <th width="8%">Tipo Impuesto</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for ob in object_list %}
+                                    <tr>
+                                        <td>{{ ob.id }}</td>
+                                        <td class="nombre"><a
+                                                href="{% url 'frontend_home' %}productos/detalle/{{ ob.id }}">{{ ob.nombre }}</a>
+                                        </td>
+                                        <td>{{ ob.marca }}</td>
+                                        <td>{{ ob.cantidad }}</td>
+                                        <td>{{ ob.precio_venta }}</td>
+                                        <td>{{ ob.precio_compra }}</td>
+                                        <td>{{ ob.producto_tipo_nombre }}</td>
+                                        <td>{{ ob.tipo_impuesto }}</td>
+                                        <td style="text-align: center">
+                                            {#                                            <a href="{% url 'frontend_home' %}autor/detalle/{{ ob.id }}" type="button"#}
+                                            {#                                               class="btn btn-primary btn-xs" title="Editar"><i#}
+                                            {#                                                    class="fa fa-pencil"></i>#}
+                                            {#                                            </a>#}
+                                            <button type="button" class="btn btn-outline-danger btn-xs eliminar-listado"
+                                                    title="Eliminar"
+                                                    name="{{ ob.id }}"><i class="fa fa-trash-o"></i></button>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                    {% include "frontend/paginacion.html" %}
+                </div>
+            </div>
+        </div>
+        <div class="card-footer small text-muted"></div>
+    </div>
+{% endblock %}

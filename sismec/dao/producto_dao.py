@@ -2,7 +2,8 @@ import cx_Oracle
 from django.db import connection
 
 from apps.productos.models import TipoProducto
-
+from sismec.configuraciones import ROW_PER_PAGE
+from sismec.dao import utils as utils_dao
 
 def getTipoProductoAutocomplete(filtros):
     object_list = []
@@ -35,16 +36,16 @@ def getTipoProductoAutocomplete(filtros):
 def getProductoFiltro(filtros):
     object_list = []
     query_var = []
-    query = '''SELECT row_number() over (ORDER BY a.marca), a.id, a.nombre, a.fecha_hora_creacion, at.id, at.descripcion 
-                FROM autor AS a 
-                LEFT JOIN autor_tipo AS at ON at.id = a.tipo_autor_id'''
+    query = '''SELECT row_number() over (ORDER BY p.marca), p.id, p.nombre, p.marca, p.cantidad, p.precio_venta, p.precio_compra, p.tipo_impuesto, pt.id, pt.descripcion
+                FROM producto AS p
+                LEFT JOIN producto_tipo AS pt ON pt.id = p.tipo_producto_id'''
 
     if filtros['search'] != '':
-        query += ''' 
-        WHERE UPPER(a.nombre) like UPPER(%s)'''
+        query += '''
+        WHERE UPPER(p.nombre) like UPPER(%s)'''
         query_var = ['%' + filtros['search'] + '%']
     query += '''
-    ORDER BY a.nombre'''
+    ORDER BY p.nombre'''
 
     pagination = utils_dao.paginationData(query, query_var, filtros)
 
@@ -66,9 +67,13 @@ def getProductoFiltro(filtros):
                 data = {'row_number': i[0],
                         'id': i[1],
                         'nombre': i[2],
-                        'fecha_hora_creacion': i[3].strftime('%d/%m/%Y %H:%M') if i[3] is not None else '-',
-                        'autor_tipo_id': i[4] if i[4] is not None else 0,
-                        'autor_tipo_nombre': i[5] if i[5] is not None else '-',
+                        'marca': i[3] if i[3] is not None else '-',
+                        'cantidad': i[4] if i[4] is not None else 0,
+                        'precio_venta': i[5] if i[5] is not None else 0,
+                        'precio_compra': i[6] if i[6] is not None else 0,
+                        'tipo_impuesto': i[7] if i[7] is not None else '-',
+                        'producto_tipo_id': i[8] if i[8] is not None else 0,
+                        'producto_tipo_nombre': i[9] if i[9] is not None else '-',
                         }
                 object_list.append(data)
 

@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+{% block header_scripts %}
+    {% load static %}
+    <script type="text/javascript">
+        var id_menu = "6";
+        $(document).ready(function() {
+    var select_tipo_producto = $('#id_tipo_producto_select');
+    inicializarSelectGenerales();
+
+    function inicializarSelectGenerales() {
+
+            {#var request_name_by_id = $.ajax({#}
+			{#	url : '/ajax/get_propietario_name_by_id/',#}
+			{#	type : "GET",#}
+			{#	data : {#}
+			{#			propietario_id : propietario_id#}
+			{#		},#}
+			{#	dataType : "json",#}
+			{#	success: function (data){#}
+			{#		$.each(data, function (index,value) {#}
+			{#		$("#id_name_propietario").val(value.fields.nombres + ' ' + value.fields.apellidos );#}
+			{#		});#}
+			{#	}#}
+			{#});#}
+        select_tipo_producto.select2({
+            tags: true,
+            multiple: false,
+            tokenSeparators: [','],
+            allowClear: true,
+            placeholder: "Seleccione el nombre del tipo de producto",
+            ajax: {
+                url: '/sismec/ajax/getTipoProductoById/',
+                dataType: "json",
+                type: "GET",
+                data: function (params) {
+                    var queryParameters = {
+                        tipo_producto_id: params.term
+                    };
+                    return queryParameters;
+                },
+                processResults: function (data) {
+                    return {
+                        results: $.map(data, function (item) {
+                            return {
+                                text: item.nombre,
+                                id: item.id
+                            };
+                        })
+                    };
+                }
+            }
+        })
+            .on('select2:unselect ', function () {
+                select_tipo_producto.find('option').remove().end();
+                select_tipo_producto.val('').trigger('change');
+            });
+    }
+});
+    </script>
+{% endblock %}
+{% block content %}
+{#    <ol class="breadcrumb">#}
+{#        <li class="breadcrumb-item">#}
+{#            <a href="{% url 'frontend_home' %}" title="Inicio"><i class="fa fa-fw fa-home"></i></a>#}
+{#        </li>#}
+{#        <li class="breadcrumb-item">#}
+{#            <a href="{% url 'frontend_admin_item' %}">Admin Item</a>#}
+{#        </li>#}
+{#        <li class="breadcrumb-item">#}
+{#            <a href="{% url 'frontend_listado_autor' %}">Listado Autores</a>#}
+{#        </li>#}
+{#        <li class="breadcrumb-item active">{{ object_list.nombre }}</li>#}
+{#    </ol>#}
+    <div id="page-wrapper">
+        <div class="container-fluid">
+            <div class="row bg-title">
+                <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                    <h4 class="page-title">PRODUCTO</h4> </div>
+                <!-- /.col-lg-12 -->
+            </div>
+        </div>
+            <form action="{% url 'frontend_home' %}producto/detalle/{{ object_list.id }}/" method="post">
+                <table width="94%" border="0" cellpadding="0" cellspacing="0" id="forms" align="center">
+                    {% csrf_token %}
+                    {% for field in form %}
+                        {{ field.errors }}
+                        <tr>
+                            <td><strong>{{ field.label_tag }}</strong></td>
+                            <td class="noimage vTextField">{{ field }}</td>
+                        </tr>
+                    {% endfor %}
+                    <tr>
+                        <td><strong><label>Tipo Producto</label></strong></td>
+                        <td class="noimage vTextField">
+                            <!--select id="id_tipo_producto_select" name="id_tipo_producto_select" class="form-control"></select-->
+                            <select id="id_tipo_producto_select" name="id_tipo_producto_select" class="form-control"></select>
+                        </td>
+                    </tr>
+	            </table>
+                <BR>
+                <div class="pull-right">
+                    <input class="btn btn-primary default" type="submit" name="boton_guardar"
+                           value="Guardar Cambios"/>
+                    <input class="btn btn-danger default" type="submit" name="boton_borrar"
+                           value="Borrar este Registro"/>
+                </div>
+            </form>
+        </div>
+        <div class="card-footer small text-muted"></div>
+    </div>
+{% endblock %}

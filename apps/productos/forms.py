@@ -1,6 +1,6 @@
 from django import forms
 from django.core.validators import MaxLengthValidator
-from django.forms import ModelForm
+from django.forms import ModelForm, Form
 
 from apps.productos.models import Producto, TipoProducto
 
@@ -29,7 +29,7 @@ class ProductoForm(ModelForm):
 
         model = Producto
         fields = ['nombre', 'descripcion', 'marca', 'cantidad', 'precio_venta','precio_compra',
-                  'exentas','iva10','iva5']
+                  'tipo_impuesto']
         exclude = ['tipo_producto']
 
     def __init__(self, *args, **kwargs):

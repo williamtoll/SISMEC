@@ -46,10 +46,15 @@ class Producto(models.Model):
     estado = models.BooleanField(default=False)
     #provedor = models.CharField(max_length=20, blank=True) #Crear Clase Proveedor
     tipo_producto = models.ForeignKey(TipoProducto, on_delete=models.PROTECT, blank=True, null=True)
-    exentas =  models.BooleanField(blank=False, null=False)
-    iva10 = models.BooleanField(blank=False, null=False)
-    iva5 = models.BooleanField(blank=False, null=False)
-
+    IVA10= 'IVA 10'
+    IVA5= 'IVA 5'
+    EXENTAS='EXENTAS'
+    IMPUESTOS_CHOICES = (
+        (EXENTAS, 'Exentas'),
+        (IVA10, 'Iva 10'),
+        (IVA5, 'Iva 5'),
+    )
+    tipo_impuesto = models.CharField(max_length=20, choices=IMPUESTOS_CHOICES,default=IVA10)
     def __str__(self):
         return self.nombre
 

@@ -21,14 +21,7 @@
                         {{ field.errors }}
                         <tr>
                             <td><strong>{{ field.label_tag }}</strong></td>
-                            {%if field.html_name == 'exentas' or field.html_name == 'iva10' or field.html_name == 'iva5' %}
-                                <td class="noimage vTextField">
-                                    <input type="checkbox" name="impuestos[1][]" value="1">
-                                    {{ field.errors }}
-                                </td>
-                            {%else%}
-                                <td class="noimage vTextField">{{ field }}</td>
-                            {%endif%}
+                            <td class="noimage vTextField">{{ field }}</td>
                         </tr>
                     {% endfor %}
                     <tr>
