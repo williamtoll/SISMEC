@@ -1,5 +1,65 @@
 {% extends 'base.html' %}
-{
+{% block header_scripts %}
+<script type="text/javascript">
+
+	$(document).ready(function() {
+
+	var producto_id = $('#tipo_producto').val();
+	var request_name_by_id = $.ajax({
+				url : '/ajax/get_producto_name_by_id/',
+				type : "GET",
+				data : {
+						producto_id : producto_id
+					},
+				dataType : "json",
+				success: function (data){
+					$.each(data, function (index,value) {
+					$("#id_tipo_producto_select").val(value.fields.descripcion);
+					});
+				}
+			});
+
+
+	var select_tipo_producto = $('#id_tipo_producto_select');
+    inicializarSelectGenerales();
+
+    function inicializarSelectGenerales() {
+        select_tipo_producto.select2({
+            tags: true,
+            multiple: false,
+            tokenSeparators: [','],
+            allowClear: true,
+            placeholder: "Seleccione el nombre del tipo de producto",
+            ajax: {
+                url: '/sismec/ajax/tipo_producto_autocomplete/',
+                dataType: "json",
+                type: "GET",
+                data: function (params) {
+                    var queryParameters = {
+                        nombre: params.term
+                    };
+                    return queryParameters;
+                },
+                processResults: function (data) {
+                    return {
+                        results: $.map(data, function (item) {
+                            return {
+                                text: item.nombre,
+                                id: item.id
+                            };
+                        })
+                    };
+                }
+            }
+        })
+            .on('select2:unselect ', function () {
+                select_tipo_producto.find('option').remove().end();
+                select_tipo_producto.val('').trigger('change');
+            });
+    }
+});
+</script>
+{% endblock %}
 {% block content %}
 {#    <ol class="breadcrumb">#}
 {#        <li class="breadcrumb-item">#}

@@ -32,9 +32,9 @@ def getTipoProductoAutocomplete(request):
 def getTipoProductoById(request):
     if request.method == 'GET':
         try:
-            id_propietario = request.GET['propietario_id']
-            print("id ->" + id_propietario);
-            object_list = TipoProducto.objects.filter(id=id_propietario)
+            id_producto = request.GET['producto_id']
+            print("id ->" + id_producto);
+            object_list = TipoProducto.objects.filter(id=id_producto)
             data = serializers.serialize('json', list(object_list))
             return HttpResponse(data, content_type="application/json")
         except Exception as e:

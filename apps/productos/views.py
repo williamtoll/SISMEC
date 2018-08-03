@@ -114,7 +114,7 @@ def detalleProducto(request, id):
             c = {
                 'object_list': object_list,
                 'form': form,
-                'tipo_producto': object_list.tipo_producto
+                'tipo_producto': object_list.tipo_producto.id
             }
             return HttpResponse(t.render(c, request))
     else:
