@@ -1,63 +1,5 @@
 {% extends 'base.html' %}
-{% block header_scripts %}
-    {% load static %}
-    <script type="text/javascript">
-        var id_menu = "6";
-        $(document).ready(function() {
-    var select_tipo_producto = $('#id_tipo_producto_select');
-    inicializarSelectGenerales();
-
-    function inicializarSelectGenerales() {
-
-            {#var request_name_by_id = $.ajax({#}
-			{#	url : '/ajax/get_propietario_name_by_id/',#}
-			{#	type : "GET",#}
-			{#	data : {#}
-			{#			propietario_id : propietario_id#}
-			{#		},#}
-			{#	dataType : "json",#}
-			{#	success: function (data){#}
-			{#		$.each(data, function (index,value) {#}
-			{#		$("#id_name_propietario").val(value.fields.nombres + ' ' + value.fields.apellidos );#}
-			{#		});#}
-			{#	}#}
-			{#});#}
-        select_tipo_producto.select2({
-            tags: true,
-            multiple: false,
-            tokenSeparators: [','],
-            allowClear: true,
-            placeholder: "Seleccione el nombre del tipo de producto",
-            ajax: {
-                url: '/sismec/ajax/getTipoProductoById/',
-                dataType: "json",
-                type: "GET",
-                data: function (params) {
-                    var queryParameters = {
-                        tipo_producto_id: params.term
-                    };
-                    return queryParameters;
-                },
-                processResults: function (data) {
-                    return {
-                        results: $.map(data, function (item) {
-                            return {
-                                text: item.nombre,
-                                id: item.id
-                            };
-                        })
-                    };
-                }
-            }
-        })
-            .on('select2:unselect ', function () {
-                select_tipo_producto.find('option').remove().end();
-                select_tipo_producto.val('').trigger('change');
-            });
-    }
-});
-    </script>
-{% endblock %}
+{
 {% block content %}
 {#    <ol class="breadcrumb">#}
 {#        <li class="breadcrumb-item">#}
@@ -79,8 +21,9 @@
                 <!-- /.col-lg-12 -->
             </div>
         </div>
-            <form action="{% url 'frontend_home' %}producto/detalle/{{ object_list.id }}/" method="post">
+            <form action="{% url 'frontend_home' %}productos/detalle/{{ object_list.id }}/" method="post">
                 <table width="94%" border="0" cellpadding="0" cellspacing="0" id="forms" align="center">
+                <input type="hidden"  id="tipo_producto" value="{{ tipo_producto }}"/>
                     {% csrf_token %}
                     {% for field in form %}
                         {{ field.errors }}
