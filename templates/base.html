@@ -11,7 +11,6 @@
     <link rel="icon" type="image/png" sizes="16x16" href="{% static "plugins/images/favicon.png"%}">
     <title>SISMEC - TALLER MÉCANICO</title>
     <!-- Bootstrap Core CSS -->
-    {% block extrastyle %}
         <link href="{% static "bootstrap/dist/css/bootstrap.min.css"%}" rel="stylesheet">
         <!-- Menu CSS -->
         <link href="{% static "plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.css"%}" rel="stylesheet">
@@ -48,56 +47,37 @@
          <link href="{% static "select2/select2.min.css" %}" rel="stylesheet"/>
          <script src="{% static "select2/select2.min.js" %}"></script>
         {% block header_scripts %}{% endblock %}
-    {% endblock %}
+        {% block header_resources %}{% endblock %}
 </head>
 
 <body class="fix-header">
-         <!-- ============================================================== -->
-        <!-- Preloader -->
-        <!-- ============================================================== -->
         <div class="preloader">
             <svg class="circular" viewBox="25 25 50 50">
                 <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" />
             </svg>
         </div>
-        <!-- ============================================================== -->
-        <!-- Wrapper -->
-        <!-- ============================================================== -->
-        <div id="wrapper">
-            {% block header %}
-            <!-- ============================================================== -->
-            <!-- Topbar header - style you can find in pages.scss -->
-            <!-- ============================================================== -->
-            <nav class="navbar navbar-default navbar-static-top m-b-0">
-                <div class="navbar-header">
-                    <div class="top-left-part">
-                        <!-- Logo -->
-                        <a class="logo" href="index.html">
-                            <!-- Logo icon image, you can use font-icon also --><b>
-                            <!--This is dark logo icon--><img src="{% static "plugins/images/admin-logo.png"%}" alt="home" class="dark-logo" /><!--This is light logo icon--><img src="{% static "plugins/images/admin-logo-dark.png"%}" alt="home" class="light-logo" />
-                         </b>
-                            <!-- Logo text image you can use text also --><span class="hidden-xs">
-                            <!--This is dark logo text--><img src="{% static "plugins/images/admin-text.png"%}" alt="home" class="dark-logo" /><!--This is light logo text--><img src="{% static "plugins/images/admin-text-dark.png"%}" alt="home" class="light-logo" />
-                         </span> </a>
-                    </div>
-                    <!-- /Logo -->
-                    <ul class="nav navbar-top-links navbar-right pull-right">
-                        <li>
-                            <a class="profile-pic" href="{% url 'logout' %}"><b class="hidden-xs">Salir</b></a>
-                        </li>
+        <nav class="navbar navbar-default navbar-static-top m-b-0">
+            <div class="navbar-header">
+                <div class="top-left-part">
+                    <!-- Logo -->
+                    <a class="logo" href="index.html">
+                        <!-- Logo icon image, you can use font-icon also --><b>
+                        <!--This is dark logo icon--><img src="{% static "plugins/images/admin-logo.png"%}" alt="home" class="dark-logo" /><!--This is light logo icon--><img src="{% static "plugins/images/admin-logo-dark.png"%}" alt="home" class="light-logo" />
+                     </b>
+                        <!-- Logo text image you can use text also --><span class="hidden-xs">
+                        <!--This is dark logo text--><img src="{% static "plugins/images/admin-text.png"%}" alt="home" class="dark-logo" /><!--This is light logo text--><img src="{% static "plugins/images/admin-text-dark.png"%}" alt="home" class="light-logo" />
+                     </span> </a>
                 </div>
-            <!-- /.navbar-header -->
-            <!-- /.navbar-top-links -->
-            <!-- /.navbar-static-side -->
-            </nav>
-            <!-- End Top Navigation -->
-            {% endblock %}
+                <ul class="nav navbar-top-links navbar-right pull-right">
+                    <li>
+                        <a class="nav-link" href="{% url 'logout' %}"><i class="fa fa-sign-out fa-fw"> </i> Salir</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        {% block header %}
+        {% endblock %}
 
-
-    {% block sidebar %}
-        <!-- ============================================================== -->
-        <!-- Left Sidebar - style you can find in sidebar.scss  -->
-        <!-- ============================================================== -->
         <div class="navbar-default sidebar" role="navigation">
             <div class="sidebar-nav slimscrollsidebar">
                 <div class="sidebar-head">
@@ -108,7 +88,7 @@
                         <a href="{% url 'frontend_home' %}" class="waves-effect"><i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>Dashboard</a>
                     </li>
                     <li>
-                        <a href="{% url 'frontend_home' %}productos" class="waves-effect"><i class="fa fa-product-hunt fa-fw" aria-hidden="true"></i>Productos</a>
+                        <a href="{% url 'productos_listado' %}" class="waves-effect"><i class="fa fa-product-hunt fa-fw" aria-hidden="true"></i>Productos</a>
                     </li>
                     <li>
                         <a href="basic-table.html" class="waves-effect"><i class="fa fa-users fa-fw" aria-hidden="true"></i>Clientes</a>
@@ -131,45 +111,37 @@
 
                 </ul>
             </div>
-
         </div>
-        <!-- ============================================================== -->
-        <!-- End Left Sidebar -->
-        <!-- ============================================================== -->
+    {% block sidebar %}
     {% endblock %}
-    {% block content %}
-        <!-- ============================================================== -->
-        <!-- Page Content -->
-        <!-- ============================================================== -->
-        <div id="page-wrapper">
-            <div class="container-fluid">
-                <div class="row bg-title">
-                    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                        <h4 class="page-title">Blank Page</h4> </div>
-                    <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
-                        <!--a href="https://wrappixel.com/templates/ampleadmin/" target="_blank" class="btn btn-danger pull-right m-l-20 hidden-xs hidden-sm waves-effect waves-light">Upgrade to Pro</a-->
-                        <ol class="breadcrumb">
-                            <li><a href="#">Dashboard</a></li>
-                            <li class="active">Blank Page</li>
-                        </ol>
-                    </div>
-                    <!-- /.col-lg-12 -->
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="white-box">
-                            <h3 class="box-title">Blank Page</h3> </div>
-                    </div>
-                </div>
-            </div>
-            <!-- /.container-fluid -->
-            <footer class="footer text-center"> 2018 &copy; Lourdes Escurra </footer>
-        </div>
-        <!-- ============================================================== -->
-        <!-- End Page Content -->
-        <!-- ============================================================== -->
-        {% endblock %}
-    </div>
-</body>
 
+    <div class="row bg-title">
+        {% if messages %}
+            {% for message in messages %}
+                {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+                    <div id="alert_request" class="alert alert-danger alert-dismissable"
+                         style="margin-top: 15px; margin-bottom: 0px; margin-left: 5px; position: fixed; top: 10px; right: 10px; width: 300px; z-index: 50000;">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true"> &times;</button>
+                        <p id="error_text">{{ message }}</p>
+                    </div>
+                {% else %}
+                    <div id="alert_request" class="alert alert-success alert-dismissable"
+                         style="margin-top: 15px; margin-bottom: 0px; margin-left: 5px; position: fixed; top: 10px; right: 10px; width: 300px; z-index: 50000;">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true"> &times;</button>
+                        <p id="error_text">{{ message }}</p>
+                    </div>
+                {% endif %}
+
+            {% endfor %}
+        {% endif %}
+        <div id="mensaje_global_contenedor" class="alert alert-success alert-dismissable"
+             style="margin-top: 15px; margin-bottom: 0px; margin-left: 5px; display: none; position: fixed; top: 10px; right: 10px; width: 300px; z-index: 50000;">
+            <button type="button" class="close" aria-hidden="true"> &times;</button>
+            <p id="mensaje_global_text"> mensaje de error</p>
+        </div>
+    </div>
+    {% block content %}
+    {% endblock %}
+    <footer class="footer text-center"> 2018 &copy; Lourdes Escurra </footer>
+</body>
 </html>

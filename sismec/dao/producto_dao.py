@@ -36,7 +36,7 @@ def getTipoProductoAutocomplete(filtros):
 def getProductoFiltro(filtros):
     object_list = []
     query_var = []
-    query = '''SELECT row_number() over (ORDER BY p.marca), p.id, p.nombre, p.marca, p.cantidad, p.precio_venta, p.precio_compra, p.tipo_impuesto, pt.id, pt.descripcion
+    query = '''SELECT row_number() over (ORDER BY p.marca), p.id, p.nombre, p.marca, p.cantidad, p.precio_venta, p.tipo_impuesto, pt.id, pt.descripcion
                 FROM producto AS p
                 LEFT JOIN producto_tipo AS pt ON pt.id = p.tipo_producto_id'''
 
@@ -70,10 +70,9 @@ def getProductoFiltro(filtros):
                         'marca': i[3] if i[3] is not None else '-',
                         'cantidad': i[4] if i[4] is not None else 0,
                         'precio_venta': i[5] if i[5] is not None else 0,
-                        'precio_compra': i[6] if i[6] is not None else 0,
-                        'tipo_impuesto': i[7] if i[7] is not None else '-',
-                        'producto_tipo_id': i[8] if i[8] is not None else 0,
-                        'producto_tipo_nombre': i[9] if i[9] is not None else '-',
+                        'tipo_impuesto': i[6] if i[6] is not None else '-',
+                        'producto_tipo_id': i[7] if i[7] is not None else 0,
+                        'producto_tipo_nombre': i[8] if i[8] is not None else '-',
                         }
                 object_list.append(data)
 

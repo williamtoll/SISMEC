@@ -1,24 +1,7 @@
 {% extends 'base.html' %}
 {% block header_scripts %}
 <script type="text/javascript">
-
 	$(document).ready(function() {
-
-	var producto_id = $('#tipo_producto').val();
-	var request_name_by_id = $.ajax({
-				url : '/ajax/get_producto_name_by_id/',
-				type : "GET",
-				data : {
-						producto_id : producto_id
-					},
-				dataType : "json",
-				success: function (data){
-					$.each(data, function (index,value) {
-					$("#id_tipo_producto_select").val(value.fields.descripcion);
-					});
-				}
-			});
-
 
 	var select_tipo_producto = $('#id_tipo_producto_select');
     inicializarSelectGenerales();

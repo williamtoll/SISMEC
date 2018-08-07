@@ -41,10 +41,8 @@ class Producto(models.Model):
     marca = models.CharField(max_length=200, blank=True)
     cantidad = models.IntegerField(blank=True, null=True)
     precio_venta = models.IntegerField(blank=True, null=True)
-    precio_compra = models.IntegerField(blank=True, null=True)
     #unidad_de_medida = models.ForeignKey(UnidadMedida, on_delete=models.PROTECT, blank=True, null=True)
     estado = models.BooleanField(default=False)
-    #provedor = models.CharField(max_length=20, blank=True) #Crear Clase Proveedor
     tipo_producto = models.ForeignKey(TipoProducto, on_delete=models.PROTECT, blank=True, null=True)
     IVA10= 'IVA 10'
     IVA5= 'IVA 5'

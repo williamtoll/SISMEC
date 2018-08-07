@@ -51,11 +51,15 @@
                                             </span>
                         </div>
                     </form>
+
                     <form id="form_eliminar" action="{% url 'eliminar_producto' %}" method="post">
                         {% csrf_token %}
                         <input id="id_eliminar" name="id_eliminar" type="hidden">
                     </form>
                 </div>
+                 <div class="form-group pull-right">
+                        <a class="btn btn-sm btn-primary" href="{% url 'productos_agregar' %}"><span class="glyphicon glyphicon-plus"></span> AGREGAR NUEVO</a>
+                 </div>
             </div>
             <div class="table-responsive">
                 <div class="dataTables_wrapper container-fluid dt-bootstrap4">
@@ -70,33 +74,30 @@
                                     <th width="12%">Marca</th>
                                     <th width="8%">Cantidad</th>
                                     <th width="8%">Precio Venta</th>
-                                    <th width="8%">Precio Compra</th>
                                     <th width="8%">Tipo Producto</th>
                                     <th width="8%">Tipo Impuesto</th>
+                                    <th width="10%">Acciones</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 {% for ob in object_list %}
                                     <tr>
                                         <td>{{ ob.id }}</td>
-                                        <td class="nombre"><a
-                                                href="{% url 'frontend_home' %}productos/detalle/{{ ob.id }}">{{ ob.nombre }}</a>
-                                        </td>
+                                        <td class="nombre">{{ ob.nombre }}</td>
                                         <td>{{ ob.marca }}</td>
                                         <td>{{ ob.cantidad }}</td>
                                         <td>{{ ob.precio_venta }}</td>
-                                        <td>{{ ob.precio_compra }}</td>
                                         <td>{{ ob.producto_tipo_nombre }}</td>
                                         <td>{{ ob.tipo_impuesto }}</td>
-                                        <td style="text-align: center">
-                                            {#                                            <a href="{% url 'frontend_home' %}autor/detalle/{{ ob.id }}" type="button"#}
-                                            {#                                               class="btn btn-primary btn-xs" title="Editar"><i#}
-                                            {#                                                    class="fa fa-pencil"></i>#}
-                                            {#                                            </a>#}
-                                            <button type="button" class="btn btn-outline-danger btn-xs eliminar-listado"
-                                                    title="Eliminar"
-                                                    name="{{ ob.id }}"><i class="fa fa-trash-o"></i></button>
-                                        </td>
+                                        <td><center>
+                                            <form id="form_eliminar" action="{% url 'eliminar_producto' %}" method="post">
+                                                <a class="btn btn-sm btn-warning" href="{% url 'frontend_home' %}productos/detalle/{{ ob.id }}"><span class="glyphicon glyphicon-edit"></span> Edit</a>
+                                                {% csrf_token %}
+                                                <input id="id_eliminar" name="id_eliminar" type="hidden" value="{{ ob.id }}">
+                                                <button type="submit" class="btn btn-sm btn-danger" name="{{ ob.id }}"><span class="glyphicon glyphicon-trash"></span> Delete</button>
+                                            </form>
+                                        </center></td>
+
                                     </tr>
                                 {% endfor %}
                                 </tbody>
