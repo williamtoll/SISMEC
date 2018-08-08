@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+{% block header_scripts %}
+    {% load static %}
+    {% load staticfiles %}
+    {% load humanize %}
+    <script type="text/javascript">
+        var id_menu = "6";
+    </script>
+{% endblock %}
+{% block content %}
+{#    <ol class="breadcrumb">#}
+{#        <li class="breadcrumb-item">#}
+{#            <a href="{% url 'frontend_home' %}" title="Inicio"><i class="fa fa-fw fa-home"></i></a>#}
+{#        </li>#}
+{#        <li class="breadcrumb-item">#}
+{#            <a href="{% url 'frontend_admin_item' %}">Admin Item</a>#}
+{#        </li>#}
+{#        <li class="breadcrumb-item active">Listado Autores</li>#}
+{#    </ol>#}
+
+{#    <div class="card mb-3">#}
+{#        <div class="card-header">#}
+{#            <span>Listado Autores</span>#}
+{#            <a href="{% url 'frontend_listado_tipo_autor' %}"#}
+{#               class="btn btn-outline-warning btn-df"><i#}
+{#                    class="fa fa-fw fa-list"></i> Ver Tipos</a>#}
+{#            <div class="pull-right">#}
+{#                <a href="{% url 'frontend_agregar_autor' %}"#}
+{#                   class="btn btn-outline-primary btn-df"><i#}
+{#                        class="fa fa-fw fa-plus"></i> Agregar</a>#}
+{#            </div>#}
+{#        </div>#}
+        <div id="page-wrapper">
+             <div class="container-fluid">
+                <div class="row bg-title">
+                    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                        <h4 class="page-title">LISTADO CLIENTES</h4> </div>
+
+                    <!-- /.col-lg-12 -->
+                </div>
+            <div class="row">
+                <div class="col-lg-4">
+                    <form action="{% url 'clientes_listado' %}" method="get">
+                        <div class="form-group input-group">
+                            <input type="text" class="form-control" name="search" placeholder="Buscar..."
+                                   value="{{ filtros.search }}">
+                            <span class="input-group-btn">
+                                                <button class="btn btn-default" type="submit"><i
+                                                        class="fa fa-search"></i>
+                                                </button>
+                                            </span>
+                        </div>
+                    </form>
+                </div>
+                 <div class="form-group pull-right">
+                        <a class="btn btn-sm btn-primary" href="{% url 'clientes_agregar' %}"><span class="glyphicon glyphicon-plus"></span> AGREGAR NUEVO</a>
+                 </div>
+            </div>
+            <div class="table-responsive">
+                <div class="dataTables_wrapper container-fluid dt-bootstrap4">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <table class="table dataTable" id="dataTable" width="100%" cellspacing="0"
+                                   role="grid" aria-describedby="dataTable_info" style="width: 100%;">
+                                <thead>
+                                <tr>
+                                    <th width="8%">ID</th>
+                                    <th width="12%">Nombres/Razón Social</th>
+                                    <th width="8%">RUC</th>
+                                    <th width="12%">Dirección</th>
+                                    <th width="8%">Teléfono</th>
+                                    <th width="8%">Email</th>
+                                    <th width="8%">Tipo Persona</th>
+                                    <th width="12%">Acciones</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for ob in object_list %}
+                                    <tr>
+                                        <td>{{ ob.id }}</td>
+                                        <td class="nombre">{{ ob.nombres }}</td>
+                                        <td>{{ ob.ruc }}</td>
+                                        <td>{{ ob.direccion }}</td>
+                                        <td>{{ ob.telefono }}</td>
+                                        <td>{{ ob.mail }}</td>
+                                        <td>{{ ob.tipo_persona }}</td>
+                                        <td><center>
+                                            <form id="form_eliminar" action="{% url 'eliminar_cliente' %}" method="post">
+                                                <a class="btn btn-sm btn-warning" href="{% url 'frontend_home' %}clientes/detalle/{{ ob.id }}"><span class="glyphicon glyphicon-edit"></span> Edit</a>
+                                                {% csrf_token %}
+                                                <input id="id_eliminar" name="id_eliminar" type="hidden" value="{{ ob.id }}">
+                                                <button type="submit" class="btn btn-sm btn-danger" name="{{ ob.id }}"><span class="glyphicon glyphicon-trash"></span> Delete</button>
+                                            </form>
+                                        </center></td>
+
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                    {% include "frontend/paginacion.html" %}
+                </div>
+            </div>
+        </div>
+        <div class="card-footer small text-muted"></div>
+    </div>
+{% endblock %}

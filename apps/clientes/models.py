@@ -2,31 +2,27 @@ from django.db import models
 
 
 class Cliente(models.Model):
-    cedula = models.CharField(unique=True, max_length=10, blank=False, null=False)
+    id = models.BigAutoField(primary_key=True)
     nombres = models.CharField(max_length=255)
-    apellidos = models.CharField(max_length=255)
-    fecha_nacimiento = models.DateField('fecha de nacimiento')
     ruc = models.CharField(max_length=255)
-    SEXO_CHOICES = (
-        ("M", "Masculino"),
-        ("F", "Femenino"),
-    )
-    sexo = models.CharField(max_length=1, choices=SEXO_CHOICES)
-    direccion_particular = models.CharField(max_length=255)
-    telefono_particular = models.CharField(max_length=255, blank=True)
-    celular = models.CharField(max_length=255)
+    direccion = models.CharField(max_length=255)
+    telefono = models.CharField(max_length=255, blank=True)
     mail = models.CharField(max_length=255)
-    contactoAux = models.CharField('Contacto Auxiliar', max_length=255, blank=True)
-    telefonoAux = models.CharField('Contacto Auxiliar',max_length=255, blank=True)
-    deuda_contraida = models.BigIntegerField(blank=True, null=True)
+    JURIDICA = 'JURIDICA'
+    FISICA = 'FISICA'
+    TPO_PERSONA_CHOICES = (
+        (JURIDICA, 'Juridica'),
+        (FISICA, 'Fisica'),
+    )
+    tipo_persona = models.CharField(max_length=20, choices=TPO_PERSONA_CHOICES, default=FISICA)
 
-    def __unicode__(self):
-        return unicode(u'%s %s' % (self.nombres, self.apellidos))
+    def __str__(self):
+        return self.nombres
 
     def as_json(self):
         return dict(
-            label=self.nombres + ' ' + self.apellidos,
-            cedula=self.cedula,
+            label=self.nombres,
+            cedula=self.ruc,
             id=self.id)
 
     class Meta:

@@ -26,5 +26,6 @@ urlpatterns = [
     url(r'^', include('apps.frontend.urls')),
     url(r'^', include('apps.productos.urls')),
     url(r'^', include('apps.ajax.urls')),
+    url(r'^', include('apps.clientes.urls')),
     #path('static/', include('django.contrib.auth.urls')),
 ]
