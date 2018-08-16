@@ -36,7 +36,6 @@ class UnidadMedida(models.Model):
 
 class Producto(models.Model):
     id = models.BigAutoField(primary_key=True)
-    nombre = models.CharField(max_length=200, blank=False)
     descripcion = models.CharField(max_length=200, blank=False)
     marca = models.CharField(max_length=200, blank=True)
     cantidad = models.IntegerField(blank=True, null=True)
@@ -54,10 +53,10 @@ class Producto(models.Model):
     )
     tipo_impuesto = models.CharField(max_length=20, choices=IMPUESTOS_CHOICES,default=IVA10)
     def __str__(self):
-        return self.nombre
+        return self.descripcion
 
     def __unicode__(self):
-        return self.nombre
+        return self.descripcion
 
     class Meta:
         """Establece las configuraciones del modelo de base de datos"""

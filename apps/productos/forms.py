@@ -28,7 +28,7 @@ class ProductoForm(ModelForm):
     class Meta:
 
         model = Producto
-        fields = ['nombre', 'descripcion', 'marca', 'precio_venta',
+        fields = ['descripcion', 'marca', 'precio_venta',
                   'tipo_impuesto']
         exclude = ['tipo_producto']
 
