@@ -36,16 +36,16 @@ def getTipoProductoAutocomplete(filtros):
 def getProductoFiltro(filtros):
     object_list = []
     query_var = []
-    query = '''SELECT row_number() over (ORDER BY p.marca), p.id, p.nombre, p.marca, p.cantidad, p.precio_venta, p.tipo_impuesto, pt.id, pt.descripcion
+    query = '''SELECT row_number() over (ORDER BY p.marca), p.id, p.descripcion, p.marca, p.cantidad, p.precio_venta, p.tipo_impuesto, pt.id, pt.descripcion
                 FROM producto AS p
                 LEFT JOIN producto_tipo AS pt ON pt.id = p.tipo_producto_id'''
 
     if filtros['search'] != '':
         query += '''
-        WHERE UPPER(p.nombre) like UPPER(%s)'''
+        WHERE UPPER(p.descripcion) like UPPER(%s)'''
         query_var = ['%' + filtros['search'] + '%']
     query += '''
-    ORDER BY p.nombre'''
+    ORDER BY p.marca'''
 
     pagination = utils_dao.paginationData(query, query_var, filtros)
 
@@ -66,7 +66,7 @@ def getProductoFiltro(filtros):
             for i in cursor.fetchall():
                 data = {'row_number': i[0],
                         'id': i[1],
-                        'nombre': i[2],
+                        'descripcion': i[2],
                         'marca': i[3] if i[3] is not None else '-',
                         'cantidad': i[4] if i[4] is not None else 0,
                         'precio_venta': i[5] if i[5] is not None else 0,

@@ -43,7 +43,6 @@ INSTALLED_APPS = [
     'apps.productos',
     'apps.clientes',
     'apps.proveedores',
-    'apps.servicios',
     'apps.principal',
     'apps.ajax',
 ]

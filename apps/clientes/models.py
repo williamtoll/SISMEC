@@ -4,7 +4,7 @@ from django.db import models
 class Cliente(models.Model):
     id = models.BigAutoField(primary_key=True)
     nombres = models.CharField(max_length=255)
-    ruc = models.CharField(max_length=255)
+    ruc = models.CharField(max_length=255, unique=True)
     direccion = models.CharField(max_length=255)
     telefono = models.CharField(max_length=255, blank=True)
     mail = models.CharField(max_length=255)
