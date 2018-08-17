@@ -70,7 +70,7 @@
                                 <thead>
                                 <tr>
                                     <th width="8%">ID</th>
-                                    <th width="12%">Nombre</th>
+                                    <th width="12%">Descripción</th>
                                     <th width="12%">Marca</th>
                                     <th width="8%">Cantidad</th>
                                     <th width="8%">Precio Venta</th>
@@ -83,7 +83,7 @@
                                 {% for ob in object_list %}
                                     <tr>
                                         <td>{{ ob.id }}</td>
-                                        <td class="nombre">{{ ob.nombre }}</td>
+                                        <td class="nombre">{{ ob.descripcion }}</td>
                                         <td>{{ ob.marca }}</td>
                                         <td>{{ ob.cantidad }}</td>
                                         <td>{{ ob.precio_venta }}</td>
