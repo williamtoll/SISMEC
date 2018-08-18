@@ -79,7 +79,12 @@
                         <td><strong><label>Tipo Producto</label></strong></td>
                         <td class="noimage vTextField">
                             <!--select id="id_tipo_producto_select" name="id_tipo_producto_select" class="form-control"></select-->
-                            <select id="id_tipo_producto_select" name="id_tipo_producto_select" class="form-control"></select>
+                            <select id="id_tipo_producto_select" name="id_tipo_producto_select" class="form-control">
+                             {% if object_list.tipo_producto != None %}
+                                        <option value="{{ object_list.tipo_producto.id }}"
+                                                selected> {{ object_list.tipo_producto.descripcion }}</option>
+                                    {% endif %}
+                            </select>
                         </td>
                     </tr>
 	            </table>
