@@ -40,3 +40,18 @@ def getTipoProductoById(request):
         except Exception as e:
             traceback.print_exc(e.args)
             return HttpResponseServerError('No se ha podido obtener un resultado')
+
+
+@require_http_methods(["GET"])
+def getProveedorAutocomplete(request):
+    if request.method == 'GET':
+        try:
+            data = request.GET
+            nombres = data.get('nombres', '')
+            filtros = {'nombres': nombres}
+            object_list = producto_dao.getTipoProductoAutocomplete(filtros)
+            json_response = json.dumps(object_list)
+            return HttpResponse(json_response, content_type='application/json')
+        except Exception as e:
+            traceback.print_exc(e.args)
+            return HttpResponseServerError('No se ha podido obtener un resultado')
