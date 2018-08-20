@@ -5,7 +5,7 @@ from apps.proveedores.models import Proveedor
 # Orden de Compra Cabecera
 class OrdenCompraCab(models.Model):
     id = models.BigAutoField(primary_key=True)
-    fecha = models.DateTimeField(auto_now_add=True)
+    fecha_pedido = models.DateTimeField(auto_now_add=True)
     proveedor = models.ForeignKey(Proveedor, on_delete=models.PROTECT, blank=True, null=True)
     PENDIENTE = 'PENDIENTE'
     CONFIRMADO = 'CONFIRMADO'

@@ -28,5 +28,6 @@ urlpatterns = [
     url(r'^', include('apps.ajax.urls')),
     url(r'^', include('apps.clientes.urls')),
     url(r'^', include('apps.proveedores.urls')),
+    url(r'^', include('apps.compras.urls')),
     #path('static/', include('django.contrib.auth.urls')),
 ]

@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'apps.proveedores',
     'apps.principal',
     'apps.ajax',
+    'apps.compras',
 ]
 
 MIDDLEWARE = [

@@ -6,8 +6,16 @@ from django.db import connection
 def getProveedorFiltro(filtros):
     object_list = []
     query = '''SELECT row_number() over (ORDER BY p.id), p.id, p.nombres, p.ruc, p.direccion, p.telefono, p.mail
-        FROM proveedor AS p ORDER BY p.id'''
+        FROM proveedor AS p'''
     query_var = []
+
+    if filtros['search'] != '':
+        query += '''
+          WHERE UPPER(p.nombres) like UPPER(%s)'''
+        query_var = ['%' + filtros['search'] + '%']
+    query += '''
+      ORDER BY p.id'''
+
     pagination = utils_dao.paginationData(query, query_var, filtros)
 
     total_row = pagination['total_row']

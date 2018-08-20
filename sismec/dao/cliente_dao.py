@@ -6,8 +6,16 @@ from django.db import connection
 def getClienteFiltro(filtros):
     object_list = []
     query = '''SELECT row_number() over (ORDER BY c.id), c.id, c.nombres, c.ruc, c.direccion, c.telefono,c.mail, c.tipo_persona
-        FROM cliente AS c ORDER BY c.id'''
+        FROM cliente AS c'''
     query_var = []
+
+    if filtros['search'] != '':
+        query += '''
+          WHERE UPPER(c.nombres) like UPPER(%s)'''
+        query_var = ['%' + filtros['search'] + '%']
+    query += '''
+      ORDER BY c.id'''
+
     pagination = utils_dao.paginationData(query, query_var, filtros)
 
     total_row = pagination['total_row']

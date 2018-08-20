@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+        <div id="page-wrapper">
+            <div class="container-fluid">
+                <div class="row bg-title">
+                    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                        <h4 class="page-title">AGREGAR ORDEN DE COMPRA</h4> </div>
+                    <!-- /.col-lg-12 -->
+                </div>
+            </div>
+            <form action="" method="post" id="form_add_" enctype="multipart/form-data">
+                    <div class="row form-group">
+                        <label class="col-lg-1"></label>
+                        <label class="col-lg-4">Fecha:</label>
+                        <div class="col-lg-2"><input type="date" name="fecha"></div>
+                    </div>
+
+
+
+                <div class="-pull-left">
+                    <input name="" type="submit" value="Guardar" class="btn btn-primary default"
+                           style=" margin-bottom: 10px; cursor: pointer;"/>
+                </div>
+            </form>
+            <div class="card-footer small text-muted"></div>
+            <!-- /.container-fluid -->
+            <footer class="footer text-center"> 2018 &copy; Lourdes Escurra </footer>
+        </div>
+{% endblock %}
