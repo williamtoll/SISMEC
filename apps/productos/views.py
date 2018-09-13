@@ -13,9 +13,14 @@ from django.views.decorators.http import require_http_methods
 
 from apps.productos.forms import ProductoForm
 from apps.productos.models import Producto, TipoProducto
+from django.contrib.auth.decorators import permission_required
+
+from sismec.utils import custom_permission_required
+
 
 @require_http_methods(["GET", "POST"])
 @login_required(login_url='/sismec/login/')
+@custom_permission_required('productos.add_producto')
 # # Funcion para agregar un producto.
 def agregarProducto(request):
     t = loader.get_template('productos/agregar.html')
@@ -111,6 +116,7 @@ def detalleProducto(request, id):
 
 @require_http_methods(["POST"])
 @login_required(login_url='/sismec/login/')
+@custom_permission_required('productos.delete_producto')
 # Funcion para eliminar un autor desde el listado.
 def eliminarProducto(request):
     if request.method == 'POST':
