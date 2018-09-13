@@ -48,3 +48,33 @@ def getProveedorFiltro(filtros):
         finally:
             cursor.close()
     return object_list, pagination
+
+
+def getProveedorAutocomplete(filtros):
+    object_list = []
+    tipo_producto_list =[]
+    query_var = []
+    query = '''SELECT prov.id, prov.nombres, prov.ruc, prov.direccion, prov.telefono, prov.mail FROM proveedor prov '''
+
+    if filtros['nombres'] != '':
+        query += 'WHERE UPPER(prov.nombres) LIKE UPPER(%s) '
+        query_var.append('%' + filtros['nombres'] + '%')
+
+    query += 'ORDER BY prov.nombres'
+    cursor = connection.cursor()
+    try:
+        cursor.execute(query, query_var)
+        for i in cursor.fetchall():
+            data = {'id': i[0],
+                    'nombres': i[1],
+                    'ruc': i[2],
+                    'direccion': i[3],
+                    'telefono': i[4],
+                    'mail': i[5],
+                    }
+            object_list.append(data)
+    except Exception as e:
+        print(e.args)
+    finally:
+        cursor.close()
+    return object_list

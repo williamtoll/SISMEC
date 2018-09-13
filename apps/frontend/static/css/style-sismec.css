@@ -14,3 +14,25 @@
 	.checkbox {
 	  margin-bottom: 30px;
 }
+
+.cabecera_pedido{
+	margin: 10px;
+	padding:8px;
+}
+
+.detalle_pedido{
+	/*margin: 0px 10px;*/
+	/*padding: 10px 0px; margin: 12px; border: 2px solid #CCC; display: inline-block;*/
+}
+
+.item-detalle{
+	/*margin: 20px 0px;*/
+	/*padding: 0px 5px;*/
+}
+.item-detalle input {
+	margin: 5px !important;
+}
+
+.add-btn {
+	top: 10px;
+}

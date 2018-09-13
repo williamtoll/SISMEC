@@ -81,3 +81,38 @@ def getProductoFiltro(filtros):
         finally:
             cursor.close()
     return object_list, pagination
+
+
+def getProductoAutocomplete(filtros):
+    object_list = []
+    query_var = []
+    query = '''SELECT p.id, p.descripcion, p.marca, p.cantidad, p.precio_venta, p.tipo_impuesto, pt.id, pt.descripcion
+                FROM producto AS p
+                LEFT JOIN producto_tipo AS pt ON pt.id = p.tipo_producto_id'''
+
+    if filtros['nombre'] != '':
+        query += '''
+        WHERE UPPER(p.descripcion) like UPPER(%s)'''
+        query_var = ['%' + filtros['search'] + '%']
+    query += '''
+    ORDER BY p.marca'''
+    cursor = connection.cursor()
+    try:
+        cursor.execute(query, query_var)
+
+        for i in cursor.fetchall():
+            data = {'id': i[0],
+                    'descripcion': i[1],
+                    'marca': i[2] if i[2] is not None else '-',
+                    'cantidad': i[3] if i[3] is not None else 0,
+                    'precio_venta': i[4] if i[4] is not None else 0,
+                    'tipo_impuesto': i[5] if i[5] is not None else '-',
+                    'producto_tipo_id': i[6] if i[6] is not None else 0,
+                    'producto_tipo_nombre': i[7] if i[7] is not None else '-',
+                    }
+            object_list.append(data)
+    except Exception as e:
+        print(e.args)
+    finally:
+        cursor.close()
+    return object_list
