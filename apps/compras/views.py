@@ -6,11 +6,13 @@ from django.shortcuts import render
 from django.template import loader
 from django.views.decorators.http import require_http_methods
 from datetime import datetime
+
+from apps.productos.models import Producto
 from apps.proveedores.models import Proveedor
 from apps.compras.models import OrdenCompraCab, OrdenCompraDet
 from django.contrib import messages
 from django.urls import reverse
-
+import json
 
 # Para crear una orden de compra
 @require_http_methods(["GET", "POST"])
@@ -24,8 +26,7 @@ def agregarOC(request):
 
         # Obtener fecha
         #fecha = datetime.datetime.strptime(request.POST.get('fecha', ''), "%Y-%m-%d")
-        detalle = request.POST.get('detalle', '')
-        detalle = request.POST.getlist('detalle')
+
         try:
             for proveedor_id in proveedor_list:
                 proveedor = Proveedor.objects.get(id=proveedor_id)
@@ -33,14 +34,19 @@ def agregarOC(request):
             #nuevaOC.fecha_pedido = fecha
             nuevaOC.proveedor= proveedor
             nuevaOC.estado = OrdenCompraCab.PENDIENTE
-            ret = request.POST
-            for item in request.POST.get('detalle', ''):
-                item['id']
-            #nuevaOC.save()
-            detalle = request.POST.get('detalle', '')
+            nuevaOC.save()
+            lista_detalles = json.loads(request.POST.get('detalle', ''))
+            for key in lista_detalles:
+                detalle = OrdenCompraDet()
+                nombre_producto = lista_detalles[key]['descripcion']
+                producto = Producto.objects.get(descripcion__exact=nombre_producto)
+                detalle.compra_cab = nuevaOC
+                detalle.producto = producto
+                detalle.cantidad = lista_detalles[key]['cantidad']
+                detalle.save()
 
-            messages.add_message(request, messages.INFO, 'Producto agregado exitosamente')
-            return HttpResponseRedirect(reverse('productos_listado'))
+            messages.add_message(request, messages.INFO, 'Orden de Compra agregada exitosamente')
+            return HttpResponseRedirect(reverse('frontend_home'))
         except Exception as e:
             traceback.print_exc(e.args)
             messages.add_message(request, messages.ERROR, e.args)

@@ -1,4 +1,6 @@
 from django.db import models
+
+from apps.productos.models import Producto
 from apps.proveedores.models import Proveedor
 
 
@@ -34,7 +36,7 @@ class OrdenCompraCab(models.Model):
 class OrdenCompraDet(models.Model):
     id = models.BigAutoField(primary_key=True)
     compra_cab = models.ForeignKey(OrdenCompraCab, on_delete=models.PROTECT, blank=True, null= False)
-    producto = models.ForeignKey(Proveedor, on_delete=models.PROTECT, blank=True, null=True)
+    producto = models.ForeignKey(Producto, on_delete=models.PROTECT, blank=True, null=False)
     cantidad = models.IntegerField(blank=True, null=True)
 
     def __str__(self):
