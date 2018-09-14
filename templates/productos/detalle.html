@@ -96,12 +96,15 @@
                          <input class="btn btn-danger default" type="submit" name="boton_borrar"
                            value="Borrar este Registro"/>
                     {% elif perms.productos.delete_producto %}
+                         <input class="btn btn-primary default" type="submit" name="boton_guardar"
+                           value="Guardar Cambios" disabled/>
                         <input class="btn btn-danger default" type="submit" name="boton_borrar"
                            value="Borrar este Registro"/>
-
                     {% elif perms.productos.change_producto %}
                         <input class="btn btn-primary default" type="submit" name="boton_guardar"
                            value="Guardar Cambios"/>
+                         <input class="btn btn-danger default" type="submit" name="boton_borrar"
+                           value="Borrar este Registro" disabled/>
                      {% else %}
                          <input class="btn btn-primary default" type="submit" name="boton_guardar"
                            value="Guardar Cambios" disabled/>

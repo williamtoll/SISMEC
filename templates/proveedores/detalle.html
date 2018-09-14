@@ -33,10 +33,27 @@
 	            </table>
                 <BR>
                 <div class="pull-right">
-                    <input class="btn btn-primary default" type="submit" name="boton_guardar"
+                    {%if perms.proveedores.change_proveedor and perms.proveedores.delete_proveedor %}
+                        <input class="btn btn-primary default" type="submit" name="boton_guardar"
                            value="Guardar Cambios"/>
-                    <input class="btn btn-danger default" type="submit" name="boton_borrar"
+                         <input class="btn btn-danger default" type="submit" name="boton_borrar"
                            value="Borrar este Registro"/>
+                    {% elif perms.proveedores.delete_proveedor %}
+                         <input class="btn btn-primary default" type="submit" name="boton_guardar"
+                           value="Guardar Cambios" disabled/>
+                        <input class="btn btn-danger default" type="submit" name="boton_borrar"
+                           value="Borrar este Registro"/>
+                    {% elif perms.proveedores.change_proveedor %}
+                        <input class="btn btn-primary default" type="submit" name="boton_guardar"
+                           value="Guardar Cambios"/>
+                         <input class="btn btn-danger default" type="submit" name="boton_borrar"
+                           value="Borrar este Registro" disabled/>
+                     {% else %}
+                         <input class="btn btn-primary default" type="submit" name="boton_guardar"
+                           value="Guardar Cambios" disabled/>
+                         <input class="btn btn-danger default" type="submit" name="boton_borrar"
+                           value="Borrar este Registro" disabled/>
+                    {%endif%}
                 </div>
             </form>
         </div>

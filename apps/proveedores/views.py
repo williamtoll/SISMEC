@@ -14,6 +14,9 @@ from sismec.dao import proveedor_dao
 from django.contrib import messages
 
 # listar clientes
+from sismec.utils import custom_permission_required
+
+
 @require_http_methods(["GET"])
 @login_required(login_url='/sismec/login/')
 # Funcion para listar PROVEEDORES existentes.
@@ -41,6 +44,7 @@ def listarProveedor(request):
 
 @require_http_methods(["GET", "POST"])
 @login_required(login_url='/sismec/login/')
+@custom_permission_required('proveedores.add_proveedor')
 # # Funcion para agregar un PROVEEDOR.
 def agregarProveedor(request):
     t = loader.get_template('proveedores/agregar.html')
@@ -102,6 +106,7 @@ def detalleProveedor(request, id):
 
 @require_http_methods(["GET", "POST"])
 @login_required(login_url='/sismec/login/')
+@custom_permission_required('proveedores.delete_proveedor')
 # Funcion para eliminar un proveedor desde el listado.
 def eliminarProveedor(request):
     if request.method == 'POST':

@@ -12,5 +12,5 @@ def custom_permission_required(function, perm):
         else:
             messages.add_message(request, messages.ERROR, 'No posee los privilegios suficientes')
             # Return a response or redirect to referrer or some page of your choice
-            return HttpResponseRedirect(reverse('productos_listado'))
+            return HttpResponseRedirect(reverse('frontend_home'))
     return _function

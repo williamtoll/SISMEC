@@ -14,6 +14,9 @@ from sismec.dao import cliente_dao
 from django.contrib import messages
 
 # listar clientes
+from sismec.utils import custom_permission_required
+
+
 @require_http_methods(["GET"])
 @login_required(login_url='/sismec/login/')
 # Funcion para listar Clientes existentes.
@@ -41,6 +44,7 @@ def listarCliente(request):
 
 @require_http_methods(["GET", "POST"])
 @login_required(login_url='/sismec/login/')
+@custom_permission_required('clientes.add_cliente')
 # # Funcion para agregar un cliente.
 def agregarCliente(request):
     t = loader.get_template('clientes/agregar.html')
@@ -102,6 +106,7 @@ def detalleCliente(request, id):
 
 @require_http_methods(["GET", "POST"])
 @login_required(login_url='/sismec/login/')
+@custom_permission_required('clientes.delete_cliente')
 # Funcion para eliminar un autor desde el listado.
 def eliminarCliente(request):
     if request.method == 'POST':
