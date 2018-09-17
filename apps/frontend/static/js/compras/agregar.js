@@ -19,6 +19,7 @@ $(document).ready(function() {
     var index = 0;
     var descripcion;
     var ok=false;
+    var cantidad_item= 0;
     function inicializarSelectGenerales() {
         select_proveedor.select2({
             tags: true,
@@ -95,14 +96,24 @@ $(document).ready(function() {
             index = $('.item-detalle').length;
             var inputs= $('.item-detalle')[index -1].children
             descripcion = $('#id_producto_agregar :selected').text();
+            cantidad_item = $('#cantidad').val();
             inputs[0].value=descripcion;
+            inputs[1].value=cantidad_item;
+            select_producto.find('option').remove().end();
+            select_producto.val('').trigger('change');
+            $('#cantidad').val('1');
             ok=true;
         }else{
             $('.detalle_pedido').append(item_detalle_pedido);
             index = $('.item-detalle').length;
             var inputs= $('.item-detalle')[index -1].children
             descripcion = $('#id_producto_agregar :selected').text();
+            cantidad_item = $('#cantidad').val();
             inputs[0].value=descripcion;
+            inputs[1].value=cantidad_item;
+            select_producto.find('option').remove().end();
+            select_producto.val('').trigger('change');
+            $('#cantidad').val('1');
             idsum +=1;
         }
 
@@ -117,8 +128,7 @@ $(document).ready(function() {
     	$("#form_add_oc").submit(function(){
 
 			//1. TODO: Hacer chequeo de que todos los valores esten correctos.
-			if (formOk()){
-			    validarDetalle();
+			if (validarCabecera() && validarDetalle()){
 				//2. Obtener el JSON del detalle
 				detalle = generarDetalleJSON();
 				$("#detalle").val(detalle);
@@ -150,16 +160,6 @@ function generarDetalleJSON(){
 		return detalle_json;
 	}
 
-function formOk(){
-		// Realizar validaciones.
-		if (detalle_valido){
-			return true;
-		}
-		else {
-			alert('Detalle de factura incorrecto, por favor corrija y vuelva a enviar');
-		}
-	}
-
 function validarDetalle(){
 
 	console.log('validando');
@@ -169,16 +169,31 @@ function validarDetalle(){
 		cantidad = $(this).find(".cantidad-item").val();
 		cantidad = parseInt(cantidad) || 0;
 		concepto = $(this).find(".producto_desc").val();
-		indicador_validez = '#840A0A'; // Por defecto invalido (Rojo)
+		//indicador_validez = '#840A0A'; // Por defecto invalido (Rojo)
 		// Requerimieno minimo para un detalle valido
 		if (cantidad != 0){
 				// VALIDO
 				console.log('Detalle VALIDO');
-				indicador_validez = '#1C842D';
+				//indicador_validez = '#1C842D';
 		}
 		else{
-			detalle_valido = false;
+		    alert("Debe seleccionar al menos un item");
+			detalle_valido =false;
 		}
-		$(this).css('background',indicador_validez);
+		//$(this).css('background',indicador_validez);
 	});
+	return detalle_valido;
+}
+
+function validarCabecera(){
+    console.log('validando cabecera');
+    if ($("#fecha").val() == ""){
+        alert("Debe seleccionar una fecha valida");
+        return false;
+    }
+    if ($("#id_proveedor_select").val() == null){
+        alert("Debe seleccionar un proveedor valido");
+        return false;
+    }
+    return true;
 }

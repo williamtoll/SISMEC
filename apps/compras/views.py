@@ -12,11 +12,16 @@ from apps.proveedores.models import Proveedor
 from apps.compras.models import OrdenCompraCab, OrdenCompraDet
 from django.contrib import messages
 from django.urls import reverse
+from sismec.dao import compra_dao
 import json
+
+from sismec.configuraciones import ROW_PER_PAGE
+from sismec.utils import custom_permission_required
 
 # Para crear una orden de compra
 @require_http_methods(["GET", "POST"])
 @login_required(login_url='/sismec/login/')
+@custom_permission_required('compras.add_ordencompracab')
 # # Funcion para agregar una orden de compra.
 def agregarOC(request):
     t = loader.get_template('compras/agregar_oc.html')
@@ -55,3 +60,26 @@ def agregarOC(request):
         c = {}
         return HttpResponse(t.render(c, request))
 
+
+# @require_http_methods(["GET"])
+# @login_required(login_url='/sismec/login/')
+# # Funcion para listar Clientes existentes.
+# def listarOrdenCompra(request):
+#     t = loader.get_template('compras/listado.html')
+#     if request.method == 'GET':
+#         data = request.GET
+#         filtros = {'row_per_page': data.get('row_per_page', ROW_PER_PAGE),
+#                    'page': data.get('page', 1), 'search': data.get('search', '')}
+#
+#         query_param_list = [filtros['row_per_page'], filtros['search']]
+#
+#         query_params = '?row_per_page={}&search={}'.format(*query_param_list)
+#         #object_list, pagination = compra_dao.getOCFiltro(filtros)
+#
+#         c = {
+#             'object_list': object_list,
+#             'pagination': pagination,
+#             'filtros': filtros,
+#             'query_params': query_params
+#         }
+#         return HttpResponse(t.render(c, request))
