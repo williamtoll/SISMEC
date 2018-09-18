@@ -1,7 +1,8 @@
-item_inicial_detalle_pedido = '<div class="item-detalle">'
-			+ '<input type="text" class="producto_desc col-xs-4" id="id_producto_select" name="id_producto_select" value="">'
-            + '<input type="number" class= "cantidad-item item col-xs-2" placeholder="Cantidad" value="">'
-		    + '<br> <br><br></div> ';
+item_inicial_detalle_pedido =  '<div class="item-detalle">'
+			+ '<input type="text" class="producto_desc col-xs-4" id="id_producto_select" name="id_producto_select">'
+            + '<input type="number" class= "cantidad-item item col-xs-2" placeholder="Cantidad" value="" style="left: 5px;">'
+			+ '<a href="#" class="btn btn-sm btn-danger rm-btn" style="height: 35px;margin-left: 10px;"><span class="glyphicon glyphicon-minus"></span></a>'
+		    + ' <br><br></div>';
 
 
 item_detalle_pedido = '<div class="item-detalle">'
@@ -10,8 +11,9 @@ item_detalle_pedido = '<div class="item-detalle">'
 			+ '<a href="#" class="btn btn-sm btn-danger rm-btn" style="height: 35px;margin-left: 10px;"><span class="glyphicon glyphicon-minus"></span></a>'
 		    + ' <br><br></div>';
 var detalle_valido = true;
+var es_repetido = false;
 $(document).ready(function() {
-    $('.detalle_pedido').append(item_inicial_detalle_pedido);
+    // $('.detalle_pedido').append(item_inicial_detalle_pedido);
     var select_proveedor = $('#id_proveedor_select');
     var select_producto = $('#id_producto_agregar')
     inicializarSelectGenerales();
@@ -92,19 +94,9 @@ $(document).ready(function() {
 
     //para agregar un item
     $(".agregar").click(function () {
-        if(idsum == 1 && ok == false){
-            index = $('.item-detalle').length;
-            var inputs= $('.item-detalle')[index -1].children
-            descripcion = $('#id_producto_agregar :selected').text();
-            cantidad_item = $('#cantidad').val();
-            inputs[0].value=descripcion;
-            inputs[1].value=cantidad_item;
-            select_producto.find('option').remove().end();
-            select_producto.val('').trigger('change');
-            $('#cantidad').val('1');
-            ok=true;
-        }else{
-            $('.detalle_pedido').append(item_detalle_pedido);
+        es_repetido = itemRepetidos();
+        if (es_repetido == false){
+           $('.detalle_pedido').append(item_detalle_pedido);
             index = $('.item-detalle').length;
             var inputs= $('.item-detalle')[index -1].children
             descripcion = $('#id_producto_agregar :selected').text();
@@ -115,8 +107,10 @@ $(document).ready(function() {
             select_producto.val('').trigger('change');
             $('#cantidad').val('1');
             idsum +=1;
+        }else{
+            select_producto.find('option').remove().end();
+            select_producto.val('').trigger('change');
         }
-
     });
     // Para eliminar un item.
 		$('.detalle_pedido').on("click",".rm-btn", function(e){
@@ -196,4 +190,17 @@ function validarCabecera(){
         return false;
     }
     return true;
+}
+
+function itemRepetidos(){
+    var repetidos = false;
+    $(".item-detalle").each(function(index, element ){
+		concepto = $(this).find(".producto_desc").val();
+		// Verificar que ya no exista ese item agregado
+		if (concepto == $('#id_producto_agregar :selected').text()){
+		    alert("El item seleccionado ya se encuentra agregado")
+            repetidos = true;
+		}
+	});
+    return repetidos;
 }
