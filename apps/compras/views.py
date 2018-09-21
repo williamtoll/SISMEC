@@ -6,7 +6,6 @@ from django.shortcuts import render
 from django.template import loader
 from django.views.decorators.http import require_http_methods
 from datetime import datetime
-
 from apps.productos.models import Producto
 from apps.proveedores.models import Proveedor
 from apps.compras.models import OrdenCompraCab, OrdenCompraDet
@@ -30,7 +29,7 @@ def agregarOC(request):
         proveedor_list = request.POST.get('id_proveedor_select', '')
 
         # Obtener fecha
-        #fecha = datetime.datetime.strptime(request.POST.get('fecha', ''), "%Y-%m-%d")
+        fecha = datetime.strptime(request.POST.get('fecha', ''), "%Y-%m-%d")
 
         try:
             for proveedor_id in proveedor_list:
@@ -39,6 +38,7 @@ def agregarOC(request):
             #nuevaOC.fecha_pedido = fecha
             nuevaOC.proveedor= proveedor
             nuevaOC.estado = OrdenCompraCab.PENDIENTE
+            nuevaOC.fecha_pedido = fecha
             nuevaOC.save()
             lista_detalles = json.loads(request.POST.get('detalle', ''))
             for key in lista_detalles:
@@ -83,3 +83,30 @@ def agregarOC(request):
 #             'query_params': query_params
 #         }
 #         return HttpResponse(t.render(c, request))
+
+
+@require_http_methods(["GET"])
+@login_required(login_url='/sismec/login/')
+# Funcion para listar PRODUCTOS existentes.
+def listarOC(request):
+    t = loader.get_template('compras/listado.html')
+    if request.method == 'GET':
+        data = request.GET
+
+        filtros = {'row_per_page': data.get('row_per_page', ROW_PER_PAGE),
+                   'page': data.get('page', 1), 'proveedor': data.get('proveedor_select', ''), 'fecha': data.get('fecha', ''),
+                   'estado': data.get('estado', '')}
+
+        query_param_list = [filtros['row_per_page'], filtros['proveedor'], filtros['fecha'], filtros['estado']]
+
+        query_params = '?row_per_page={}&search={}'.format(*query_param_list)
+        object_list, pagination = compra_dao.getOCFiltro(filtros)
+
+        c = {
+            'object_list': object_list,
+            'pagination': pagination,
+            'filtros': filtros,
+            'query_params': query_params
+        }
+        return HttpResponse(t.render(c, request))
+

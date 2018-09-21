@@ -7,7 +7,7 @@ from apps.proveedores.models import Proveedor
 # Orden de Compra Cabecera
 class OrdenCompraCab(models.Model):
     id = models.BigAutoField(primary_key=True)
-    fecha_pedido = models.DateTimeField(auto_now_add=True)
+    fecha_pedido = models.DateField(blank=True, null=True)
     proveedor = models.ForeignKey(Proveedor, on_delete=models.PROTECT, blank=True, null=True)
     PENDIENTE = 'PENDIENTE'
     CONFIRMADO = 'CONFIRMADO'
@@ -36,7 +36,7 @@ class OrdenCompraCab(models.Model):
 class OrdenCompraDet(models.Model):
     id = models.BigAutoField(primary_key=True)
     compra_cab = models.ForeignKey(OrdenCompraCab, on_delete=models.PROTECT, blank=True, null= False)
-    producto = models.ForeignKey(Producto, on_delete=models.PROTECT, blank=True, null=False)
+    producto = models.ForeignKey(Producto, on_delete=models.PROTECT, blank=True, null= False)
     cantidad = models.IntegerField(blank=True, null=True)
 
     def __str__(self):
