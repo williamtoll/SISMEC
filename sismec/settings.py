@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'apps.principal',
     'apps.ajax',
     'apps.compras',
+    'apps.facturas',
 ]
 
 MIDDLEWARE = [

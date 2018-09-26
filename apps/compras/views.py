@@ -60,31 +60,6 @@ def agregarOC(request):
         c = {}
         return HttpResponse(t.render(c, request))
 
-
-# @require_http_methods(["GET"])
-# @login_required(login_url='/sismec/login/')
-# # Funcion para listar Clientes existentes.
-# def listarOrdenCompra(request):
-#     t = loader.get_template('compras/listado.html')
-#     if request.method == 'GET':
-#         data = request.GET
-#         filtros = {'row_per_page': data.get('row_per_page', ROW_PER_PAGE),
-#                    'page': data.get('page', 1), 'search': data.get('search', '')}
-#
-#         query_param_list = [filtros['row_per_page'], filtros['search']]
-#
-#         query_params = '?row_per_page={}&search={}'.format(*query_param_list)
-#         #object_list, pagination = compra_dao.getOCFiltro(filtros)
-#
-#         c = {
-#             'object_list': object_list,
-#             'pagination': pagination,
-#             'filtros': filtros,
-#             'query_params': query_params
-#         }
-#         return HttpResponse(t.render(c, request))
-
-
 @require_http_methods(["GET"])
 @login_required(login_url='/sismec/login/')
 # Funcion para listar PRODUCTOS existentes.
@@ -110,3 +85,32 @@ def listarOC(request):
         }
         return HttpResponse(t.render(c, request))
 
+
+# Funcion para consultar el detalle de una orden de compra.
+@require_http_methods(["GET", "POST"])
+@login_required(login_url='/sismec/login/')
+def detalleOC(request, id):
+    t = loader.get_template('compras/detalle.html')
+    cabeceraOc = OrdenCompraCab.objects.get(pk = int(id))
+    detallesOc = OrdenCompraDet.objects.filter(compra_cab__id=cabeceraOc.id)
+    # Se envia el formulario
+    if request.method == 'POST':
+        # Obtener el proveedor
+        proveedor_list = request.POST.get('id_proveedor_select', '')
+
+        # Obtener fecha
+        fecha = datetime.strptime(request.POST.get('fecha', ''), "%Y-%m-%d")
+        for proveedor_id in proveedor_list:
+            proveedor = Proveedor.objects.get(id=proveedor_id)
+        cabeceraOc.proveedor = proveedor
+        cabeceraOc.fecha_pedido = fecha
+        cabeceraOc.save()
+        messages.add_message(request, messages.INFO, 'Se actualizaron los datos')
+        return HttpResponseRedirect(reverse('oc_listado'))
+
+    else:
+        c = {
+            'cabecera_oc': cabeceraOc,
+            'detalles_oc': detallesOc
+        }
+        return HttpResponse(t.render(c))

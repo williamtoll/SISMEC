@@ -43,8 +43,8 @@ class Producto(models.Model):
     #unidad_de_medida = models.ForeignKey(UnidadMedida, on_delete=models.PROTECT, blank=True, null=True)
     estado = models.BooleanField(default=False)
     tipo_producto = models.ForeignKey(TipoProducto, on_delete=models.PROTECT, blank=True, null=True)
-    IVA10= 'IVA 10'
-    IVA5= 'IVA 5'
+    IVA10= 'IVA10'
+    IVA5= 'IVA5'
     EXENTAS='EXENTAS'
     IMPUESTOS_CHOICES = (
         (EXENTAS, 'Exentas'),

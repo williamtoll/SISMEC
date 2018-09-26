@@ -63,8 +63,8 @@
                                 <thead>
                                 <tr>
                                     <th width="8%">Nro.</th>
-                                    <th width="12%">Fecha</th>
-                                    <th width="12%">Proveedor</th>
+                                    <th width="10%">Fecha</th>
+                                    <th width="10%">Proveedor</th>
                                     <th width="10%">Acciones</th>
                                 </tr>
                                 </thead>
@@ -75,11 +75,12 @@
                                     <td>{{ ob.fecha_pedido }}</td>
                                     <td>{{ ob.proveedor_descripcion }}</td>
                                     <td><center>
-                                        <form id="form_eliminar" action="{% url 'eliminar_producto' %}" method="post">
-                                            <a class="btn btn-sm btn-warning" href="{% url 'frontend_home' %}productos/detalle/{{ ob.id }}"><span class="glyphicon glyphicon-edit"></span> Edit</a>
+                                        <form id="form_add_oc" action="{% url 'eliminar_producto' %}" method="post">
+                                            <a class="btn btn-sm btn-warning" href="{% url 'frontend_home' %}compras/detalle/{{ ob.id }}"><span class="glyphicon glyphicon-edit"></span> Edit</a>
                                             {% csrf_token %}
                                             <input id="id_eliminar" name="id_eliminar" type="hidden" value="{{ ob.id }}">
                                             <button type="submit" class="btn btn-sm btn-danger" name="{{ ob.id }}"><span class="glyphicon glyphicon-trash"></span> Delete</button>
+                                            <a class="btn btn-sm btn-warning" href="{% url 'frontend_home' %}facturas/agregar/{{ ob.id }}"><span class="glyphicon glyphicon-edit"></span> Facturar</a>
                                         </form>
                                     </center></td>
 

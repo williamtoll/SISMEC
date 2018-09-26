@@ -19,13 +19,6 @@ class OrdenCompraCab(models.Model):
     )
     estado = models.CharField(max_length=20, choices=ESTADO_CHOICES, default=PENDIENTE)
 
-    def __str__(self):
-        return self.id
-
-    def as_json(self):
-        return dict(
-            id=self.id)
-
     class Meta:
         """Establece las configuraciones del modelo de base de datos"""
         managed = True
@@ -38,13 +31,6 @@ class OrdenCompraDet(models.Model):
     compra_cab = models.ForeignKey(OrdenCompraCab, on_delete=models.PROTECT, blank=True, null= False)
     producto = models.ForeignKey(Producto, on_delete=models.PROTECT, blank=True, null= False)
     cantidad = models.IntegerField(blank=True, null=True)
-
-    def __str__(self):
-        return self.id
-
-    def as_json(self):
-        return dict(
-            id=self.id)
 
     class Meta:
         """Establece las configuraciones del modelo de base de datos"""

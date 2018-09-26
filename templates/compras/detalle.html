@@ -2,30 +2,36 @@
 {% block header_scripts %}
     {% load staticfiles %}
     <!--script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script-->
-    <script src="{% static "js/compras/agregar.js" %}" type="text/javascript"></script>
+    <script src="{% static "js/compras/detalle.js" %}" type="text/javascript"></script>
 {% endblock %}
 {% block content %}
     <div id="page-wrapper">
     <div class="container-fluid">
     <div class="row">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-        <form action="" method="post" id="form_add_oc" enctype="multipart/form-data">
+        <form action="{% url 'frontend_home' %}compras/detalle/{{ cabecera_oc.id }}/" method="post" id="form_add_oc" enctype="multipart/form-data">
             <div class="panel panel-info">
                 <div class="panel-heading">
-                     <h4 class="page-title" style="color:#fff;">AGREGAR ORDEN DE COMPRA</h4>
+                     <h4 class="page-title" style="color:#fff;">ORDEN DE COMPRA</h4>
                 </div>
                 <div class="panel-body">
                     {% csrf_token %}
                     <div>
                         <label class="col-lg-2">Fecha:</label>
-                        <div class="col-lg-2"><input type="date" id="fecha" name="fecha"></div>
+                        <div class="col-lg-2"><input type="date" id="fecha" name="fecha" value="{{ cabecera_oc.fecha_pedido }}"></div>
                         <label class="col-lg-2">Proveedor:</label>
-                        <div class="col-lg-3"><select id="id_proveedor_select" name="id_proveedor_select" class="form-control"></select></div>
+                        <div class="col-lg-3">
+                            <select id="id_proveedor_select" name="id_proveedor_select" class="form-control">
+                                 {% if cabecera_oc.proveedor != None %}
+                                        <option value="{{ cabecera_oc.proveedor.id }}"
+                                                selected> {{ cabecera_oc.proveedor.nombres }}</option>
+                                    {% endif %}
+                            </select>
+                        </div>
                         <input id="detalle" type="hidden" name="detalle" />
                     </div>
                 </div>
             </div>
-
             <div class="panel panel-info">
                 <div class="panel-heading">
                      <h4 class="page-title" style="color:#fff;">Seleccionar items</h4>
@@ -45,13 +51,21 @@
                             </button>
                         </span>
                     </div>
-                    <br><br>
-                   <div class="detalle_pedido">
-                        <br><br>
+                    <br><br><br><br>
+                    <div class="detalle_pedido">
+                        {% for detalle in detalles_oc %}
+                            <div class="item-detalle">
+                                <input type="text" class="id_detalle col-xs-2" id="id_detalle" name="id_detalle_item" disabled value="{{ detalle.id }}">
+                                <input type="text" class="producto_desc col-xs-4" id="id_producto_select" name="id_producto_select" disabled value="{{ detalle.producto.descripcion }}">
+                                <input type="number" class= "cantidad-item item col-xs-2" placeholder="Cantidad" style="left: 5px;" value="{{ detalle.cantidad }}">
+                                <a href="#" class="btn btn-sm btn-danger rm-btn" style="height: 35px;margin-left: 10px;"><span class="glyphicon glyphicon-minus"></span></a>
+                                <br><br>
+                            </div>
+                        {% endfor %}
                    </div>
                 </div>
             </div>
-           <div class="pull-left">
+           <div class="-pull-left">
                     <input name="" type="submit" value="Guardar" class="btn btn-primary default"
                            style=" margin-bottom: 10px; cursor: pointer;"/>
                 </div>
