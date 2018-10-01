@@ -75,7 +75,7 @@
                                     <td>{{ ob.fecha_pedido }}</td>
                                     <td>{{ ob.proveedor_descripcion }}</td>
                                     <td><center>
-                                        <form id="form_add_oc" action="{% url 'eliminar_producto' %}" method="post">
+                                        <form id="form_add_oc" action="{% url 'eliminar_oc' %}" method="post">
                                             <a class="btn btn-sm btn-warning" href="{% url 'frontend_home' %}compras/detalle/{{ ob.id }}"><span class="glyphicon glyphicon-edit"></span> Edit</a>
                                             {% csrf_token %}
                                             <input id="id_eliminar" name="id_eliminar" type="hidden" value="{{ ob.id }}">
