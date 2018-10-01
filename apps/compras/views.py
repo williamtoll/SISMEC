@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.template import loader
+from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
 from datetime import datetime
 from apps.productos.models import Producto
@@ -87,6 +88,7 @@ def listarOC(request):
 
 
 # Funcion para consultar el detalle de una orden de compra.
+@csrf_exempt
 @require_http_methods(["GET", "POST"])
 @login_required(login_url='/sismec/login/')
 def detalleOC(request, id):
@@ -105,6 +107,31 @@ def detalleOC(request, id):
         cabeceraOc.proveedor = proveedor
         cabeceraOc.fecha_pedido = fecha
         cabeceraOc.save()
+
+        lista_detalles = json.loads(request.POST.get('detalle', ''))
+        borrar_detalle = True
+        for detallecompra in detallesOc:
+            borrar_detalle = True
+            for key in lista_detalles:
+                id_oc = int(lista_detalles[key]['id_detalle'])
+                if detallecompra.id == id_oc:
+                    detallecompra.cantidad = lista_detalles[key]['cantidad']
+                    borrar_detalle = False
+                    detallecompra.save()
+                    break
+            if borrar_detalle == True:
+                detallecompra.delete()
+
+        for key in lista_detalles:
+            id_oc = int(lista_detalles[key]['id_detalle'])
+            if id_oc ==0:
+                detalle = OrdenCompraDet()
+                nombre_producto = lista_detalles[key]['descripcion']
+                producto = Producto.objects.get(descripcion__exact=nombre_producto)
+                detalle.compra_cab = detallecompra.compra_cab
+                detalle.producto = producto
+                detalle.cantidad = lista_detalles[key]['cantidad']
+                detalle.save()
         messages.add_message(request, messages.INFO, 'Se actualizaron los datos')
         return HttpResponseRedirect(reverse('oc_listado'))
 

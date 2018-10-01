@@ -1,6 +1,6 @@
 item_detalle_pedido = '<div class="item-detalle">'
             + '<input type="text" class="id_detalle col-xs-2" id="id_detalle" name="id_detalle_item" disabled value="0">'
-			+ '<input type="text" class="producto_desc col-xs-4" id="id_producto_select" name="id_producto_select">'
+			+ '<input type="text" class="producto_desc col-xs-4" id="id_producto_select" name="id_producto_select" disabled>'
             + '<input type="number" class= "cantidad-item item col-xs-2" placeholder="Cantidad" value="" style="left: 5px;">'
 			+ '<a href="#" class="btn btn-sm btn-danger rm-btn" style="height: 35px;margin-left: 10px;"><span class="glyphicon glyphicon-minus"></span></a>'
 		    + ' <br><br></div>';
@@ -185,7 +185,7 @@ function generarDetalleJSON(){
 			// Agregamos el elemento mas externo
 			i = index + 1;
 			//Se obtienen los datos.
-            id_detalle = $(this).find(".producto_desc").val();
+            id_detalle = $(this).find(".id_detalle").val();
             descripcion = $(this).find(".producto_desc").val();
 			cantidad = $(this).find(".cantidad-item").val();
 
