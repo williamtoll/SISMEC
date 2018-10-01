@@ -141,3 +141,24 @@ def detalleOC(request, id):
             'detalles_oc': detallesOc
         }
         return HttpResponse(t.render(c))
+
+@require_http_methods(["GET", "POST"])
+@login_required(login_url='/sismec/login/')
+# Funcion para eliminar una orden de compra desde el listado.
+def eliminarOC(request):
+    if request.method == 'POST':
+        data = request.POST
+        id = data.get('id_eliminar')
+        try:
+            cabeceraOc = OrdenCompraCab.objects.get(pk=int(id))
+            detallesOc = OrdenCompraDet.objects.filter(compra_cab__id=cabeceraOc.id)
+            for detallecompra in detallesOc:
+                detallecompra.delete()
+
+            cabeceraOc.delete()
+            messages.add_message(request, messages.INFO, 'Orden de Compra eliminada')
+        except Exception as e:
+            traceback.print_exc(e.args)
+            messages.add_message(request, messages.ERROR,
+                                 'No se puede eliminar la Orden de Compra')
+        return HttpResponseRedirect(reverse('oc_listado'))
