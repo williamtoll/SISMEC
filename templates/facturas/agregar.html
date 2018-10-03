@@ -9,74 +9,134 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <form action="" method="post" id="form_add_oc" enctype="multipart/form-data">
-                        <div class="panel panel-info">
-                            <div class="panel-heading">
-                                <h4 class="page-title" style="color:#fff;">FACTURA COMPRA</h4>
-                            </div>
-                            <div class="panel-body">
-                                {% csrf_token %}
-                                <div class="form-group">
-                                    <label for="timbrado">Número de Timbrado:</label>
-                                    <div class="form-control"><input type="text" id="timbrado" name="timbrado"></div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="fecha-fin-timbrado">Fecha de Fin de Vigencia:</label>
-                                    <div class="form-control"><input type="date" id="fecha-fin-timbrado" name="fecha-fin-timbrado"></div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="fecha">Fecha de Emisión:</label>
-                                    <div class="form-control"><input type="date" id="fecha" name="fecha"></div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="proveedor">Razón Social:</label>
-                                    <div class="form-control"><input type="text" id="proveedor" name="proveedor"></div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="proveedor-dir">Dirección:</label>
-                                    <div class="form-control"><input type="text" id="proveedor-dir" name="proveedor-dir"></div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="condicion-compra">Condición de Compra:</label>
-                                    <div class="form-control">
-                                        <select id="condicion-compra" name="condicion-compra">
-                                          <option value="Contado">Contado</option>
-                                          <option value="Credito">Crédito</option>
-                                      </select>
-                                    </div>
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <h4 class="page-title" style="color:#fff;">MOVIMIENTO</h4>
+                        </div>
+                        <div class="panel-body">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="tipo_movimiento">Tipo de Movimiento:</label>
+                                <div class="form-control">
+                                    <select id="tipo_movimiento" name=tipo_movimiento">
+                                      <option value="Compra">COMPRA</option>
+                                      <option value="Venta">VENTA</option>
+                                    </select>
                                 </div>
                             </div>
-                            <div class="panel panel-info">
-                                <div class="panel-body">
-                                    <table width="94%" border="0" cellpadding="0" cellspacing="0" id="forms" align="center">
-                                        <thead>
-                                            <th>ID</th>
-                                            <th>CANT.</th>
-                                            <th>DESCRIPCION</th>
-                                            <th>PRECIO UNIT.</th>
-                                            <th>EXENTAS</th>
-                                            <th>5%</th>
-                                            <th>10%</th>
-                                        </thead>
-                                        <tbody>
-                                            {% for detalle in detalles_oc %}
-                                                <tr>
-                                                    <td>{{ detalle.id }}</td>
-                                                    <td><input class= "cantidad-item" value="{{ detalle.cantidad }}"></td>
-                                                    <td>{{ detalle.producto.descripcion }}</td>
-                                                    <td><input id="precio_uni"></td>
-                                                    <td><input id="exentas"></td>
-                                                    <td><input id="iva_10"></td>
-                                                    <td><input id="iva_5"></td>
-                                                </tr>
-                                            {% endfor %}
-                                        </tbody>
-
-                                    </table>
+                            <div class="form-group">
+                                <label for="prov_client">Cliente/Proveedor</label>
+                                <div class="form-control">
+                                    <select id="id_prov_client_select" name="id_prov_client_select" class="form-control">
+                                        {% if cabecera_oc.proveedor != None %}
+                                            <option value="{{ cabecera_oc.proveedor.id }}"
+                                                    selected> {{ cabecera_oc.proveedor.nombres }}</option>
+                                        {% endif %}
+                                    </select>
                                 </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="prov_client_dir">Dirección:</label>
+                                <div class="form-control"><span>{{ cabecera_oc.proveedor.direccion }}</span></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="prov_client_tel">Teléfono:</label>
+                                <div class="form-control"><span>{{ cabecera_oc.proveedor.telefono }}</span></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="prov_client_ruc">Ruc:</label>
+                                <div class="form-control"><span>{{ cabecera_oc.proveedor.ruc }}</span></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="condicion_compra">Condición de Compra:</label>
+                                <div class="form-control">
+                                    <select id="condicion_compra" name="condicion_compra">
+                                      <option value="Contado">CONTADO</option>
+                                      <option value="Credito">CREDITO</option>
+                                  </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="timbrado">Número de Timbrado:</label>
+                                <div class="form-control"><input type="text" id="timbrado" name="timbrado"></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="fecha_ini_timbrado">Fecha de Inicio de Vigencia:</label>
+                                <div class="form-control"><input type="date" id="fecha_ini_timbrado" name="fecha_ini_timbrado"></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="fecha_fin_timbrado">Fecha de Fin de Vigencia:</label>
+                                <div class="form-control"><input type="date" id="fecha_fin_timbrado" name="fecha_fin_timbrado"></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="fecha">Fecha de Emisión:</label>
+                                <div class="form-control"><input type="date" id="fecha" name="fecha"></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="numero_factura">Numero Factura:</label>
+                                <div class="form-control"><input type="text" id="numero_factura" name="numero_factura"></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="numero_oc">Numero Orden de Compra:</label>
+                                <div class="form-control"><input type="text" id="numero_oc" name="numero-oc" value="{{ cabecera_oc.id }}"></div>
                             </div>
                         </div>
-                    </form>
+                        <div class="panel panel-info">
+                            <div class="panel-body">
+                                <table width="94%" border="0" cellpadding="0" cellspacing="0" id="forms" align="center" class="detalles_factura">
+                                    <thead>
+                                        <th>ID</th>
+                                        <th>CANT.</th>
+                                        <th>DESCRIPCION</th>
+                                        <th>PRECIO UNIT.</th>
+                                        <th>EXENTAS</th>
+                                        <th>5%</th>
+                                        <th>10%</th>
+                                    </thead>
+                                    <tbody>
+                                        {% for detalle in detalles_oc %}
+                                            <tr class="data">
+                                                <td>{{ detalle.id }}</td>
+                                                <td><input type="number" class= "cantidad-item" id="id_cantidad_{{ detalle.id }}" data-id="{{ detalle.id }}" value="{{ detalle.cantidad }}" disabled></td>
+                                                <td>{{ detalle.producto.descripcion }}</td>
+                                                <td><input type="number" class="precio_uni" id="id_precio_{{ detalle.id }}" data-id="{{ detalle.id }}"></td>
+                                                <td><input type="number" class="exentas" id="id_exentas_{{ detalle.id }}" data-id="{{ detalle.id }}" disabled></td>
+                                                <td><input type="number" class="iva_5" id="id_iva5_{{ detalle.id }}" data-id="{{ detalle.id }}" disabled></td>
+                                                <td><input type="number" class="iva_10" id="id_iva10_{{ detalle.id }}" data-id="{{ detalle.id }}" disabled></td>
+                                                <td><input type="hidden" class="tipo_impuesto" id="id_impuesto_{{ detalle.id }}" data-id="{{ detalle.id }}" value="{{ detalle.producto.tipo_impuesto }}" disabled></td>
+                                                <td><input type="hidden" class="id_producto" id="id_producto{{ detalle.id }}" data-id="{{ detalle.id }}" value="{{ detalle.producto.id }}" disabled></td>
+                                            </tr>
+                                        {% endfor %}
+                                            <tr rowspan="3"></tr>
+                                            <tr>
+                                                <td colspan="3">SUB TOTAL:</td>
+                                                <td></td>
+                                                <td><input disabled class="sub_exentas"></td>
+                                                <td><input disabled class="sub_iva5"></td>
+                                                <td><input disabled class="sub_iva10"></td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2">LIQUIDACION IVA:</td>
+                                                <td>(5%):</td>
+                                                <td><input disabled class="total_iva5"></td>
+                                                <td>(10%):</td>
+                                                <td><input disabled class="total_iva10"></td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="5"></td>
+                                                <td>TOTAL IVA:</td>
+                                                <td><input disabled class="total_iva"></td>
+                                            </tr>
+                                    </tbody>
+
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pull-left">
+                        <input name="" type="button" value="Guardar" class="btn btn-primary default guardar"
+                           style=" margin-bottom: 10px; cursor: pointer;"/>
+                    </div>
                 </div>
             </div>
         </div>

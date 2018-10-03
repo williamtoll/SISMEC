@@ -1,3 +1,70 @@
 from django.db import models
+from apps.clientes.models import Cliente
+from apps.compras.models import OrdenCompraCab
+from apps.productos.models import Producto
+from apps.proveedores.models import Proveedor
 
-# Create your models here.
+# Movimiento Cabecera
+class MovimientoCabecera(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    fecha_emision = models.DateField(blank=True, null=True)
+    cliente = models.ForeignKey(Cliente, on_delete=models.PROTECT, blank=True, null=True)
+    proveedor = models.ForeignKey(Proveedor, on_delete=models.PROTECT, blank=True, null=True)
+    numero_factura = models.CharField(max_length=20, blank=True, null=False)
+    COMPRA = 'COMPRA'
+    VENTA = 'VENTA'
+    MOVIMIENTO_CHOICES = (
+        (COMPRA, 'Compra'),
+        (VENTA, 'Venta'),
+    )
+    tipo_movimiento = models.CharField(max_length=20, choices=MOVIMIENTO_CHOICES, default=COMPRA)
+    CONTADO = 'CONTADO'
+    CREDITO = 'CREDITO'
+    FACTURA_CHOICES = (
+        (CONTADO, 'Contado'),
+        (CREDITO, 'Credito'),
+    )
+    tipo_factura = models.CharField(max_length=20, choices=FACTURA_CHOICES, default=CONTADO)
+    PENDIENTE = 'PENDIENTE'
+    COBRADO = 'COBRADO'
+    PAGADO = 'PAGADO'
+    COMPLETADO = 'COMPLETADO'
+    ANULADO ='ANULADO'
+    CONDICION_CHOICES = (
+        (PENDIENTE, 'Pendiente'),
+        (COBRADO, 'Cobrado'),
+        (PAGADO, 'Pagado'),
+        (COMPLETADO, 'Completado'),
+        (ANULADO, 'Anulado'),
+    )
+    estado = models.CharField(max_length=20, choices=CONDICION_CHOICES, default=COMPRA)
+    monto_total = models.IntegerField(blank=True, null=True)
+    grav10_total = models.IntegerField(blank=True, null=True)
+    grav5_total = models.IntegerField(blank=True, null=True)
+    iva10_total = models.IntegerField(blank=True, null=True)
+    iva5_total = models.IntegerField(blank=True, null=True)
+    timbrado = models.CharField(max_length=255)
+    fecha_inicio = models.DateField(blank=True, null=True)
+    fecha_fin = models.DateField(blank=True, null=True)
+    orden_compra = models.ForeignKey(OrdenCompraCab, on_delete=models.PROTECT, blank=True, null= True)
+    class Meta:
+        """Establece las configuraciones del modelo de base de datos"""
+        managed = True
+        db_table = 'movimiento_cabecera'
+
+
+# Movimiento Detalle
+class MovimientoDetalle(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    movimiento_cab = models.ForeignKey(MovimientoCabecera, on_delete=models.PROTECT, blank=True, null= False)
+    producto = models.ForeignKey(Producto, on_delete=models.PROTECT, blank=True, null= False)
+    cantidad = models.IntegerField(blank=True, null=True)
+    precio_unitario = models.IntegerField(blank=True, null=True)
+    exentas = models.IntegerField(blank=True, null=True)
+    iva5 = models.IntegerField(blank=True, null=True)
+    iva10 = models.IntegerField(blank=True, null=True)
+
+    class Meta:
+        """Establece las configuraciones del modelo de base de datos"""
+        managed = True
+        db_table = 'movimiento_detalle'

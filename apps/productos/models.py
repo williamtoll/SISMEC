@@ -38,7 +38,7 @@ class Producto(models.Model):
     id = models.BigAutoField(primary_key=True)
     descripcion = models.CharField(max_length=200, blank=False)
     marca = models.CharField(max_length=200, blank=True)
-    cantidad = models.IntegerField(blank=True, null=True)
+    cantidad = models.IntegerField(blank=True, null=False, default=0)
     precio_venta = models.IntegerField(blank=True, null=True)
     #unidad_de_medida = models.ForeignKey(UnidadMedida, on_delete=models.PROTECT, blank=True, null=True)
     estado = models.BooleanField(default=False)
