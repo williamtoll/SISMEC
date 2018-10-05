@@ -98,14 +98,18 @@ def agregarFacturaCompra(request, id):
                 producto.cantidad = cantidad_producto
                 producto.save()
             #ACTUALIZAR ESTADO DE OC
-            cabeceraOc.estado= OrdenCompraCab.FACTURADO
-            cabeceraOc.save()
-            messages.add_message(request, messages.INFO, 'Movimiento agregado exitosamente')
-            return HttpResponseRedirect(reverse('frontend_home'))
+            #cabeceraOc.estado= OrdenCompraCab.FACTURADO
+            #cabeceraOc.save()
+            status = 200
+            mensajes = 'Movimiento agregado exitosamente'
+            json_response = {'status' : status, 'mensajes' : mensajes}
+            return HttpResponse(json.dumps(json_response), content_type='application/json')
         except Exception as e:
             traceback.print_exc(e.args)
-            messages.add_message(request, messages.ERROR, e.args)
-            return HttpResponse(t.render(request))
+            status = 500
+            mensajes = 'Ha ocurrido un error'
+            json_response = {'status': status, 'mensajes': mensajes}
+            return HttpResponse(json.dumps(json_response), content_type='application/json')
     else:
         c = {
             'cabecera_oc': cabeceraOc,

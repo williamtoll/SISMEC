@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponseServerError
 from django.urls import NoReverseMatch, reverse
 from django.template import loader
+from django.contrib import messages
 # Create your views here.
 def index(request):
     if request.user.is_authenticated():
@@ -13,3 +14,16 @@ def index(request):
             return HttpResponseRedirect(reverse('frontend_login'))
     else:
         return HttpResponseRedirect(reverse('frontend_login'))
+
+
+def alertsservice(request):
+    data = request.GET
+    mensaje = data.get('mensajes', '')
+    status = data.get('status', '')
+    if status == "200":
+        messages.add_message(request, messages.INFO, mensaje)
+        return HttpResponseRedirect(reverse('oc_listado'))
+    else:
+        messages.add_message(request, messages.ERROR, mensaje)
+        return HttpResponseRedirect(reverse('oc_listado'))
+

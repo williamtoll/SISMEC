@@ -162,8 +162,7 @@ $(document).ready(function() {
             dataType : "json"
         });
         request.done(function(msg) {
-
-            return true;
+            window.location.replace("/sismec/principal?mensajes=" + msg.mensajes +"&status=" + msg.status);
         });
     });
 });
