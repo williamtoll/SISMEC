@@ -7,7 +7,7 @@ from sismec.dao import utils as utils_dao
 def getOCFiltro(filtros):
     object_list = []
     query_var = []
-    query = '''SELECT oc.id, oc.fecha_pedido,  p.id, p.nombres
+    query = '''SELECT oc.id, oc.fecha_pedido,  p.id, p.nombres, oc.estado
                 FROM orden_compra_cabecera AS oc
                 LEFT JOIN proveedor AS p ON p.id = oc.proveedor_id WHERE 1=1 '''
 
@@ -45,6 +45,7 @@ def getOCFiltro(filtros):
                         'fecha_pedido': i[1],
                         'proveedor_id': i[2] if i[2] is not None else 0,
                         'proveedor_descripcion': i[3] if i[3] is not None else '-',
+                        'estado': i[4] if i[4] is not None else '-',
                         }
                 object_list.append(data)
 

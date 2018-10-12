@@ -65,6 +65,7 @@
                                     <th width="8%">Nro.</th>
                                     <th width="10%">Fecha</th>
                                     <th width="10%">Proveedor</th>
+                                    <th width="10%">Estado</th>
                                     <th width="10%">Acciones</th>
                                 </tr>
                                 </thead>
@@ -74,6 +75,7 @@
                                     <td>{{ ob.id }}</td>
                                     <td>{{ ob.fecha_pedido }}</td>
                                     <td>{{ ob.proveedor_descripcion }}</td>
+                                    <td>{{ ob.estado }}</td>
                                     <td><center>
                                         <form id="form_add_oc" action="{% url 'eliminar_oc' %}" method="post">
                                             <a class="btn btn-sm btn-warning" href="{% url 'frontend_home' %}compras/detalle/{{ ob.id }}"><span class="glyphicon glyphicon-edit"></span> Edit</a>
