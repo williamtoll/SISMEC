@@ -2,6 +2,7 @@ item_detalle_pedido = '<div class="item-detalle">'
             + '<input type="text" class="id_detalle col-xs-2" id="id_detalle" name="id_detalle_item" disabled value="0">'
 			+ '<input type="text" class="producto_desc col-xs-4" id="id_producto_select" name="id_producto_select" disabled>'
             + '<input type="number" class= "cantidad-item item col-xs-2" placeholder="Cantidad" value="" style="left: 5px;">'
+            + '<input type="number" class= "monto-item item col-xs-2" placeholder="Monto" value="" style="left: 5px;">'
 			+ '<a href="#" class="btn btn-sm btn-danger rm-btn" style="height: 35px;margin-left: 10px;"><span class="glyphicon glyphicon-minus"></span></a>'
 		    + ' <br><br></div>';
 var detalle_valido = true;
@@ -10,6 +11,9 @@ $(document).ready(function() {
     var select_proveedor = $('#id_proveedor_select');
     var select_producto = $('#id_producto_agregar');
     var idsum= 1;
+    var estado_compra = $('#estado_cabecera').val();
+    $('#condicion_compra').val(estado_compra).change();
+
     inicializarSelectGenerales();
     function inicializarSelectGenerales() {
         select_proveedor.select2({
@@ -79,7 +83,23 @@ $(document).ready(function() {
                 select_producto.val('').trigger('change');
             });
     }
-
+    $('#presupuesto').on('change', function () {
+	var files = $('#presupuesto').prop('files');
+	console.log('validando path');
+	console.log(files)
+	var path = ""
+	if (files.length > 0) {
+		console.log("prueba");
+	    var reader = new FileReader();
+	    reader.readAsDataURL(files[0]);
+	    reader.onload = function () {
+		   console.log(reader.result);
+		   path = reader.result;
+		   console.log(path)
+		   $('#presupuesto_path').val(path)
+		};
+	}
+    });
     //para agregar un item
     $(".agregar").click(function () {
         es_repetido = itemRepetidos();
@@ -123,6 +143,18 @@ $(document).ready(function() {
         }
     });
 
+    function validarCabecera(){
+        console.log('validando cabecera');
+        if ($("#fecha").val() == ""){
+            alert("Debe seleccionar una fecha valida");
+            return false;
+        }
+        if ($("#id_proveedor_select").val() == null){
+            alert("Debe seleccionar un proveedor valido");
+            return false;
+        }
+        return true;
+    }
 });
 
 function itemRepetidos(){
@@ -149,6 +181,8 @@ function validarDetalle(){
 		cantidad = $(this).find(".cantidad-item").val();
 		cantidad = parseInt(cantidad) || 0;
 		concepto = $(this).find(".producto_desc").val();
+		monto = $(this).find(".monto-item").val();
+		monto = parseInt(monto) || 0;
 		//indicador_validez = '#840A0A'; // Por defecto invalido (Rojo)
 		// Requerimieno minimo para un detalle valido
 		if (cantidad != 0){
@@ -165,18 +199,7 @@ function validarDetalle(){
 	return detalle_valido;
 }
 
-function validarCabecera(){
-    console.log('validando cabecera');
-    if ($("#fecha").val() == ""){
-        alert("Debe seleccionar una fecha valida");
-        return false;
-    }
-    if ($("#id_proveedor_select").val() == null){
-        alert("Debe seleccionar un proveedor valido");
-        return false;
-    }
-    return true;
-}
+
 
 function generarDetalleJSON(){
 		detalle_json = '';
@@ -188,9 +211,10 @@ function generarDetalleJSON(){
             id_detalle = $(this).find(".id_detalle").val();
             descripcion = $(this).find(".producto_desc").val();
 			cantidad = $(this).find(".cantidad-item").val();
+			monto = $(this).find(".monto-item").val();
 
 			key = 'item' + i;
-			value = {id_detalle : id_detalle, descripcion : descripcion, cantidad : cantidad};
+			value = {id_detalle : id_detalle, descripcion : descripcion, cantidad : cantidad , monto : monto};
 			objeto[key] = value;
 			JSON.stringify(objeto);
 
@@ -198,4 +222,19 @@ function generarDetalleJSON(){
 
 		detalle_json = JSON.stringify(objeto);
 		return detalle_json;
-	}
+}
+
+function getBase64(file) {
+
+   reader.onload = function () {
+     console.log(reader.result);
+
+
+   };
+   reader.onerror = function (error) {
+     console.log('Error: ', error);
+     return error;
+   };
+
+    return reader.result;
+}

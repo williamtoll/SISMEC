@@ -42,6 +42,37 @@ $(document).ready(function() {
 
     });
 
+    $(".precio_uni").each(function(data) {
+        var id = this.dataset.id;
+        precio_uni = $('#id_precio_' + id).val();
+        cantidad = $('#id_cantidad_' + id).val();
+        if ($('#id_impuesto_' + id).val() == "IVA10") {
+            iva10 = precio_uni * cantidad;
+            $('#id_iva10_' + id).val(iva10);
+            calcularSubTotalesIva10();
+            $('#id_iva5_' + id).val(0);
+            $('#id_exentas_' + id).val(0);
+        } else if($('#id_impuesto_' + id).val() == "IVA5") {
+            iva5 = precio_uni * cantidad;
+            $('#id_iva5_' + id).val(iva5);
+            calcularSubTotalesIva5();
+            $('#id_iva10_' + id).val(0);
+            $('#id_exentas_' + id).val(0);
+        }else{
+            exentas = precio_uni * cantidad;
+            $('#id_exentas_' + id).val(exentas);
+            calcularSubTotalesExentas();
+            $('#id_iva5_' + id).val(0);
+            $('#id_iva10_' + id).val(0);
+        }
+        total_iva5 = parseInt(subtotal_iva5 / 21);
+        total_iva10 = parseInt(subtotal_iva10/ 11);
+        $('.total_iva5').val(total_iva5);
+        $('.total_iva10').val(total_iva10);
+        $('.total_iva').val(total_iva5 + total_iva10);
+
+    });
+
     if ($('#numero_oc').val() != ""){
         $('#tipo_movimiento').val("Compra");
         $('#tipo_movimiento').attr("disabled", "disabled");
@@ -164,5 +195,8 @@ $(document).ready(function() {
         request.done(function(msg) {
             window.location.replace("/sismec/principal?mensajes=" + msg.mensajes +"&status=" + msg.status);
         });
+        request.error(function (msg) {
+            window.location.replace("/sismec/principal?mensajes=" + msg.mensajes +"&status=" + msg.status);
+        })
     });
 });

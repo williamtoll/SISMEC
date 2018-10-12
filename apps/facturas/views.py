@@ -22,7 +22,9 @@ from apps.proveedores.models import Proveedor
 def agregarFacturaCompra(request, id):
     t = loader.get_template('facturas/agregar.html')
     cabeceraOc = OrdenCompraCab.objects.get(pk=id)
-    cabeceraOc.fecha_pedido = cabeceraOc.fecha_pedido.strftime("%d/%m/%Y")
+    #cabeceraOc.fecha_pedido = cabeceraOc.fecha_pedido.strftime("%d/%m/%Y")
+    cabeceraOc.estado = "FACTURADO"
+    cabeceraOc.save()
     detallesOc = OrdenCompraDet.objects.filter(compra_cab__id=cabeceraOc.id)
     if request.method == 'POST':
         # Obtener tipo de movimiento
@@ -98,8 +100,7 @@ def agregarFacturaCompra(request, id):
                 producto.cantidad = cantidad_producto
                 producto.save()
             #ACTUALIZAR ESTADO DE OC
-            #cabeceraOc.estado= OrdenCompraCab.FACTURADO
-            #cabeceraOc.save()
+
             status = 200
             mensajes = 'Movimiento agregado exitosamente'
             json_response = {'status' : status, 'mensajes' : mensajes}
