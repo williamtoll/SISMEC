@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block header_scripts %}
+    {% load staticfiles %}
+    <!--script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script-->
+    <!--script src="{% static "js/producto/agregar.js" %}" type="text/javascript"></script-->
+{% endblock %}
+
+{% block content %}
+        <div id="page-wrapper">
+            <div class="container-fluid">
+                <div class="row bg-title">
+                    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                        <h4 class="page-title">RECEPCIÓN</h4> </div>
+                    <!-- /.col-lg-12 -->
+                </div>
+            </div>
+            <form action="" method="post" id="form_add_" enctype="multipart/form-data">
+                <table width="94%" border="0" cellpadding="0" cellspacing="0" id="forms" align="center">
+                    {% csrf_token %}
+                    {% for field in form %}
+                        {{ field.errors }}
+                        <tr>
+                            <td><strong>{{ field.label_tag }}</strong></td>
+                            <td class="noimage">{{ field }}</td>
+
+                        </tr>
+                    {% endfor %}
+                    <tr>
+                        <td><strong><label>Tipo Producto</label></strong></td>
+                        <td class="noimage vTextField">
+                            <!--select id="id_tipo_producto_select" name="id_tipo_producto_select" class="form-control"></select-->
+                            <select id="id_tipo_producto_select" name="id_tipo_producto_select" class="form-control"></select>
+                        </td>
+                    </tr>
+	            </table>
+                <div class="-pull-left">
+                    <input name="" type="submit" value="Guardar" class="btn btn-primary default"
+                           style=" margin-bottom: 10px; cursor: pointer;"/>
+                </div>
+            </form>
+            <div class="card-footer small text-muted"></div>
+            <!-- /.container-fluid -->
+            <footer class="footer text-center"> 2018 &copy; Lourdes Escurra </footer>
+        </div>
+{% endblock %}
