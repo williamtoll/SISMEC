@@ -49,3 +49,34 @@ def getClienteFiltro(filtros):
         finally:
             cursor.close()
     return object_list, pagination
+
+
+def getClienteAutocomplete(filtros):
+    object_list = []
+    tipo_producto_list =[]
+    query_var = []
+    query = '''SELECT c.id, c.nombres, c.ruc, c.direccion, c.telefono, c.mail, c.tipo_persona FROM cliente c '''
+
+    if filtros['nombres'] != '':
+        query += 'WHERE UPPER(c.nombres) LIKE UPPER(%s) '
+        query_var.append('%' + filtros['nombres'] + '%')
+
+    query += 'ORDER BY c.nombres'
+    cursor = connection.cursor()
+    try:
+        cursor.execute(query, query_var)
+        for i in cursor.fetchall():
+            data = {'id': i[0],
+                    'nombres': i[1],
+                    'ruc': i[2],
+                    'direccion': i[3],
+                    'telefono': i[4],
+                    'mail': i[5],
+                    'tipo_persona': i[6],
+                    }
+            object_list.append(data)
+    except Exception as e:
+        print(e.args)
+    finally:
+        cursor.close()
+    return object_list

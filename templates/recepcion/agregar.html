@@ -22,21 +22,30 @@
                         <tr>
                             <td><strong>{{ field.label_tag }}</strong></td>
                             {%if field.html_name == 'año' %}
-                                <td class="noimage"><input type=number id="año" name="año" min="1900" max="2099" step="1" value="2016" /></td>
-                            {% else %}
+                                <td class="noimage"><input type=number id="año" name="año" min="1900" max="2099" step="1" value="2018" /></td>
+                            {% elif field.html_name == 'fecha_recepcion' %}
+                                 <td class="noimage"><input type=date id="fecha_recepcion" name="fecha_recepcion"/></td>
+                             {% else %}
                                 <td class="noimage">{{ field }}</td>
                             {% endif %}
                         </tr>
                     {% endfor %}
+                     <tr>
+                        <td><strong><label>Cliente: </label></strong></td>
+                        <td class="noimage vTextField">
+                            <!--select id="id_tipo_producto_select" name="id_tipo_producto_select" class="form-control"></select-->
+                            <select id="id_cliente_select" name="cliente_select" class="form-control"></select>
+                        </td>
+                    </tr>
                     <tr>
-                        <td><strong><label>Marca del Vehiculo </label></strong></td>
+                        <td><strong><label>Marca del Vehiculo: </label></strong></td>
                         <td class="noimage vTextField">
                             <!--select id="id_tipo_producto_select" name="id_tipo_producto_select" class="form-control"></select-->
                             <select id="id_marca_vehiculo_select" name="marca_vehiculo_select" class="form-control"></select>
                         </td>
                     </tr>
                     <tr>
-                        <td><strong><label>Modelo del Vehiculo </label></strong></td>
+                        <td><strong><label>Modelo del Vehiculo: </label></strong></td>
                         <td class="noimage vTextField">
                             <!--select id="id_tipo_producto_select" name="id_tipo_producto_select" class="form-control"></select-->
                             <select id="id_modelo_vehiculo_select" name="modelo_vehiculo_select" class="form-control"></select>

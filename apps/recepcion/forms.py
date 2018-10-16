@@ -32,7 +32,6 @@ class ModeloForm(ModelForm):
         super(ModeloForm, self).__init__(*args, **kwargs)
 
 class RecepcionVehiculoForm(ModelForm):
-    fecha_recepcion = forms.DateField(input_formats=DATE_INPUT_FORMATS)
     detalle_problema = forms.CharField(widget=forms.Textarea(
         attrs={'placeholder': 'Ingrese el detalle del problema','required': 'true', 'cols': 40, 'rows': 3}), validators=[MaxLengthValidator(255)])
 
@@ -40,7 +39,6 @@ class RecepcionVehiculoForm(ModelForm):
         attrs={'placeholder': 'Ingrese las pertenencias encontradas en el vehiculo', 'required': 'true', 'cols': 40, 'rows': 3}), validators=[MaxLengthValidator(255)])
 
     class Meta:
-
         model = RecepcionVehiculo
         fields = ['fecha_recepcion', 'chapa', 'kilometraje',
                   'combustible_aprox', 'año',  'pertencencias_vehiculo',  'detalle_problema']

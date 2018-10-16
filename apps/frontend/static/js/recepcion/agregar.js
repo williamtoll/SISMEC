@@ -1,6 +1,7 @@
 $(document).ready(function() {
     var select_marca_vehiculo = $('#id_marca_vehiculo_select');
     var select_modelo_vehiculo = $('#id_modelo_vehiculo_select');
+    var select_cliente = $('#id_cliente_select');
     inicializarSelectGenerales();
 
     function inicializarSelectGenerales() {
@@ -21,6 +22,8 @@ $(document).ready(function() {
                     return queryParameters;
                 },
                 processResults: function (data) {
+                    select_modelo_vehiculo.find('option').remove().end();
+                    select_modelo_vehiculo.val('').trigger('change');
                     return {
                         results: $.map(data, function (item) {
                             return {
@@ -35,6 +38,8 @@ $(document).ready(function() {
             .on('select2:unselect ', function () {
                 select_marca_vehiculo.find('option').remove().end();
                 select_marca_vehiculo.val('').trigger('change');
+                select_modelo_vehiculo.find('option').remove().end();
+                select_modelo_vehiculo.val('').trigger('change');
             });
 
         select_modelo_vehiculo.select2({
@@ -69,6 +74,38 @@ $(document).ready(function() {
             .on('select2:unselect ', function () {
                 select_modelo_vehiculo.find('option').remove().end();
                 select_modelo_vehiculo.val('').trigger('change');
+            });
+            select_cliente.select2({
+                tags: true,
+                multiple: false,
+                tokenSeparators: [','],
+                allowClear: true,
+                placeholder: "Seleccione el nombre del cliente",
+                ajax: {
+                    url: '/sismec/ajax/getClienteAutocomplete/',
+                    dataType: "json",
+                    type: "GET",
+                    data: function (params) {
+                        var queryParameters = {
+                            nombres: params.term
+                        };
+                        return queryParameters;
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.nombres,
+                                    id: item.id
+                                };
+                            })
+                        };
+                    }
+                }
+            })
+            .on('select2:unselect ', function () {
+                select_cliente.find('option').remove().end();
+                select_cliente.val('').trigger('change');
             });
     }
     var anho = $('#año').val();
