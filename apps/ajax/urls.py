@@ -7,4 +7,6 @@ urlpatterns = [
     url(r'^sismec/ajax/get_producto_name_by_id/$', ajax_views.getTipoProductoById),
     url(r'^sismec/ajax/getProveedorAutocomplete/$', ajax_views.getProveedorAutocomplete),
     url(r'^sismec/ajax/getProductoAutocomplete/$', ajax_views.getProductoAutocomplete),
+    url(r'^sismec/ajax/marca_vehiculo_autocomplete/$', ajax_views.getMarcaAutocomplete),
+    url(r'^sismec/ajax/modelo_vehiculo_autocomplete/$', ajax_views.getModeloAutocomplete),
 ]

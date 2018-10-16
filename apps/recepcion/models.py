@@ -31,7 +31,7 @@ class Modelo(models.Model):
     class Meta:
         """Establece las configuraciones del modelo de base de datos"""
         managed = True
-        db_table = 'descripcion'
+        db_table = 'modelo'
 
 class RecepcionVehiculo(models.Model):
     id = models.BigAutoField(primary_key=True)

@@ -6,7 +6,7 @@ import traceback
 from django.views.decorators.http import require_http_methods
 
 from apps.productos.models import TipoProducto
-from sismec.dao import producto_dao, proveedor_dao
+from sismec.dao import producto_dao, proveedor_dao, recepcion_dao
 from django.http import HttpResponse, HttpResponseServerError, HttpResponseRedirect
 from django.template import loader
 from django.urls import reverse
@@ -65,6 +65,35 @@ def getProductoAutocomplete(request):
             nombre = data.get('nombre', '')
             filtros = {'nombre': nombre}
             object_list = producto_dao.getProductoAutocomplete(filtros)
+            json_response = json.dumps(object_list)
+            return HttpResponse(json_response, content_type='application/json')
+        except Exception as e:
+            traceback.print_exc(e.args)
+            return HttpResponseServerError('No se ha podido obtener un resultado')
+
+@require_http_methods(["GET"])
+def getMarcaAutocomplete(request):
+    if request.method == 'GET':
+        try:
+            data = request.GET
+            descripcion = data.get('descripcion', '')
+            filtros = {'descripcion': descripcion}
+            object_list = recepcion_dao.getMarcaAutocomplete(filtros)
+            json_response = json.dumps(object_list)
+            return HttpResponse(json_response, content_type='application/json')
+        except Exception as e:
+            traceback.print_exc(e.args)
+            return HttpResponseServerError('No se ha podido obtener un resultado')
+
+@require_http_methods(["GET"])
+def getModeloAutocomplete(request):
+    if request.method == 'GET':
+        try:
+            data = request.GET
+            descripcion = data.get('descripcion', '')
+            marca = data.get('marca','')
+            filtros = {'descripcion': descripcion, 'marca': marca}
+            object_list = recepcion_dao.getModeloAutocomplete(filtros)
             json_response = json.dumps(object_list)
             return HttpResponse(json_response, content_type='application/json')
         except Exception as e:
