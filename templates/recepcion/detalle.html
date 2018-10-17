@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% block header_scripts %}
+    {% load staticfiles %}
+    <!--script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script-->
+    <script src="{% static "js/recepcion/agregar.js" %}" type="text/javascript"></script>
+{% endblock %}
+
+{% block content %}
+        <div id="page-wrapper">
+            <div class="container-fluid">
+                <div class="row bg-title">
+                    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                        <h4 class="page-title">MODIFICAR RECEPCIÓN</h4> </div>
+                    <!-- /.col-lg-12 -->
+                </div>
+            </div>
+            <form action="" method="post" id="form_add_" enctype="multipart/form-data">
+                <table width="94%" border="0" cellpadding="0" cellspacing="0" id="forms" align="center">
+                    {% csrf_token %}
+                    {% for field in form %}
+                        {{ field.errors }}
+                        <tr>
+                            <td><strong>{{ field.label_tag }}</strong></td>
+                            {%if field.html_name == 'año' %}
+                                <td class="noimage"><input type=number id="año" name="año" min="1900" max="2099" step="1" value="{{ object_list.año }}" /></td>
+                            {% elif field.html_name == 'fecha_recepcion' %}
+                                 <td class="noimage"><input type=date id="fecha_recepcion" name="fecha_recepcion" value="{{ object_list.fecha_recepcion }}"/></td>
+                             {% else %}
+                                <td class="noimage">{{ field }}</td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                     <tr>
+                        <td><strong><label>Cliente: </label></strong></td>
+                        <td class="noimage vTextField">
+                            <select id="id_cliente_select" name="cliente_select" class="form-control">
+                             {% if object_list.cliente != None %}
+                                        <option value="{{ object_list.cliente.id }}"
+                                                selected> {{ object_list.cliente.nombres }}</option>
+                                    {% endif %}
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong><label>Marca del Vehiculo: </label></strong></td>
+                        <td class="noimage vTextField">
+                             <select id="id_marca_vehiculo_select" name="marca_vehiculo_select" class="form-control">
+                             {% if object_list.marca != None %}
+                                        <option value="{{ object_list.marca.id }}"
+                                                selected> {{ object_list.marca.descripcion }}</option>
+                                    {% endif %}
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong><label>Modelo del Vehiculo: </label></strong></td>
+                        <td class="noimage vTextField">
+                            <select id="id_modelo_vehiculo_select" name="modelo_vehiculo_select" class="form-control">
+                             {% if object_list.modelo != None %}
+                                        <option value="{{ object_list.modelo.id }}"
+                                                selected> {{ object_list.modelo.descripcion }}</option>
+                                    {% endif %}
+                            </select>
+                        </td>
+                    </tr>
+	            </table>
+            <br>
+                <div class="pull-right">
+                    <input class="btn btn-primary default" type="submit" name="boton_guardar"
+                           value="Guardar Cambios"/>
+                </div>
+            </form>
+            <div class="card-footer small text-muted"></div>
+            <!-- /.container-fluid -->
+            <footer class="footer text-center"> 2018 &copy; Lourdes Escurra </footer>
+        </div>
+{% endblock %}
