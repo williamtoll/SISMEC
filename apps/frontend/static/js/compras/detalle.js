@@ -13,7 +13,6 @@ $(document).ready(function() {
     var idsum= 1;
     var estado_compra = $('#estado_cabecera').val();
     $('#condicion_compra').val(estado_compra).change();
-
     inicializarSelectGenerales();
     function inicializarSelectGenerales() {
         select_proveedor.select2({
@@ -183,6 +182,7 @@ function validarDetalle(){
 		concepto = $(this).find(".producto_desc").val();
 		monto = $(this).find(".monto-item").val();
 		monto = parseInt(monto) || 0;
+		$(this).find(".monto-item").val(monto);
 		//indicador_validez = '#840A0A'; // Por defecto invalido (Rojo)
 		// Requerimieno minimo para un detalle valido
 		if (cantidad != 0){
