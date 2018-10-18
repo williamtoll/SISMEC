@@ -18,7 +18,7 @@
                 <div class="panel-body">
                     <div>
                         <label class="col-lg-2">Fecha:</label>
-                        <div class="col-lg-4"><input type="date" id="fecha" name="fecha"value="{{ cabecera_oc.fecha_pedido }}"></div>
+                        <div class="col-lg-4"><input type="date" id="fecha" name="fecha"value="{{ fecha_pedido }}"></div>
                         <label class="col-lg-3">Proveedor:</label>
                         <div class="col-lg-3">
                             <select id="id_proveedor_select" name="id_proveedor_select" class="form-control">
@@ -71,7 +71,7 @@
                                 <input type="text" class="id_detalle col-xs-2" id="id_detalle" name="id_detalle_item" disabled value="{{ detalle.id }}">
                                 <input type="text" class="producto_desc col-xs-4" id="id_producto_select" name="id_producto_select" disabled value="{{ detalle.producto.descripcion }}">
                                 <input type="number" class= "cantidad-item item col-xs-2" placeholder="Cantidad" style="left: 5px;" value="{{ detalle.cantidad }}">
-                                <input type="number" class= "monto-item item col-xs-2" placeholder="Precio Unit"  style="left: 5px;" value="{{ detalle.monto }}">
+                                <input type="text" class= "monto-item item col-xs-2" placeholder="Precio Unit"  style="left: 5px;" value="{{ detalle.monto }}" onkeyup="formatearNumeros(this)" onchange="formatearNumeros(this)">
                                 <a href="#" class="btn btn-sm btn-danger rm-btn" style="height: 35px;margin-left: 10px;"><span class="glyphicon glyphicon-minus"></span></a>
                                 <br><br>
                             </div>

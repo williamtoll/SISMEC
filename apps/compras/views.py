@@ -97,6 +97,7 @@ def detalleOC(request, id):
     t = loader.get_template('compras/detalle.html')
     cabeceraOc = OrdenCompraCab.objects.get(pk = int(id))
     detallesOc = OrdenCompraDet.objects.filter(compra_cab__id=cabeceraOc.id)
+    fecha_pedido = datetime.strptime(str(cabeceraOc.fecha_pedido),'%Y-%m-%d').strftime('%Y-%m-%d')
     # Se envia el formulario
     if request.method == 'POST':
         # Obtener el proveedor
@@ -154,7 +155,8 @@ def detalleOC(request, id):
     else:
         c = {
             'cabecera_oc': cabeceraOc,
-            'detalles_oc': detallesOc
+            'detalles_oc': detallesOc,
+            'fecha_pedido': fecha_pedido
         }
         return HttpResponse(t.render(c))
 

@@ -13,6 +13,11 @@ $(document).ready(function() {
     var idsum= 1;
     var estado_compra = $('#estado_cabecera').val();
     $('#condicion_compra').val(estado_compra).change();
+    $(".monto-item").each(function() {
+        console.log($(this).val());
+        $(this).val(formatearNumeros_convalor($(this).val()));
+        console.log(formatearNumeros_convalor($(this).val()))
+    });
     inicializarSelectGenerales();
     function inicializarSelectGenerales() {
         select_proveedor.select2({
@@ -181,6 +186,7 @@ function validarDetalle(){
 		cantidad = parseInt(cantidad) || 0;
 		concepto = $(this).find(".producto_desc").val();
 		monto = $(this).find(".monto-item").val();
+		monto = monto.replace(".","");
 		monto = parseInt(monto) || 0;
 		$(this).find(".monto-item").val(monto);
 		//indicador_validez = '#840A0A'; // Por defecto invalido (Rojo)

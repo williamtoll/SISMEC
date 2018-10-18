@@ -32,7 +32,7 @@ class OrdenCompraDet(models.Model):
     compra_cab = models.ForeignKey(OrdenCompraCab, on_delete=models.PROTECT, blank=True, null= False)
     producto = models.ForeignKey(Producto, on_delete=models.PROTECT, blank=True, null= False)
     cantidad = models.IntegerField(blank=True, null=True)
-    monto = models.IntegerField(blank=True, null=True)
+    monto = models.IntegerField(blank=True, null=True,default=0)
 
     class Meta:
         """Establece las configuraciones del modelo de base de datos"""

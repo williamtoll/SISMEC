@@ -22,11 +22,10 @@ from apps.proveedores.models import Proveedor
 def agregarFacturaCompra(request, id):
     t = loader.get_template('facturas/agregar.html')
     cabeceraOc = OrdenCompraCab.objects.get(pk=id)
-    #cabeceraOc.fecha_pedido = cabeceraOc.fecha_pedido.strftime("%d/%m/%Y")
-    cabeceraOc.estado = "FACTURADO"
-    cabeceraOc.save()
     detallesOc = OrdenCompraDet.objects.filter(compra_cab__id=cabeceraOc.id)
     if request.method == 'POST':
+        cabeceraOc.estado = "FACTURADO"
+        cabeceraOc.save()
         # Obtener tipo de movimiento
         tipo_movimiento = request.POST.get('tipo_movimiento', '')
         # Obtener el proveedor
