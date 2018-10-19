@@ -16,7 +16,7 @@ from django.urls import reverse
 # Agregar un presupuesto
 @require_http_methods(["GET", "POST"])
 @login_required(login_url='/sismec/login/')
-def agregarOC(request):
+def agregarPresupuesto(request):
     t = loader.get_template('ventas/agregar.html')
     if request.method == 'POST':
         # Obtener el cliente
@@ -40,11 +40,10 @@ def agregarOC(request):
                 producto = Producto.objects.get(descripcion__exact=nombre_producto)
                 detalle.presupuesto_cab = nuevoPresupuesto
                 detalle.producto = producto
-                #de
                 detalle.cantidad = lista_detalles[key]['cantidad']
                 detalle.save()
 
-            messages.add_message(request, messages.INFO, 'Orden de Compra agregada exitosamente')
+            messages.add_message(request, messages.INFO, 'Presupuesto agregado exitosamente')
             return HttpResponseRedirect(reverse('frontend_home'))
         except Exception as e:
             traceback.print_exc(e.args)

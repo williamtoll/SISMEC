@@ -32,5 +32,6 @@ urlpatterns = [
     url(r'^', include('apps.facturas.urls')),
     url(r'^', include('apps.principal.urls')),
     url(r'^', include('apps.recepcion.urls')),
+    url(r'^', include('apps.ventas.urls')),
     #path('static/', include('django.contrib.auth.urls')),
 ]
