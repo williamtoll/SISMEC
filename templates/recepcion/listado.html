@@ -62,7 +62,7 @@
                                role="grid" aria-describedby="dataTable_info" style="width: 100%;">
                                 <thead>
                                 <tr>
-                                    <th width="8%">Id</th>
+                                    <th width="8%">Código Recepción</th>
                                     <th width="8%">Fecha de Recepción</th>
                                     <th width="8%">Chapa</th>
                                     <th width="12%">Detalle del Problema</th>
@@ -75,7 +75,7 @@
                             <tbody>
                             {% for ob in object_list %}
                                 <tr>
-                                    <td>{{ ob.id }}</td>
+                                    <td>{{ ob.codigo_recepcion }}</td>
                                     <td>{{ ob.fecha_recepcion }}</td>
                                     <td>{{ ob.chapa }}</td>
                                     <td>{{ ob.detalle_problema }}</td>

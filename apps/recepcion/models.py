@@ -45,7 +45,7 @@ class RecepcionVehiculo(models.Model):
     modelo = models.ForeignKey(Modelo, on_delete=models.PROTECT, blank=True, null=False)
     año = models.IntegerField(blank=True, null=True)
     detalle_problema = models.CharField(max_length=255)
-    
+    codigo_recepcion = models.CharField(max_length=255,  null=False, default="")
     def __str__(self):
         return self.id
 
@@ -57,3 +57,14 @@ class RecepcionVehiculo(models.Model):
         """Establece las configuraciones del modelo de base de datos"""
         managed = True
         db_table = 'recepcion_vehiculo'
+
+
+class SecuenciaNumerica(models.Model):
+    ultimo_numero = models.IntegerField(blank=True, null=True)
+    anho = models.IntegerField(blank=True, null=True)
+
+
+    class Meta:
+        """Establece las configuraciones del modelo de base de datos"""
+        managed = True
+        db_table = 'secuencia_numerica'

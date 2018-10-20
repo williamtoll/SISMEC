@@ -7,6 +7,7 @@ from django.views.decorators.http import require_http_methods
 from django.template import loader
 from datetime import datetime
 from apps.clientes.models import Cliente
+from apps.principal.common_functions import generar_codigo
 from apps.recepcion.forms import RecepcionVehiculoForm
 from apps.recepcion.models import Marca, Modelo, RecepcionVehiculo
 from sismec.configuraciones import ROW_PER_PAGE
@@ -40,6 +41,7 @@ def agregarRecepcionVehiculo(request):
                 for cli in cliente:
                     cliente_r = Cliente.objects.get(id=cli)
                     form.instance.cliente = cliente_r
+                form.instance.codigo_recepcion = generar_codigo()
                 form.instance.fecha_recepcion =fecha_recepcion
                 form.instance.año = int(año)
                 form.save()

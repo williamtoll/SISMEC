@@ -65,7 +65,7 @@ def getModeloAutocomplete(filtros):
 def getRecepcionFiltro(filtros):
     object_list = []
     query_var = []
-    query = '''SELECT rv.id, rv.fecha_recepcion, rv.chapa,  
+    query = '''SELECT rv.codigo_recepcion, rv.fecha_recepcion, rv.chapa,  
                rv.detalle_problema, m.descripcion, mod.descripcion, c.nombres
                FROM recepcion_vehiculo rv, marca m, modelo mod, cliente c
                where rv.marca_id = m.id and rv.modelo_id = mod.id and rv.cliente_id = c.id '''
@@ -96,7 +96,7 @@ def getRecepcionFiltro(filtros):
             cursor.execute(query_row_page, query_var_page)
 
             for i in cursor.fetchall():
-                data = {'id': i[0],
+                data = {'codigo_recepcion': i[0],
                         'fecha_recepcion': i[1],
                         'chapa': i[2] if i[2] is not None else '-',
                         'detalle_problema': i[3] if i[3] is not None else '-',
