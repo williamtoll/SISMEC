@@ -14,11 +14,10 @@ from django.contrib import messages
 import json
 from django.urls import reverse
 from sismec.dao import venta_dao
-
-# Agregar un presupuesto
+from django.views.decorators.csrf import csrf_exempt
 from sismec.configuraciones import ROW_PER_PAGE
 
-
+# Agregar un presupuesto
 @require_http_methods(["GET", "POST"])
 @login_required(login_url='/sismec/login/')
 def agregarPresupuesto(request):
@@ -84,3 +83,65 @@ def listarPresupuestos(request):
             'query_params': query_params
         }
         return HttpResponse(t.render(c, request))
+
+# Funcion para consultar el detalle de una orden de compra.
+@csrf_exempt
+@require_http_methods(["GET", "POST"])
+@login_required(login_url='/sismec/login/')
+def detallePresupuesto(request, id):
+    t = loader.get_template('ventas/detalle.html')
+    cabPresupuesto = PresupuestoCab.objects.get(pk = int(id))
+    detPresupuesto = PresupuestoDet.objects.filter(presupuesto_cab__id=cabPresupuesto.id)
+    fecha_presupuesto = datetime.strptime(str(cabPresupuesto.fecha_presupuesto),'%Y-%m-%d').strftime('%Y-%m-%d')
+    # Se envia el formulario
+    if request.method == 'POST':
+        # Obtener la recepcion
+        recepcion_list = request.POST.get('id_recepcion_select', '')
+        #obterner el estado
+        filename = ""
+        estado_presupuesto = request.POST.get('estado_presupuesto', '')
+        # Obtener fecha
+        fecha = datetime.strptime(request.POST.get('fecha', ''), "%Y-%m-%d")
+        for recepcion_id in recepcion_list:
+            recepcion = RecepcionVehiculo.objects.get(id=recepcion_id)
+        cabPresupuesto.recepcion_vehiculo = recepcion
+        cabPresupuesto.estado = request.POST.get('estado', '')
+        cabPresupuesto.fecha_presupuesto = fecha
+        cabPresupuesto.save()
+
+        lista_detalles = json.loads(request.POST.get('detalle', ''))
+        borrar_detalle = True
+        for detallePresupuesto in detPresupuesto:
+            borrar_detalle = True
+            for key in lista_detalles:
+                id_presup = int(lista_detalles[key]['id_detalle'])
+                if detallePresupuesto.id == id_presup:
+                    detallePresupuesto.cantidad = lista_detalles[key]['cantidad']
+                    detallePresupuesto.precio_unitario = lista_detalles[key]['monto']
+                    borrar_detalle = False
+                    detallePresupuesto.save()
+                    break
+            if borrar_detalle == True:
+                detallePresupuesto.delete()
+
+        for key in lista_detalles:
+            id_oc = int(lista_detalles[key]['id_detalle'])
+            if id_oc ==0:
+                detalle = PresupuestoDet()
+                nombre_producto = lista_detalles[key]['descripcion']
+                producto = Producto.objects.get(descripcion__exact=nombre_producto)
+                detalle.compra_cab = detallePresupuesto.presupuesto_cab
+                detalle.producto = producto
+                detalle.cantidad = lista_detalles[key]['cantidad']
+                detalle.monto = lista_detalles[key]['monto']
+                detalle.save()
+        messages.add_message(request, messages.INFO, 'Se actualizaron los datos')
+        return HttpResponseRedirect(reverse('oc_listado'))
+
+    else:
+        c = {
+            'cabecera_pre': cabPresupuesto,
+            'detalles_pre': detPresupuesto,
+            'fecha_pedido': fecha_presupuesto
+        }
+        return HttpResponse(t.render(c))
