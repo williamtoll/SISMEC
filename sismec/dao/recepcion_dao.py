@@ -78,6 +78,10 @@ def getRecepcionFiltro(filtros):
         query += ''' 
          AND rv.fecha_recepcion = %s'''
         query_var.append(filtros['fecha_recepcion'])
+    # if filtros['codigo'] != '':
+    #     query += '''
+    #      AND UPPER(rv.codigo_recepcion) LIKE UPPER(%s)'''
+    #     query_var.append('%' + filtros['codigo'] + '%')
 
     pagination = utils_dao.paginationData(query, query_var, filtros)
 
@@ -111,3 +115,37 @@ def getRecepcionFiltro(filtros):
         finally:
             cursor.close()
     return object_list, pagination
+
+
+def getRecepcionAutocomplete(filtros):
+    object_list = []
+    query_var = []
+    query = '''SELECT rv.id, rv.codigo_recepcion, rv.chapa,  
+               rv.detalle_problema, m.descripcion, mod.descripcion, c.nombres
+               FROM recepcion_vehiculo rv, marca m, modelo mod, cliente c
+               where rv.marca_id = m.id and rv.modelo_id = mod.id and rv.cliente_id = c.id '''
+
+    if filtros['codigo'] != '':
+        query += ''' 
+         AND UPPER(rv.codigo_recepcion) LIKE UPPER(%s)'''
+        query_var.append('%' + filtros['codigo'] + '%')
+
+    cursor = connection.cursor()
+    try:
+        cursor.execute(query, query_var)
+        for i in cursor.fetchall():
+            data = {'id': i[0],
+                    'codigo_recepcion': i[1],
+                    'chapa': i[2] if i[2] is not None else '-',
+                    'detalle_problema': i[3] if i[3] is not None else '-',
+                    'marca': i[4] if i[4] is not None else '-',
+                    'modelo': i[5] if i[5] is not None else '-',
+                    'cliente': i[6] if i[6] is not None else '-',
+                    }
+            object_list.append(data)
+
+    except Exception as e:
+        print(e.args)
+    finally:
+        cursor.close()
+    return object_list

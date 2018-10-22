@@ -1,7 +1,7 @@
 item_inicial_detalle_pedido =  '<div class="item-detalle">'
 			+ '<input type="text" class="producto_desc col-xs-4" id="id_producto_select" name="id_producto_select">'
             + '<input type="number" class= "cantidad-item item col-xs-2" placeholder="Cantidad" value="" style="left: 5px;">'
-            + '<input type="number" class= "monto-item item col-xs-2" placeholder="Monto" value="" style="left: 5px;">'
+            + '<input type="number" class= "monto-item item col-xs-2" placeholder="Monto" value="" onkeyup="formatearNumeros(this)" onchange="formatearNumeros(this)" style="left: 5px;">'
 			+ '<a href="#" class="btn btn-sm btn-danger rm-btn" style="height: 35px;margin-left: 10px;"><span class="glyphicon glyphicon-minus"></span></a>'
 		    + ' <br><br></div>';
 
@@ -9,14 +9,14 @@ item_inicial_detalle_pedido =  '<div class="item-detalle">'
 item_detalle_pedido = '<div class="item-detalle">'
 			+ '<input type="text" class="producto_desc col-xs-4" id="id_producto_select" name="id_producto_select">'
             + '<input type="number" class= "cantidad-item item col-xs-2" placeholder="Cantidad" value="" style="left: 5px;">'
-            + '<input type="number" class= "monto-item item col-xs-2" placeholder="Monto" value="" style="left: 5px;">'
+            + '<input type="number" class= "monto-item item col-xs-2" placeholder="Monto" onkeyup="formatearNumeros(this)" onchange="formatearNumeros(this)" value="" style="left: 5px;">'
 			+ '<a href="#" class="btn btn-sm btn-danger rm-btn" style="height: 35px;margin-left: 10px;"><span class="glyphicon glyphicon-minus"></span></a>'
 		    + ' <br><br></div>';
 
 var detalle_valido = true;
 var es_repetido = false;
 $(document).ready(function() {
-    var select_cliente = $('#id_cliente_select');
+    var select_recepcion = $('#id_recepcion_select');
     var select_producto = $('#id_producto_agregar');
     inicializarSelectGenerales();
     var idsum= 1;
@@ -25,19 +25,19 @@ $(document).ready(function() {
     var ok=false;
     var cantidad_item= 0;
     function inicializarSelectGenerales() {
-        select_cliente.select2({
+        select_recepcion.select2({
                 tags: true,
                 multiple: false,
                 tokenSeparators: [','],
                 allowClear: true,
-                placeholder: "Seleccione el nombre del cliente",
+                placeholder: "Seleccione el codigo de recepcion",
                 ajax: {
-                    url: '/sismec/ajax/getClienteAutocomplete/',
+                    url: '/sismec/ajax/getRecepcionAutocomplete/',
                     dataType: "json",
                     type: "GET",
                     data: function (params) {
                         var queryParameters = {
-                            nombres: params.term
+                            codigo: params.term
                         };
                         return queryParameters;
                     },
@@ -45,7 +45,7 @@ $(document).ready(function() {
                         return {
                             results: $.map(data, function (item) {
                                 return {
-                                    text: item.nombres,
+                                    text: item.codigo_recepcion,
                                     id: item.id
                                 };
                             })
@@ -54,8 +54,8 @@ $(document).ready(function() {
                 }
             })
             .on('select2:unselect ', function () {
-                select_cliente.find('option').remove().end();
-                select_cliente.val('').trigger('change');
+                select_recepcion.find('option').remove().end();
+                select_recepcion.val('').trigger('change');
             });
 
         select_producto.select2({
@@ -159,6 +159,8 @@ function generarDetalleJSON(){
             descripcion = $(this).find(".producto_desc").val();
 			cantidad = $(this).find(".cantidad-item").val();
             monto = $(this).find(".monto-item").val();
+            monto = monto.replace(".","");
+		    monto = parseInt(monto) || 0;
 			key = 'item' + i;
 			value = {descripcion : descripcion, cantidad : cantidad, monto: monto};
 			objeto[key] = value;
@@ -179,6 +181,10 @@ function validarDetalle(){
 		cantidad = $(this).find(".cantidad-item").val();
 		cantidad = parseInt(cantidad) || 0;
 		concepto = $(this).find(".producto_desc").val();
+		monto = $(this).find(".monto-item").val();
+		monto = monto.replace(".","");
+		monto = parseInt(monto) || 0;
+		$(this).find(".monto-item").val(monto);
 		//indicador_validez = '#840A0A'; // Por defecto invalido (Rojo)
 		// Requerimieno minimo para un detalle valido
 		if (cantidad != 0){
@@ -201,8 +207,8 @@ function validarCabecera(){
         alert("Debe seleccionar una fecha valida");
         return false;
     }
-    if ($("#id_proveedor_select").val() == null){
-        alert("Debe seleccionar un proveedor valido");
+    if ($("#id_recepcion_select").val() == null){
+        alert("Debe seleccionar una Recepcion valida");
         return false;
     }
     return true;

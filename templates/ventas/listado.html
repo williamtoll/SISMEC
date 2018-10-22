@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+{% block header_scripts %}
+    {% load static %}
+    {% load staticfiles %}
+    {% load humanize %}
+    <script src="{% static "js/ventas/listado.js" %}" type="text/javascript"></script>
+    <script type="text/javascript">
+        var id_menu = "6";
+    </script>
+{% endblock %}
+{% block content %}
+    <div id="page-wrapper">
+         <div class="container-fluid">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h4 class="page-title">LISTADO DE PRESUPUESTOS</h4>
+                    </div>
+                </div>
+            </div>
+             <div class="row">
+                 <div class="col-lg-12">
+                     <form action="{% url 'presupuesto_listado' %}" method="get">
+                         <div class="col-lg-4">
+                              <label class="form-control">Fecha de Presupuesto:</label>
+                              <input type="date" class="form-control" name="fecha" value="{{ filtros.fecha }}">
+                         </div>
+                         <div class="col-lg-4">
+                              <label class="form-control">Codigo de Presupuesto:</label>
+                              <select id="id_codigo_select" name="codigo_select" class="form-control" value="{{ filtros.codigo }}" ></select>
+                         </div>
+                         <div class="col-lg-4">
+                              <label class="form-control">Estado:</label>
+                              <select id="id_estado" name="estado" class="form-control" value="{{ filtros.estado }}">
+                                  <option></option>
+                                  <option value="Pendiente">Pendiente</option>
+                                  <option value="Confirmado">Confirmado</option>
+                                  <option value="Rechazado">Rechazado</option>
+                                  <option value="Facturado">Fcturado</option>
+                              </select>
+                         </div>
+
+                         <div class="col-lg-4">
+                             <div class="form-group pull-right">
+                                    <!--a class="btn btn-sm btn-primary" href="{% url 'presupuesto_listado' %}"><span class="glyphicon glyphicon-search"></span> Buscar</a-->
+                                 <button class="btn btn-default" type="submit"><i class="fa fa-search"></i><span class="input-group-btn">Buscar</span></button>
+                             </div>
+                        </div>
+                    </form>
+                 </div>
+             </div>
+            <div class="row" style="padding: 15px">
+                <div class="col-lg-offset-4">
+                     <div class="form-group pull-right">
+                            <a class="btn btn-sm btn-primary" href="{% url 'presupuesto_agregar' %}"><span class="glyphicon glyphicon-plus"></span> AGREGAR NUEVO</a>
+                     </div>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <div class="dataTables_wrapper container-fluid dt-bootstrap4">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <table class="table dataTable" id="dataTable" width="100%" cellspacing="0"
+                               role="grid" aria-describedby="dataTable_info" style="width: 100%;">
+                                <thead>
+                                <tr>
+                                    <th width="8%">Nro.</th>
+                                    <th width="10%">Fecha de Presupuesto</th>
+                                    <th width="10%">Código de Recepción</th>
+                                    <th width="10%">Estado</th>
+                                    <!--th width="10%">Acciones</th-->
+                                </tr>
+                                </thead>
+                            <tbody>
+                            {% for ob in object_list %}
+                                <tr>
+                                    <td>{{ ob.id }}</td>
+                                    <td>{{ ob.fecha_presupuesto }}</td>
+                                    <td>{{ ob.codigo_recepcion }}</td>
+                                    <td>{{ ob.estado }}</td>
+                                    <!--td><center>
+                                        <form id="form_add_oc" action="{% url 'eliminar_oc' %}" method="post">
+                                            {% csrf_token %}
+                                            {%if ob.estado != "FACTURADO" %}
+                                                <a class="btn btn-sm btn-warning" href="{% url 'frontend_home' %}compras/detalle/{{ ob.id }}"><span class="glyphicon glyphicon-edit"></span> Edit</a>
+                                                 <input id="id_eliminar" name="id_eliminar" type="hidden" value="{{ ob.id }}">
+                                                <button type="submit" class="btn btn-sm btn-danger" name="{{ ob.id }}"><span class="glyphicon glyphicon-trash"></span> Delete</button>
+                                                <a class="btn btn-sm btn-warning" href="{% url 'frontend_home' %}facturas/agregar/{{ ob.id }}"><span class="glyphicon glyphicon-edit"></span> Facturar</a>
+                                            {%endif%}
+
+                                        </form>
+                                    </center></td-->
+
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                            </table>
+                        </div>
+                     </div>
+{#                {% include "frontend/paginacion.html" %}#}
+                </div>
+            </div>
+        </div>
+        <div class="card-footer small text-muted"></div>
+    </div>
+{% endblock %}

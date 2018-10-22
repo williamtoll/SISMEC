@@ -218,6 +218,8 @@ function generarDetalleJSON(){
             descripcion = $(this).find(".producto_desc").val();
 			cantidad = $(this).find(".cantidad-item").val();
 			monto = $(this).find(".monto-item").val();
+			monto = monto.replace(".","");
+		    monto = parseInt(monto) || 0;
 
 			key = 'item' + i;
 			value = {id_detalle : id_detalle, descripcion : descripcion, cantidad : cantidad , monto : monto};

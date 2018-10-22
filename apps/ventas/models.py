@@ -4,21 +4,25 @@ from apps.productos.models import Producto
 
 
 # Presupuesto Venta Cabecera
+from apps.recepcion.models import RecepcionVehiculo
+
+
 class PresupuestoCab(models.Model):
     id = models.BigAutoField(primary_key=True)
     fecha_presupuesto = models.DateField(blank=True, null=True)
-    cliente = models.ForeignKey(Cliente, on_delete=models.PROTECT, blank=True, null=True)
-
+    recepcion_vehiculo = models.ForeignKey(RecepcionVehiculo,on_delete=models.PROTECT, blank=True, null=True )
     PENDIENTE = 'PENDIENTE'
     CONFIRMADO = 'CONFIRMADO'
     FACTURADO = 'FACTURADO'
+    RECHAZADO = 'RECHAZADO'
     ESTADO_CHOICES = (
         (PENDIENTE, 'Pendiente'),
         (CONFIRMADO, 'Confirmado'),
         (FACTURADO, 'Facturado'),
+        (RECHAZADO, 'Rechazado'),
     )
     estado = models.CharField(max_length=20, choices=ESTADO_CHOICES, default=PENDIENTE)
-    monto_total = models.IntegerField(blank=True, null=True)
+    #monto_total = models.IntegerField(blank=True, null=True)
     class Meta:
         """Establece las configuraciones del modelo de base de datos"""
         managed = True
