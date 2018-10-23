@@ -2,7 +2,7 @@
 {% block header_scripts %}
     {% load staticfiles %}
     <!--script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script-->
-    <!--script src="{% static "js/compras/detalle.js" %}" type="text/javascript"></script-->
+    <script src="{% static "js/ventas/detalle.js" %}" type="text/javascript"></script>
 {% endblock %}
 {% block content %}
     <div id="page-wrapper">
@@ -15,6 +15,7 @@
                 <div class="panel-heading">
                      <h4 class="page-title" style="color:#fff;">PRESUPUESTO DE VENTA</h4>
                 </div>
+                <input id="detalle" type="hidden" name="detalle" />
                 <div class="panel-body">
                     <div>
                         <label class="col-lg-2">Fecha:</label>
@@ -28,10 +29,12 @@
                                     {% endif %}
                             </select>
                         </div>
+                        <br>
+                        <div class="col-lg-6"></div>
                         <label class="col-lg-3">Estado</label>
                         <input id="estado_cabecera" type="hidden" name="estado_cabecera" value="{{ cabecera_pre.estado }}" />
                         <div class="col-lg-3">
-                            <select id="condicion_compra" name="condicion_compra" class="form-control">
+                            <select id="condicion_presupuesto" name="condicion_presupuesto" class="form-control">
                               <option value="PENDIENTE">PENDIENTE</option>
                               <option value="CONFIRMADO">CONFIRMADO</option>
                               <option value="RECHAZADO">RECHAZADO</option>

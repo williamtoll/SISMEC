@@ -170,7 +170,10 @@ def generarFacturaVenta(request, id):
             movimiento.numero_factura = numero_factura
             movimiento.tipo_movimiento = tipo_movimiento
             movimiento.tipo_factura = condicion_compra
-            movimiento.estado = MovimientoCabecera.PENDIENTE
+            if movimiento.tipo_factura == 'CONTADO':
+                movimiento.estado = MovimientoCabecera.COMPLETADO
+            else:
+                movimiento.estado = MovimientoCabecera.PENDIENTE
             movimiento.monto_total = sub_exentas + sub_iva10 + sub_iva5
             movimiento.grav10_total = sub_iva10 - total_iva10
             movimiento.grav5_total = sub_iva5 - total_iva5

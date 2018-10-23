@@ -99,13 +99,13 @@ def detallePresupuesto(request, id):
         recepcion_list = request.POST.get('id_recepcion_select', '')
         #obterner el estado
         filename = ""
-        estado_presupuesto = request.POST.get('estado_presupuesto', '')
+        estado_presupuesto = request.POST.get('condicion_presupuesto', '')
         # Obtener fecha
         fecha = datetime.strptime(request.POST.get('fecha', ''), "%Y-%m-%d")
         for recepcion_id in recepcion_list:
             recepcion = RecepcionVehiculo.objects.get(id=recepcion_id)
         cabPresupuesto.recepcion_vehiculo = recepcion
-        cabPresupuesto.estado = request.POST.get('estado', '')
+        cabPresupuesto.estado = estado_presupuesto
         cabPresupuesto.fecha_presupuesto = fecha
         cabPresupuesto.save()
 
@@ -130,18 +130,39 @@ def detallePresupuesto(request, id):
                 detalle = PresupuestoDet()
                 nombre_producto = lista_detalles[key]['descripcion']
                 producto = Producto.objects.get(descripcion__exact=nombre_producto)
-                detalle.compra_cab = detallePresupuesto.presupuesto_cab
+                detalle.presupuesto_cab = detallePresupuesto.presupuesto_cab
                 detalle.producto = producto
                 detalle.cantidad = lista_detalles[key]['cantidad']
-                detalle.monto = lista_detalles[key]['monto']
+                detalle.precio_unitario = int(lista_detalles[key]['monto'])
                 detalle.save()
         messages.add_message(request, messages.INFO, 'Se actualizaron los datos')
-        return HttpResponseRedirect(reverse('oc_listado'))
+        return HttpResponseRedirect(reverse('presupuesto_listado'))
 
     else:
         c = {
             'cabecera_pre': cabPresupuesto,
             'detalles_pre': detPresupuesto,
-            'fecha_pedido': fecha_presupuesto
+            'fecha_presupuesto': fecha_presupuesto
         }
         return HttpResponse(t.render(c))
+
+@require_http_methods(["GET", "POST"])
+@login_required(login_url='/sismec/login/')
+# Funcion para eliminar una orden de compra desde el listado.
+def eliminarPresupuesto(request):
+    if request.method == 'POST':
+        data = request.POST
+        id = data.get('id_eliminar')
+        try:
+            cabPresupuesto = PresupuestoCab.objects.get(pk=int(id))
+            detPresupuesto = PresupuestoDet.objects.filter(presupuesto_cab__id=cabPresupuesto.id)
+            for detallepre in detPresupuesto:
+                detallepre.delete()
+
+            cabPresupuesto.delete()
+            messages.add_message(request, messages.INFO, 'Orden de Compra eliminada')
+        except Exception as e:
+            traceback.print_exc(e.args)
+            messages.add_message(request, messages.ERROR,
+                                 'No se puede eliminar la Orden de Compra')
+        return HttpResponseRedirect(reverse('oc_listado'))
