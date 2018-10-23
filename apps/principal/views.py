@@ -27,3 +27,13 @@ def alertsservice(request):
         messages.add_message(request, messages.ERROR, mensaje)
         return HttpResponseRedirect(reverse('oc_listado'))
 
+def alertsserviceVentas(request):
+    data = request.GET
+    mensaje = data.get('mensajes', '')
+    status = data.get('status', '')
+    if status == "200":
+        messages.add_message(request, messages.INFO, mensaje)
+        return HttpResponseRedirect(reverse('presupuesto_listado'))
+    else:
+        messages.add_message(request, messages.ERROR, mensaje)
+        return HttpResponseRedirect(reverse('presupuesto_listado'))

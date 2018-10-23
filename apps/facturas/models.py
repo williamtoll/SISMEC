@@ -5,6 +5,9 @@ from apps.productos.models import Producto
 from apps.proveedores.models import Proveedor
 
 # Movimiento Cabecera
+from apps.ventas.models import PresupuestoCab
+
+
 class MovimientoCabecera(models.Model):
     id = models.BigAutoField(primary_key=True)
     fecha_emision = models.DateField(blank=True, null=True)
@@ -47,6 +50,7 @@ class MovimientoCabecera(models.Model):
     fecha_inicio = models.DateField(blank=True, null=True)
     fecha_fin = models.DateField(blank=True, null=True)
     orden_compra = models.ForeignKey(OrdenCompraCab, on_delete=models.PROTECT, blank=True, null= True)
+    presupuesto = models.ForeignKey(PresupuestoCab, on_delete=models.PROTECT, blank=True, null= True)
     class Meta:
         """Establece las configuraciones del modelo de base de datos"""
         managed = True
