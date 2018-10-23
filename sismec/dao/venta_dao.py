@@ -16,11 +16,11 @@ def getPresupuestoFiltro(filtros):
         query_var.append('%' + filtros['codigo'] + '%')
     if filtros['fecha'] != '':
         query += ''' 
-         AND oc.fecha_pedido = %s'''
+         AND pc.fecha_presupuesto = %s'''
         query_var.append(filtros['fecha'])
     if filtros['estado'] != '':
         query += '''  
-         AND oc.estado = %s'''
+         AND pc.estado = %s'''
         query_var.append(filtros['estado'])
 
     pagination = utils_dao.paginationData(query, query_var, filtros)
