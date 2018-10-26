@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block header_scripts %}
+    {% load staticfiles %}
+    <!--script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script-->
+    <script src="{% static "js/facturas/agregarfc.js" %}" type="text/javascript"></script>
+{% endblock %}
+{% block content %}
+    <div id="page-wrapper">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <h4 class="page-title" style="color:#fff;">COBRO</h4>
+                        </div>
+                        <div class="panel-body">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="fecha">Fecha:</label>
+                                    <div><input type="date" id="fecha" name="fecha"></div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="numero_factura">Numero Factura:</label>
+                                    <div><input type="text" id="numero_factura" name="numero_factura"></div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="pull-left">
+                        <input name="" type="button" value="Guardar" class="btn btn-primary default guardar"
+                           style=" margin-bottom: 10px; cursor: pointer;"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+        <div class="card-footer small text-muted"></div>
+        <!-- /.container-fluid -->
+        <footer class="footer text-center"> 2018 &copy; Lourdes Escurra </footer>
+    </div>
+{% endblock %}

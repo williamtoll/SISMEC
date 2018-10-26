@@ -87,8 +87,8 @@
                                     <td><center>
                                         <form id="form_add_oc" action="{% url 'eliminar_oc' %}" method="post">
                                             {% csrf_token %}
-                                            {%if ob.estado != "PENDIENTE" %}
-                                                <a class="btn btn-sm btn-warning" href="{% url 'frontend_home' %}facturas/agregar/{{ ob.id }}"><span class="glyphicon glyphicon-edit"></span> Cobrar</a>
+                                            {%if ob.estado == "PENDIENTE" %}
+                                                <a class="btn btn-sm btn-warning" href="{% url 'frontend_home' %}facturas/cobrar_venta/{{ ob.id }}"><span class="glyphicon glyphicon-edit"></span> Cobrar</a>
                                             {%endif%}
 
                                         </form>

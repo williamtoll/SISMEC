@@ -14,6 +14,8 @@ class MovimientoCabecera(models.Model):
     cliente = models.ForeignKey(Cliente, on_delete=models.PROTECT, blank=True, null=True)
     proveedor = models.ForeignKey(Proveedor, on_delete=models.PROTECT, blank=True, null=True)
     numero_factura = models.CharField(max_length=20, blank=True, null=False)
+    fecha_vencimiento = models.DateField(blank=True, null=True)
+    nro_cuota = models.IntegerField(blank=True, null=True, default=0)
     COMPRA = 'COMPRA'
     VENTA = 'VENTA'
     MOVIMIENTO_CHOICES = (
@@ -72,3 +74,31 @@ class MovimientoDetalle(models.Model):
         """Establece las configuraciones del modelo de base de datos"""
         managed = True
         db_table = 'movimiento_detalle'
+
+class CobroPagomodels(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    movimiento_cab = models.ForeignKey(MovimientoCabecera, on_delete=models.PROTECT, blank=True, null=False)
+    fecha = models.DateField(blank=True, null=True)
+    nro_cuota = models.IntegerField(blank=True, null=True)
+    monto = models.IntegerField(blank=True, null=True)
+    nro_recibo = models.CharField(max_length=20, blank=True, null=False)
+    forma_pago = models.CharField(max_length=20, blank=True, null=False)
+    COBRO = 'COBRO'
+    PAGO = 'PAGO'
+    TIPO_CHOICES = (
+        (COBRO, 'Cobro'),
+        (PAGO, 'Pago'),
+    )
+    tipo = models.CharField(max_length=20, choices=TIPO_CHOICES, default=COBRO)
+    ACTIVO = 'ACTIVO'
+    ANULADO = 'ANULADO'
+    ESTADO_CHOICES = (
+        (ACTIVO, 'Activo'),
+        (ANULADO, 'Anulado'),
+    )
+    estado = models.CharField(max_length=20, choices=ESTADO_CHOICES, default=ACTIVO)
+    dato_adicional = models.CharField(max_length=200, blank=True, null=False)
+    class Meta:
+        """Establece las configuraciones del modelo de base de datos"""
+        managed = True
+        db_table = 'cobro_pago'

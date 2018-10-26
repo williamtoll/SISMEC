@@ -161,6 +161,9 @@ def generarFacturaVenta(request, id):
         # subtotal_iva10/ 11
         total_iva10 = int(request.POST.get('total_iva10', ''))
 
+        nro_cuotas = int(request.POST.get('nro_cuota', ''))
+
+        fecha_vencimiento = datetime.strptime(request.POST.get('fecha_vencimiento', ''), "%Y-%m-%d")
         try:
             for cliente_id in cliente_list:
                 cliente = Cliente.objects.get(id=cliente_id)
@@ -170,10 +173,13 @@ def generarFacturaVenta(request, id):
             movimiento.numero_factura = numero_factura
             movimiento.tipo_movimiento = tipo_movimiento
             movimiento.tipo_factura = condicion_compra
-            if movimiento.tipo_factura == 'CONTADO':
+            movimiento.nro_cuota = nro_cuotas
+
+            if movimiento.tipo_factura == 'Contado':
                 movimiento.estado = MovimientoCabecera.COMPLETADO
             else:
                 movimiento.estado = MovimientoCabecera.PENDIENTE
+                movimiento.fecha_vencimiento = fecha_vencimiento
             movimiento.monto_total = sub_exentas + sub_iva10 + sub_iva5
             movimiento.grav10_total = sub_iva10 - total_iva10
             movimiento.grav5_total = sub_iva5 - total_iva5
@@ -252,3 +258,16 @@ def listarFV(request):
             'query_params': query_params
         }
         return HttpResponse(t.render(c, request))
+
+
+@csrf_exempt
+@require_http_methods(["GET", "POST"])
+@login_required(login_url='/sismec/login/')
+def cobrarFacturaVenta(request, id):
+    t = loader.get_template('facturas/cobrar_venta.html')
+    cabMovimiento = MovimientoCabecera.objects.get(pk=id)
+    #detPresupuesto = PresupuestoDet.objects.filter(presupuesto_cab__id=cabPresupuesto.id)
+    c = {
+        'cabecera_mov': cabMovimiento
+    }
+    return HttpResponse(t.render(c, request))

@@ -43,6 +43,16 @@ $(document).ready(function() {
         $('.total_iva').val(formatearNumeros_convalor("" + total_iva));
 
     });
+    $('#condicion_compra').on('change', function () {
+        if ($('#condicion_compra').val() == "Credito") {
+            $(".fecha_vencimiento").removeClass("ocultar");
+            $(".cantidad_cuotas").removeClass("ocultar");
+        }else{
+            $(".fecha_vencimiento").addClass("ocultar");
+            $(".cantidad_cuotas").addClass("ocultar");
+        }
+
+    });
 
     $(".precio_uni").each(function(data) {
         var id = this.dataset.id;
@@ -189,6 +199,8 @@ $(document).ready(function() {
                 fecha_fin_timbrado: $('#fecha_fin_timbrado').val(),
                 fecha: $('#fecha').val(),
                 numero_factura: $('#numero_factura').val(),
+                nro_cuota: parseInt($('#cantidad_cuotas').val()) || 0,
+                fecha_vencimiento: $('#fecha_vencimiento').val(),
                 sub_exentas: parseInt($('.sub_exentas').val().replace(".","")) || 0,
                 sub_iva5: parseInt($('.sub_iva5').val().replace(".","")) || 0,
                 sub_iva10: parseInt($('.sub_iva10').val().replace(".","")) || 0,

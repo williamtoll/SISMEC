@@ -29,5 +29,7 @@ def generar_codigo():
         codigo = str(secuencia.ultimo_numero) + "-" + str(secuencia.anho)
     else:
         codigo = str(int(secuencia.ultimo_numero + 1)) + "-" + str(secuencia.anho)
-
+        nro_secuencia = secuencia.ultimo_numero + 1
+        secuencia.ultimo_numero = nro_secuencia
+        secuencia.save()
     return codigo

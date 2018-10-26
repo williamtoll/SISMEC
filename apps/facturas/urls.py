@@ -6,4 +6,5 @@ urlpatterns = [
    url(r'^sismec/facturas/agregar/(?P<id>\d+)/$', facturas_views.agregarFacturaCompra,  name='facturas_agregar'),
    url(r'^sismec/facturas/generar_factura/(?P<id>\d+)/$', facturas_views.generarFacturaVenta,  name='factura_venta_agregar'),
    url(r'^sismec/facturas/listado/$', facturas_views.listarFV, name='factura_venta_listado'),
+   url(r'^sismec/facturas/cobrar_venta/(?P<id>\d+)/$', facturas_views.cobrarFacturaVenta, name='cobrar_fv'),
 ]
