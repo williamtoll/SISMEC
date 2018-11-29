@@ -6,7 +6,7 @@ from sismec.dao import utils as utils_dao
 def getFacturaVentaFiltro(filtros):
     object_list = []
     query_var = []
-    query = '''SELECT mc.id, mc.fecha_emision, mc.numero_factura, mc.tipo_factura, mc.estado, mc.monto_total, c.nombres, c.id, pc.id
+    query = '''SELECT mc.id, mc.fecha_emision, mc.numero_factura, mc.tipo_factura, mc.estado, mc.monto_total, mc.saldo, c.nombres, c.id, pc.id
                FROM movimiento_cabecera mc, cliente c, presupuesto_cabecera pc
                WHERE mc.cliente_id = c.id and mc.presupuesto_id = pc.id '''
 
@@ -46,9 +46,10 @@ def getFacturaVentaFiltro(filtros):
                         'tipo_factura': i[3] if i[3] is not None else '-',
                         'estado': i[4] if i[4] is not None else '-',
                         'monto_total': i[5] if i[5] is not None else '-',
-                        'nombres': i[6] if i[6] is not None else '-',
-                        'cliente_id': i[7] if i[7] is not None else '-',
-                        'presupuesto_id': i[8] if i[8] is not None else '-',
+                        'saldo': i[6] if i[6] is not None else '-',
+                        'nombres': i[7] if i[7] is not None else '-',
+                        'cliente_id': i[8] if i[8] is not None else '-',
+                        'presupuesto_id': i[9] if i[9] is not None else '-',
                         }
                 object_list.append(data)
 

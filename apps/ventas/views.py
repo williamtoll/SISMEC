@@ -24,18 +24,18 @@ def agregarPresupuesto(request):
     t = loader.get_template('ventas/agregar.html')
     if request.method == 'POST':
         # Obtener la recepcion
-        recepcion_list = request.POST.get('id_recepcion_select', '')
+        recepcion_list = int(request.POST.get('id_recepcion_select', ''))
 
         # Obtener fecha
         fecha = datetime.strptime(request.POST.get('fecha', ''), "%Y-%m-%d")
         try:
-            for recepcion_id in recepcion_list:
-                recepcion = RecepcionVehiculo.objects.get(id=recepcion_id)
+            recepcion = RecepcionVehiculo.objects.get(id=recepcion_list)
+            recepcion.estado = RecepcionVehiculo.PRESUPUESTADO
+            recepcion.save()
 
             nuevoPresupuesto = PresupuestoCab()
             #nuevaOC.fecha_pedido = fecha
             nuevoPresupuesto.recepcion_vehiculo = recepcion
-            nuevoPresupuesto.estado = PresupuestoCab.PENDIENTE
             nuevoPresupuesto.fecha_presupuesto = fecha
             nuevoPresupuesto.save()
             lista_detalles = json.loads(request.POST.get('detalle', ''))
@@ -50,9 +50,9 @@ def agregarPresupuesto(request):
                 detalle.save()
 
             messages.add_message(request, messages.INFO, 'Presupuesto agregado exitosamente')
-            return HttpResponseRedirect(reverse('frontend_home'))
+            return HttpResponseRedirect(reverse('presupuesto_listado'))
         except Exception as e:
-            traceback.print_exc(e.args)
+            #traceback.print_exc(e.args)
             messages.add_message(request, messages.ERROR, e.args)
             return HttpResponse(t.render(request))
     else:
@@ -102,10 +102,10 @@ def detallePresupuesto(request, id):
         estado_presupuesto = request.POST.get('condicion_presupuesto', '')
         # Obtener fecha
         fecha = datetime.strptime(request.POST.get('fecha', ''), "%Y-%m-%d")
-        for recepcion_id in recepcion_list:
-            recepcion = RecepcionVehiculo.objects.get(id=recepcion_id)
+        recepcion = RecepcionVehiculo.objects.get(id=recepcion_list)
+        recepcion.estado = estado_presupuesto
+        recepcion.save()
         cabPresupuesto.recepcion_vehiculo = recepcion
-        cabPresupuesto.estado = estado_presupuesto
         cabPresupuesto.fecha_presupuesto = fecha
         cabPresupuesto.save()
 
@@ -130,7 +130,7 @@ def detallePresupuesto(request, id):
                 detalle = PresupuestoDet()
                 nombre_producto = lista_detalles[key]['descripcion']
                 producto = Producto.objects.get(descripcion__exact=nombre_producto)
-                detalle.presupuesto_cab = detallePresupuesto.presupuesto_cab
+                detalle.presupuesto_cab = cabPresupuesto
                 detalle.producto = producto
                 detalle.cantidad = lista_detalles[key]['cantidad']
                 detalle.precio_unitario = int(lista_detalles[key]['monto'])

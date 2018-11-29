@@ -81,11 +81,11 @@
                                     <td><center>
                                         <form id="form_add_oc" action="{% url 'eliminar_pre' %}" method="post">
                                             {% csrf_token %}
-                                            {%if ob.estado == "PENDIENTE" or  ob.estado == "RECHAZADO" %}
+                                            {%if ob.estado == "PRESUPUESTADO" or  ob.estado == "RECHAZADO" %}
                                                 <a class="btn btn-sm btn-warning" href="{% url 'frontend_home' %}ventas/detalle/{{ ob.id }}"><span class="glyphicon glyphicon-edit"></span> Edit</a>
                                                  <input id="id_eliminar" name="id_eliminar" type="hidden" value="{{ ob.id }}">
                                                 <button type="submit" class="btn btn-sm btn-danger" name="{{ ob.id }}"><span class="glyphicon glyphicon-trash"></span> Delete</button>
-                                            {% elif ob.estado == "CONFIRMADO" %}
+                                            {% elif ob.estado == "APROBADO" %}
                                                 <a class="btn btn-sm btn-warning" href="{% url 'frontend_home' %}ventas/detalle/{{ ob.id }}"><span class="glyphicon glyphicon-edit"></span> Edit</a>
                                                 <a class="btn btn-sm btn-success" href="{% url 'frontend_home' %}facturas/generar_factura/{{ ob.id }}"><span class="glyphicon glyphicon-check"></span> Facturar</a>
                                                 <input id="id_eliminar" name="id_eliminar" type="hidden" value="{{ ob.id }}">

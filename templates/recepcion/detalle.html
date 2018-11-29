@@ -24,7 +24,7 @@
                             {%if field.html_name == 'año' %}
                                 <td class="noimage"><input type=number id="año" name="año" min="1900" max="2099" step="1" value="{{ object_list.año }}" /></td>
                             {% elif field.html_name == 'fecha_recepcion' %}
-                                 <td class="noimage"><input type=date id="fecha_recepcion" name="fecha_recepcion" value="{{ object_list.fecha_recepcion }}"/></td>
+                                 <td class="noimage"><input type=date id="fecha_recepcion" name="fecha_recepcion" value="{{ fecha_recepcion }}"/></td>
                              {% else %}
                                 <td class="noimage">{{ field }}</td>
                             {% endif %}

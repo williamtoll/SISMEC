@@ -45,10 +45,8 @@ $(document).ready(function() {
     });
     $('#condicion_compra').on('change', function () {
         if ($('#condicion_compra').val() == "Credito") {
-            $(".fecha_vencimiento").removeClass("ocultar");
             $(".cantidad_cuotas").removeClass("ocultar");
         }else{
-            $(".fecha_vencimiento").addClass("ocultar");
             $(".cantidad_cuotas").addClass("ocultar");
         }
 

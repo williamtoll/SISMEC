@@ -3,11 +3,10 @@ from apps.clientes.models import Cliente
 from apps.compras.models import OrdenCompraCab
 from apps.productos.models import Producto
 from apps.proveedores.models import Proveedor
-
-# Movimiento Cabecera
 from apps.ventas.models import PresupuestoCab
 
 
+# Movimiento Cabecera
 class MovimientoCabecera(models.Model):
     id = models.BigAutoField(primary_key=True)
     fecha_emision = models.DateField(blank=True, null=True)
@@ -15,7 +14,7 @@ class MovimientoCabecera(models.Model):
     proveedor = models.ForeignKey(Proveedor, on_delete=models.PROTECT, blank=True, null=True)
     numero_factura = models.CharField(max_length=20, blank=True, null=False)
     fecha_vencimiento = models.DateField(blank=True, null=True)
-    nro_cuota = models.IntegerField(blank=True, null=True, default=0)
+    plazo_dias = models.IntegerField(blank=True, null=True, default=0)
     COMPRA = 'COMPRA'
     VENTA = 'VENTA'
     MOVIMIENTO_CHOICES = (
@@ -44,6 +43,7 @@ class MovimientoCabecera(models.Model):
     )
     estado = models.CharField(max_length=20, choices=CONDICION_CHOICES, default=COMPRA)
     monto_total = models.IntegerField(blank=True, null=True)
+    saldo = models.IntegerField(blank=True, null=True, default=0)
     grav10_total = models.IntegerField(blank=True, null=True)
     grav5_total = models.IntegerField(blank=True, null=True)
     iva10_total = models.IntegerField(blank=True, null=True)
@@ -79,7 +79,6 @@ class CobroPagomodels(models.Model):
     id = models.BigAutoField(primary_key=True)
     movimiento_cab = models.ForeignKey(MovimientoCabecera, on_delete=models.PROTECT, blank=True, null=False)
     fecha = models.DateField(blank=True, null=True)
-    nro_cuota = models.IntegerField(blank=True, null=True)
     monto = models.IntegerField(blank=True, null=True)
     nro_recibo = models.CharField(max_length=20, blank=True, null=False)
     forma_pago = models.CharField(max_length=20, blank=True, null=False)

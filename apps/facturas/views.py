@@ -14,7 +14,7 @@ from datetime import datetime
 import json
 from django.views.decorators.csrf import csrf_exempt
 # Agregar un factura Compra
-from apps.facturas.models import MovimientoCabecera, MovimientoDetalle
+from apps.facturas.models import MovimientoCabecera, MovimientoDetalle, CobroPagomodels
 from apps.productos.models import Producto
 from apps.proveedores.models import Proveedor
 from apps.ventas.models import PresupuestoCab, PresupuestoDet
@@ -161,9 +161,9 @@ def generarFacturaVenta(request, id):
         # subtotal_iva10/ 11
         total_iva10 = int(request.POST.get('total_iva10', ''))
 
-        nro_cuotas = int(request.POST.get('nro_cuota', ''))
+        plazo_dias = int(request.POST.get('nro_cuota', ''))
 
-        fecha_vencimiento = datetime.strptime(request.POST.get('fecha_vencimiento', ''), "%Y-%m-%d")
+        #fecha_vencimiento = datetime.strptime(request.POST.get('fecha_vencimiento', ''), "%Y-%m-%d")
         try:
             for cliente_id in cliente_list:
                 cliente = Cliente.objects.get(id=cliente_id)
@@ -173,14 +173,16 @@ def generarFacturaVenta(request, id):
             movimiento.numero_factura = numero_factura
             movimiento.tipo_movimiento = tipo_movimiento
             movimiento.tipo_factura = condicion_compra
-            movimiento.nro_cuota = nro_cuotas
-
+            movimiento.plazo_dias = plazo_dias
+            movimiento.monto_total = sub_exentas + sub_iva10 + sub_iva5
             if movimiento.tipo_factura == 'Contado':
                 movimiento.estado = MovimientoCabecera.COMPLETADO
+                movimiento.saldo = 0
             else:
                 movimiento.estado = MovimientoCabecera.PENDIENTE
-                movimiento.fecha_vencimiento = fecha_vencimiento
-            movimiento.monto_total = sub_exentas + sub_iva10 + sub_iva5
+                movimiento.saldo = movimiento.monto_total
+                #movimiento.fecha_vencimiento = fecha_vencimiento
+
             movimiento.grav10_total = sub_iva10 - total_iva10
             movimiento.grav5_total = sub_iva5 - total_iva5
             movimiento.iva10_total = sub_iva10
@@ -266,8 +268,32 @@ def listarFV(request):
 def cobrarFacturaVenta(request, id):
     t = loader.get_template('facturas/cobrar_venta.html')
     cabMovimiento = MovimientoCabecera.objects.get(pk=id)
-    #detPresupuesto = PresupuestoDet.objects.filter(presupuesto_cab__id=cabPresupuesto.id)
-    c = {
-        'cabecera_mov': cabMovimiento
-    }
+    detPresupuesto = PresupuestoDet.objects.filter(presupuesto_cab__id=cabMovimiento.id)
+    if request.method == 'POST':
+        fecha = datetime.strptime(request.POST.get('fecha', ''), "%Y-%m-%d")
+        forma_pago = request.POST.get('forma_pago', '')
+        monto_pagado = int(request.POST.get('monto_pagado', ''))
+        saldo_Actual = cabMovimiento.saldo - monto_pagado
+        cobro_pago = CobroPagomodels()
+        cobro_pago.movimiento_cab = cabMovimiento
+        cobro_pago.fecha = fecha
+        cobro_pago.forma_pago = forma_pago
+        cobro_pago.monto = monto_pagado
+        cobro_pago.estado = CobroPagomodels.ACTIVO
+        cobro_pago.tipo = CobroPagomodels.COBRO
+        cobro_pago.dato_adicional = request.POST.get('dato_adicional', '')
+        cobro_pago.save()
+
+        cabMovimiento.saldo = saldo_Actual
+        cabMovimiento.save()
+        # ACTUALIZAR ESTADO DE OC
+
+        status = 200
+        mensajes = 'Cobro agregado exitosamente'
+        json_response = {'status': status, 'mensajes': mensajes}
+        return HttpResponse(json.dumps(json_response), content_type='application/json')
+    else:
+        c = {
+            'cabecera_mov': cabMovimiento
+        }
     return HttpResponse(t.render(c, request))

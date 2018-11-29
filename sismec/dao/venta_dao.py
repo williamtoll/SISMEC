@@ -6,7 +6,7 @@ from sismec.dao import utils as utils_dao
 def getPresupuestoFiltro(filtros):
     object_list = []
     query_var = []
-    query = '''SELECT pc.id, pc.fecha_presupuesto, rv.codigo_recepcion, pc.estado
+    query = '''SELECT pc.id, pc.fecha_presupuesto, rv.codigo_recepcion, rv.estado
 	           FROM public.presupuesto_cabecera as pc
 	           LEFT JOIN recepcion_vehiculo AS rv ON rv.id = pc.recepcion_vehiculo_id WHERE 1=1 '''
 

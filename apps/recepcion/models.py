@@ -46,6 +46,24 @@ class RecepcionVehiculo(models.Model):
     año = models.IntegerField(blank=True, null=True)
     detalle_problema = models.CharField(max_length=255)
     codigo_recepcion = models.CharField(max_length=255,  null=False, default="")
+    RECIBIDO = 'RECIBIDO'
+    PRESUPUESTADO = 'PRESUPUESTADO'
+    RECHAZADO = 'RECHAZADO'
+    APROBADO = 'APROBADO'
+    FACTURADO = 'FACTURADO'
+    PENDIENTEDEPAGO = 'PENDIENTEPAGO'
+    PAGADO = 'PAGADO'
+    ESTADO_CHOICES = (
+        (RECIBIDO, 'Recibido'),
+        (PRESUPUESTADO, 'Presupuestado'),
+        (RECHAZADO, 'Rechazado'),
+        (APROBADO, 'Aprobado'),
+        (FACTURADO, 'Facturado'),
+        (PENDIENTEDEPAGO, 'Pendiente de Pago'),
+        (PAGADO, 'Pagado'),
+
+    )
+    estado = models.CharField(max_length=20, choices=ESTADO_CHOICES, default=RECIBIDO)
     def __str__(self):
         return self.id
 
