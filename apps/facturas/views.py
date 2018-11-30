@@ -60,6 +60,7 @@ def agregarFacturaCompra(request, id):
         # subtotal_iva10/ 11
         total_iva10 = int(request.POST.get('total_iva10', ''))
 
+        plazo_dias = int(request.POST.get('nro_cuota', ''))
         try:
             for proveedor_id in proveedor_list:
                 proveedor = Proveedor.objects.get(id=proveedor_id)
@@ -69,8 +70,15 @@ def agregarFacturaCompra(request, id):
             movimiento.numero_factura = numero_factura
             movimiento.tipo_movimiento = tipo_movimiento
             movimiento.tipo_factura = condicion_compra
-            movimiento.estado = MovimientoCabecera.PENDIENTE
+            movimiento.plazo_dias = plazo_dias
             movimiento.monto_total = sub_exentas + sub_iva10 + sub_iva5
+            if movimiento.tipo_factura == 'Contado':
+                movimiento.estado = MovimientoCabecera.COMPLETADO
+                movimiento.saldo = 0
+            else:
+                movimiento.estado = MovimientoCabecera.PENDIENTE
+                movimiento.saldo = movimiento.monto_total
+                #movimiento.fecha_vencimiento = fecha_vencimiento
             movimiento.grav10_total = sub_iva10 - total_iva10
             movimiento.grav5_total = sub_iva5 - total_iva5
             movimiento.iva10_total = sub_iva10
@@ -267,6 +275,30 @@ def listarFV(request):
         }
         return HttpResponse(t.render(c, request))
 
+@require_http_methods(["GET"])
+@login_required(login_url='/sismec/login/')
+# Funcion para listar facturas compras.
+def listarFC(request):
+    t = loader.get_template('facturas/listado_fcompras.html')
+    if request.method == 'GET':
+        data = request.GET
+
+        filtros = {'row_per_page': data.get('row_per_page', ROW_PER_PAGE),
+                   'page': data.get('page', 1), 'proveedor': data.get('proveedor_select', ''), 'fecha': data.get('fecha', ''),
+                   'estado': data.get('estado', '')}
+
+        query_param_list = [filtros['row_per_page'], filtros['proveedor'], filtros['fecha'], filtros['estado']]
+
+        query_params = '?row_per_page={}&search={}'.format(*query_param_list)
+        object_list, pagination = factura_dao.getFacturaCompraFiltro(filtros)
+
+        c = {
+            'object_list': object_list,
+            'pagination': pagination,
+            'filtros': filtros,
+            'query_params': query_params
+        }
+        return HttpResponse(t.render(c, request))
 
 @csrf_exempt
 @require_http_methods(["GET", "POST"])
@@ -288,6 +320,7 @@ def cobrarFacturaVenta(request, id):
         cobro_pago.estado = CobroPagomodels.ACTIVO
         cobro_pago.tipo = CobroPagomodels.COBRO
         cobro_pago.dato_adicional = request.POST.get('dato_adicional', '')
+        cobro_pago.nro_recibo = request.POST.get('numero_recibo', '')
         cobro_pago.save()
 
         recepcion = RecepcionVehiculo()
@@ -301,6 +334,46 @@ def cobrarFacturaVenta(request, id):
             recepcion.estado = RecepcionVehiculo.PAGADO
             cabMovimiento.estado = MovimientoCabecera.COMPLETADO
         recepcion.save()
+        cabMovimiento.save()
+
+        # ACTUALIZAR ESTADO DE OC
+        status = 200
+        mensajes = 'Cobro agregado exitosamente'
+        json_response = {'status': status, 'mensajes': mensajes}
+        return HttpResponse(json.dumps(json_response), content_type='application/json')
+    else:
+        c = {
+            'cabecera_mov': cabMovimiento
+        }
+    return HttpResponse(t.render(c, request))
+
+@csrf_exempt
+@require_http_methods(["GET", "POST"])
+@login_required(login_url='/sismec/login/')
+def pagarFacturaCompra(request, id):
+    t = loader.get_template('facturas/pagar_compra.html')
+    cabMovimiento = MovimientoCabecera.objects.get(pk=id)
+    if request.method == 'POST':
+        fecha = datetime.strptime(request.POST.get('fecha', ''), "%Y-%m-%d")
+        forma_pago = request.POST.get('forma_pago', '')
+        monto_pagado = int(request.POST.get('monto_pagado', ''))
+        saldo_Actual = cabMovimiento.saldo - monto_pagado
+        cobro_pago = CobroPagomodels()
+        cobro_pago.movimiento_cab = cabMovimiento
+        cobro_pago.fecha = fecha
+        cobro_pago.forma_pago = forma_pago
+        cobro_pago.monto = monto_pagado
+        cobro_pago.estado = CobroPagomodels.ACTIVO
+        cobro_pago.tipo = CobroPagomodels.PAGO
+        cobro_pago.dato_adicional = request.POST.get('dato_adicional', '')
+        cobro_pago.nro_recibo = request.POST.get('numero_recibo', '')
+        cobro_pago.save()
+
+        cabMovimiento.saldo = saldo_Actual
+        if saldo_Actual > 0:
+            cabMovimiento.estado = MovimientoCabecera.PENDIENTE
+        else:
+            cabMovimiento.estado = MovimientoCabecera.COMPLETADO
         cabMovimiento.save()
 
         # ACTUALIZAR ESTADO DE OC

@@ -14,20 +14,20 @@
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div class="panel panel-info">
                     <div class="panel-heading">
-                        <h4 class="page-title">LISTADO FACTURA VENTAS</h4>
+                        <h4 class="page-title">LISTADO FACTURA COMPRAS</h4>
                     </div>
                 </div>
             </div>
              <div class="row">
                  <div class="col-lg-12">
-                     <form action="{% url 'factura_venta_listado' %}" method="get">
+                     <form action="{% url 'factura_compra_listado' %}" method="get">
                          <div class="col-lg-4">
                               <label class="form-control">Fecha:</label>
                               <input type="date" class="form-control" name="fecha" value="{{ filtros.fecha }}">
                          </div>
                          <div class="col-lg-4">
-                              <label class="form-control">Cliente:</label>
-                              <select id="id_cliente_select" name="cliente_select" class="form-control" value="{{ filtros.cliente }}" ></select>
+                              <label class="form-control">Proveedor:</label>
+                              <select id="id_proveedor_select" name="proveedor_select" class="form-control" value="{{ filtros.proveedor }}" ></select>
                          </div>
                          <div class="col-lg-4">
                               <label class="form-control">Estado:</label>
@@ -40,7 +40,7 @@
 
                          <div class="col-lg-4">
                              <div class="form-group pull-right">
-                                    <!--a class="btn btn-sm btn-primary" href="{% url 'factura_venta_listado' %}"><span class="glyphicon glyphicon-search"></span> Buscar</a-->
+                                    <!--a class="btn btn-sm btn-primary" href="{% url 'factura_compra_listado' %}"><span class="glyphicon glyphicon-search"></span> Buscar</a-->
                                  <button class="btn btn-default" type="submit"><i class="fa fa-search"></i><span class="input-group-btn">Buscar</span></button>
                              </div>
                         </div>
@@ -68,8 +68,8 @@
                                     <th width="10%">Tipo Factura</th>
                                     <th width="10%">Estado</th>
                                     <th width="10%">Monto Total</th>
-                                    <th width="10%">Saldo</th>
-                                    <th width="10%">Cliente</th>
+                                    <th width="10%">Saldo a Pagar</th>
+                                    <th width="10%">Proveedor</th>
                                     <th width="10%">Id Presupuesto</th>
                                     <th width="10%">Acciones</th>
                                 </tr>
@@ -85,12 +85,12 @@
                                     <td>{{ ob.monto_total }}</td>
                                     <td>{{ ob.saldo }}</td>
                                     <td>{{ ob.nombres }}</td>
-                                    <td>{{ ob.presupuesto_id }}</td>
+                                    <td>{{ ob.orden_compra_id }}</td>
                                     <td><center>
                                         <form id="form_add_oc" action="{% url 'eliminar_oc' %}" method="post">
                                             {% csrf_token %}
                                             {%if ob.saldo > 0 %}
-                                                <a class="btn btn-sm btn-warning" href="{% url 'frontend_home' %}facturas/cobrar_factura/{{ ob.id }}"><span class="glyphicon glyphicon-edit"></span> Cobrar</a>
+                                                <a class="btn btn-sm btn-warning" href="{% url 'frontend_home' %}facturas/pagar_factura/{{ ob.id }}"><span class="glyphicon glyphicon-edit"></span> Agregar Pago</a>
                                             {%endif%}
 
                                         </form>
