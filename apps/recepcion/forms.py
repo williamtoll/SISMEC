@@ -42,7 +42,7 @@ class RecepcionVehiculoForm(ModelForm):
         model = RecepcionVehiculo
         fields = ['fecha_recepcion', 'chapa', 'kilometraje',
                   'combustible_aprox', 'año',  'pertencencias_vehiculo',  'detalle_problema']
-        exclude = ['cliente', 'marca', 'modelo', 'codigo_recepcion']
+        exclude = ['cliente', 'marca', 'modelo', 'codigo_recepcion', 'estado']
 
     def __init__(self, *args, **kwargs):
         super(RecepcionVehiculoForm, self).__init__(*args, **kwargs)

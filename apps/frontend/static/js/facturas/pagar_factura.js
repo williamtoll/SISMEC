@@ -1,0 +1,57 @@
+$(document).ready(function() {
+    $('#monto_pagado').on('change', function () {
+        var saldo= parseInt($("#saldo_actual").val());
+        var saldo_nuevo = saldo - parseInt($("#monto_pagado").val());
+        $("#saldo").val(saldo_nuevo);
+    });
+
+     $('#forma_pago').on('change', function () {
+        if ($('#forma_pago').val() == "TARJETA") {
+            $(".forma-pago-tarjeta").removeClass("ocultar");
+            $(".forma-pago-cheque").addClass("ocultar");
+        }else if($('#forma_pago').val() == "CHEQUE"){
+            $(".forma-pago-cheque").removeClass("ocultar");
+            $(".forma-pago-tarjeta").addClass("ocultar");
+        }else{
+            $(".forma-pago-tarjeta").addClass("ocultar");
+            $(".forma-pago-cheque").addClass("ocultar");
+        }
+
+    });
+
+     $('.guardar').on("click", function(e){
+         var dato_adicional = {}
+          if ($('#forma_pago').val() == "TARJETA") {
+            dato_adicional.nro_cupon = $('#nro_cupon').val();
+        }else if($('#forma_pago').val() == "CHEQUE"){
+            dato_adicional.nro_cheque = $('#nro_cheque').val();
+            dato_adicional.banco = $('#banco').val();
+            dato_adicional.fecha_vencimiento = $('#fecha_vencimiento').val();
+            dato_adicional.nombre_titular = $('#nombre_titular').val();
+        }
+        var id = $('#id_factura').val();
+        dato_adicional=JSON.stringify(dato_adicional);
+        var request = $.ajax({
+            type : "POST",
+            url : "/sismec/facturas/pagar_factura/" + id + "/",
+            data : {
+                fecha: $('#fecha').val(),
+                numero_factura:  $('#numero_factura').val(),
+                numero_recibo: $('#numero_recibo').val(),
+                forma_pago: $('#forma_pago').val(),
+                monto_total: $('#monto_total').val(),
+                saldo_actual: $('#saldo_actual').val(),
+                monto_pagado: $('#monto_pagado').val(),
+                saldo: $('#saldo').val(),
+                dato_adicional: dato_adicional
+            },
+            dataType : "json"
+        });
+        request.done(function(msg) {
+            window.location.replace("/sismec/principal_pagos?mensajes=" + msg.mensajes +"&status=" + msg.status);
+        });
+        request.error(function (msg) {
+            window.location.replace("/sismec/principal_pagos?mensajes=" + msg.mensajes +"&status=" + msg.status);
+        })
+     });
+});

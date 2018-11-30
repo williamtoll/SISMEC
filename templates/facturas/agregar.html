@@ -40,7 +40,7 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="prov_client">Cliente/Proveedor</label>
+                                    <label for="prov_client">Proveedor</label>
                                     <div>
                                         <select id="id_prov_client_select" name="id_prov_client_select" class="form-control">
                                             {% if cabecera_oc.proveedor != None %}
@@ -106,6 +106,20 @@
                                     <div><input type="text" id="numero_oc" disabled name="numero-oc" value="{{ cabecera_oc.id }}"></div>
                                 </div>
                             </div>
+                            <div class="col-md-4 fecha_vencimiento ocultar">
+                                <div class="form-group">
+                                    <label for="fecha_vencimiento">Fecha de Vencimiento:</label>
+                                    <div><input type="date" id="fecha_vencimiento" name="fecha_vencimiento"></div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 cantidad_cuotas ocultar" >
+                                <div class="form-group">
+                                    <label for="numero_pre">Plazo en Dias:</label>
+                                    <div><input type="number" id="cantidad_cuotas" name="cantidad_cuotas" value="0"></div>
+                                </div>
+                            </div>
+                        </div>
                         </div>
                         <div class="panel panel-info">
                             <div class="panel-body">

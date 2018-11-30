@@ -62,12 +62,13 @@
                                role="grid" aria-describedby="dataTable_info" style="width: 100%;">
                                 <thead>
                                 <tr>
-                                    <th width="8%">Código Recepción</th>
+                                    <th width="6%">Código Recepción</th>
                                     <th width="8%">Fecha de Recepción</th>
-                                    <th width="8%">Chapa</th>
+                                    <th width="6%">Chapa</th>
                                     <th width="12%">Detalle del Problema</th>
-                                    <th width="8%">Marca</th>
-                                    <th width="8%">Modelo</th>
+                                    <th width="6%">Estado</th>
+                                    <th width="6%">Marca</th>
+                                    <th width="6%">Modelo</th>
                                     <th width="8%">Cliente</th>
                                     <th width="10%">Acciones</th>
                                 </tr>
@@ -79,6 +80,7 @@
                                     <td>{{ ob.fecha_recepcion }}</td>
                                     <td>{{ ob.chapa }}</td>
                                     <td>{{ ob.detalle_problema }}</td>
+                                    <td>{{ ob.estado }}</td>
                                     <td>{{ ob.marca }}</td>
                                     <td>{{ ob.modelo }}</td>
                                     <td>{{ ob.cliente }}</td>

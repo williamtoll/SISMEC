@@ -44,6 +44,7 @@ def agregarRecepcionVehiculo(request):
                 form.instance.codigo_recepcion = generar_codigo()
                 form.instance.fecha_recepcion =fecha_recepcion
                 form.instance.año = int(año)
+                form.instance.estado = RecepcionVehiculo.RECIBIDO
                 form.save()
                 messages.add_message(request, messages.INFO, 'Recepcion de vehiculo agregada exitosamente')
                 return HttpResponseRedirect(reverse('recepcion_listado'))
@@ -93,6 +94,7 @@ def listarRecepcion(request):
 def detalleRecepcion(request, id):
     t = loader.get_template('recepcion/detalle.html')
     object_list = RecepcionVehiculo.objects.get(pk=id)
+    fecha_recepcion = datetime.strptime(str(object_list.fecha_recepcion), '%Y-%m-%d').strftime('%Y-%m-%d')
     # Se envia el formulario
     if request.method == 'POST':
         data = request.POST
@@ -133,6 +135,7 @@ def detalleRecepcion(request, id):
         form = RecepcionVehiculoForm(instance=object_list)
         c = {
             'object_list': object_list,
+            'fecha_recepcion': fecha_recepcion,
             'form': form
         }
         return HttpResponse(t.render(c, request))
@@ -149,7 +152,7 @@ def eliminarRecepcion(request):
             obj.delete()
             messages.add_message(request, messages.INFO, 'Recepción eliminada')
         except Exception as e:
-            traceback.print_exc(e.args)
+            #traceback.print_exc(e.args)
             messages.add_message(request, messages.ERROR,
                                  'No se puede eliminar la Recepción.')
         return HttpResponseRedirect(reverse('recepcion_listado'))

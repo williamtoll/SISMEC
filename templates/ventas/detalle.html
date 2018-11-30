@@ -32,11 +32,11 @@
                         <br>
                         <div class="col-lg-6"></div>
                         <label class="col-lg-3">Estado</label>
-                        <input id="estado_cabecera" type="hidden" name="estado_cabecera" value="{{ cabecera_pre.estado }}" />
+                        <input id="estado_cabecera" type="hidden" name="estado_cabecera" value="{{ cabecera_pre.recepcion_vehiculo.estado }}" />
                         <div class="col-lg-3">
                             <select id="condicion_presupuesto" name="condicion_presupuesto" class="form-control">
-                              <option value="PENDIENTE">PENDIENTE</option>
-                              <option value="CONFIRMADO">CONFIRMADO</option>
+                              <option value="PRESUPUESTADO">PRESUPUESTADO</option>
+                              <option value="APROBADO">APROBADO</option>
                               <option value="RECHAZADO">RECHAZADO</option>
                           </select>
                         </div>

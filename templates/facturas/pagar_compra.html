@@ -2,7 +2,7 @@
 {% block header_scripts %}
     {% load staticfiles %}
     <!--script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script-->
-    <script src="{% static "js/facturas/cobrar_factura.js" %}" type="text/javascript"></script>
+    <script src="{% static "js/facturas/pagar_factura.js" %}" type="text/javascript"></script>
 {% endblock %}
 {% block content %}
     <div id="page-wrapper">
@@ -12,7 +12,7 @@
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                         <div class="panel panel-info">
                             <div class="panel-heading">
-                                <h4 class="page-title" style="color:#fff;">COBRO</h4>
+                                <h4 class="page-title" style="color:#fff;">AGREGAR PAGO</h4>
                             </div>
                             <div><input type="hidden" id="id_factura" name="id_factura" value="{{ cabecera_mov.id }}"></div>
                             <div class="panel-body">

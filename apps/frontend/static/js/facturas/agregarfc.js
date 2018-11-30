@@ -43,7 +43,14 @@ $(document).ready(function() {
         $('.total_iva').val(formatearNumeros_convalor("" + total_iva));
 
     });
+    $('#condicion_compra').on('change', function () {
+        if ($('#condicion_compra').val() == "Credito") {
+            $(".cantidad_cuotas").removeClass("ocultar");
+        }else{
+            $(".cantidad_cuotas").addClass("ocultar");
+        }
 
+    });
     $(".precio_uni").each(function(data) {
         var id = this.dataset.id;
         precio_uni = $('#id_precio_' + id).val().replace(".","");
