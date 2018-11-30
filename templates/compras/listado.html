@@ -66,7 +66,7 @@
                                     <th width="10%">Fecha</th>
                                     <th width="10%">Proveedor</th>
                                     <th width="10%">Estado</th>
-                                    <th width="10%">Acciones</th>
+                                    <th width="12%">Acciones</th>
                                 </tr>
                                 </thead>
                             <tbody>
@@ -83,7 +83,7 @@
                                                 <a class="btn btn-sm btn-warning" href="{% url 'frontend_home' %}compras/detalle/{{ ob.id }}"><span class="glyphicon glyphicon-edit"></span> Edit</a>
                                                  <input id="id_eliminar" name="id_eliminar" type="hidden" value="{{ ob.id }}">
                                                 <button type="submit" class="btn btn-sm btn-danger" name="{{ ob.id }}"><span class="glyphicon glyphicon-trash"></span> Delete</button>
-                                                <a class="btn btn-sm btn-warning" href="{% url 'frontend_home' %}facturas/agregar/{{ ob.id }}"><span class="glyphicon glyphicon-edit"></span> Facturar</a>
+                                                <a class="btn btn-sm btn-success" href="{% url 'frontend_home' %}facturas/agregar/{{ ob.id }}"><span class="glyphicon glyphicon-check"></span>Agregar Factura</a>
                                             {%endif%}
 
                                         </form>

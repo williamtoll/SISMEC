@@ -18,6 +18,7 @@ from apps.facturas.models import MovimientoCabecera, MovimientoDetalle, CobroPag
 from apps.productos.models import Producto
 from apps.proveedores.models import Proveedor
 from apps.ventas.models import PresupuestoCab, PresupuestoDet
+from apps.recepcion.models import RecepcionVehiculo
 from sismec.configuraciones import ROW_PER_PAGE
 
 
@@ -167,6 +168,9 @@ def generarFacturaVenta(request, id):
         try:
             for cliente_id in cliente_list:
                 cliente = Cliente.objects.get(id=cliente_id)
+            #Recepcion de Vehiculo asociado
+            recepcion = RecepcionVehiculo()
+            recepcion = RecepcionVehiculo.objects.get(pk=cabPresupuesto.recepcion_vehiculo.id)
             movimiento = MovimientoCabecera()
             movimiento.fecha_emision = fecha
             movimiento.cliente = cliente
@@ -178,9 +182,11 @@ def generarFacturaVenta(request, id):
             if movimiento.tipo_factura == 'Contado':
                 movimiento.estado = MovimientoCabecera.COMPLETADO
                 movimiento.saldo = 0
+                recepcion.estado = RecepcionVehiculo.FACTURADO
             else:
                 movimiento.estado = MovimientoCabecera.PENDIENTE
                 movimiento.saldo = movimiento.monto_total
+                recepcion.estado = RecepcionVehiculo.PENDIENTEDEPAGO
                 #movimiento.fecha_vencimiento = fecha_vencimiento
 
             movimiento.grav10_total = sub_iva10 - total_iva10
@@ -284,10 +290,20 @@ def cobrarFacturaVenta(request, id):
         cobro_pago.dato_adicional = request.POST.get('dato_adicional', '')
         cobro_pago.save()
 
-        cabMovimiento.saldo = saldo_Actual
-        cabMovimiento.save()
-        # ACTUALIZAR ESTADO DE OC
+        recepcion = RecepcionVehiculo()
+        recepcion = RecepcionVehiculo.objects.get(pk=cabMovimiento.presupuesto.recepcion_vehiculo.id)
 
+        cabMovimiento.saldo = saldo_Actual
+        if saldo_Actual > 0:
+            recepcion.estado = RecepcionVehiculo.PENDIENTEDEPAGO
+            cabMovimiento.estado = MovimientoCabecera.PENDIENTE
+        else:
+            recepcion.estado = RecepcionVehiculo.PAGADO
+            cabMovimiento.estado = MovimientoCabecera.COMPLETADO
+        recepcion.save()
+        cabMovimiento.save()
+
+        # ACTUALIZAR ESTADO DE OC
         status = 200
         mensajes = 'Cobro agregado exitosamente'
         json_response = {'status': status, 'mensajes': mensajes}

@@ -54,7 +54,7 @@ def agregarOC(request):
                 detalle.save()
 
             messages.add_message(request, messages.INFO, 'Orden de Compra agregada exitosamente')
-            return HttpResponseRedirect(reverse('frontend_home'))
+            return HttpResponseRedirect(reverse('oc_listado'))
         except Exception as e:
             traceback.print_exc(e.args)
             messages.add_message(request, messages.ERROR, e.args)
