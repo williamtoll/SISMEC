@@ -49,7 +49,16 @@ $(document).ready(function() {
         }else{
             $(".cantidad_cuotas").addClass("ocultar");
         }
-
+    });
+    $('#fecha').on('change', function () {
+        if ($('#fecha').val() < $('#fecha_oc').val()) {
+            alert("Debe de seleccionar una fecha superior o igual a la fecha de la Orden de Compra");
+            var fecha_oc = $('#fecha_oc').val()
+            $("input[type=date]").val("")
+			$("#guardar").prop('disabled', true);
+        }else{
+            $("#guardar").prop('disabled', false);
+        }
     });
     $(".precio_uni").each(function(data) {
         var id = this.dataset.id;

@@ -3,6 +3,7 @@ $(document).ready(function() {
         var saldo= parseInt($("#saldo_actual").val());
         var saldo_nuevo = saldo - parseInt($("#monto_pagado").val());
         $("#saldo").val(saldo_nuevo);
+        $("#saldo").prop("readonly", true);
     });
 
      $('#forma_pago').on('change', function () {

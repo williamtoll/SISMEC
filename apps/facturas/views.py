@@ -29,6 +29,7 @@ def agregarFacturaCompra(request, id):
     t = loader.get_template('facturas/agregar.html')
     cabeceraOc = OrdenCompraCab.objects.get(pk=id)
     detallesOc = OrdenCompraDet.objects.filter(compra_cab__id=cabeceraOc.id)
+    fecha_pedido = datetime.strptime(str(cabeceraOc.fecha_pedido), '%Y-%m-%d').strftime('%Y-%m-%d')
     if request.method == 'POST':
         cabeceraOc.estado = "FACTURADO"
         cabeceraOc.save()
@@ -127,7 +128,8 @@ def agregarFacturaCompra(request, id):
     else:
         c = {
             'cabecera_oc': cabeceraOc,
-            'detalles_oc': detallesOc
+            'detalles_oc': detallesOc,
+            'fecha_pedido': fecha_pedido
         }
     return HttpResponse(t.render(c, request))
 
