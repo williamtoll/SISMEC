@@ -119,6 +119,8 @@ def detalleOC(request, id):
             proveedor = Proveedor.objects.get(id=proveedor_id)
         cabeceraOc.proveedor = proveedor
         cabeceraOc.estado = request.POST.get('condicion_compra', '')
+        if cabeceraOc.estado == "ANULADO":
+            cabeceraOc.motivo_anulacion = request.POST.get('anulacion','')
         cabeceraOc.fecha_pedido = fecha
         cabeceraOc.presupuesto_compra = filename
         cabeceraOc.save()
