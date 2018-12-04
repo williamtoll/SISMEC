@@ -196,6 +196,7 @@ $(document).ready(function() {
                 fecha_fin_timbrado: $('#fecha_fin_timbrado').val(),
                 fecha: $('#fecha').val(),
                 numero_factura: $('#numero_factura').val(),
+                nro_cuota: parseInt($('#cantidad_cuotas').val()) || 0,
                 sub_exentas: parseInt($('.sub_exentas').val().replace(".","")) || 0,
                 sub_iva5: parseInt($('.sub_iva5').val().replace(".","")) || 0,
                 sub_iva10: parseInt($('.sub_iva10').val().replace(".","")) || 0,

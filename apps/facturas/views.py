@@ -227,7 +227,7 @@ def generarFacturaVenta(request, id):
                 detalle.movimiento_cab = movimiento
                 detalle.save()
                 #SE ACTUALIZA EL STOCK DE PRODUCTO
-                cantidad_producto = int(producto.cantidad) + int(detalle.cantidad)
+                cantidad_producto = int(producto.cantidad) - int(detalle.cantidad)
                 producto.cantidad = cantidad_producto
                 producto.save()
             #ACTUALIZAR ESTADO DE OC
@@ -378,7 +378,7 @@ def pagarFacturaCompra(request, id):
 
         # ACTUALIZAR ESTADO DE OC
         status = 200
-        mensajes = 'Cobro agregado exitosamente'
+        mensajes = 'Pago agregado exitosamente'
         json_response = {'status': status, 'mensajes': mensajes}
         return HttpResponse(json.dumps(json_response), content_type='application/json')
     else:
