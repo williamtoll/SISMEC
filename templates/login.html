@@ -87,6 +87,36 @@
     <strong>Version 1.0</strong>
 </p>
 <div id="message"></div>
+{% if form.errors %}
+
+    <input type="hidden" id="value_error" value="Su nombre de usuario y contraseña no coinciden. Por favor,
+                                    inténtelo de
+                                    nuevo." name="value_error"/>
+
+
+    <script>
+        $(document).ready(function () {
+            var message = document.getElementById("value_error").value;
+            $("#message").removeClass('msg-error msg');
+            $('#message').addClass('msg-error msg')
+                .html("<div class='msg-content msg-content-error'>" + message + ".</div>");
+            $('#message').show().fadeOut(10000);
+
+
+        });
+    </script>
+{% else %}
+    <script>
+        $(document).ready(function () {
+            $('#login_box').show().fadeOut(10);
+            $('#footer-log').show().fadeOut(10);
+            $('#login_box').show().fadeIn(5000);
+            $('#footer-log').show().fadeIn(5000);
+
+
+        });
+    </script>
+{% endif %}
 
 {% comment %}	{% if error %}
            {% if error.message == "error_administracion" %}
