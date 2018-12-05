@@ -1,0 +1,30 @@
+/*
+    Document   : form
+    Created on : 30-oct-2014, 13:55:23
+    Author     : Ing. Rainer Segura Peña
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+.form-horizontal input, .form-horizontal select, .ui-spinner {
+    min-width: 200px;
+    max-width: 200px;
+}
+
+ul.ui-autocomplete {
+    overflow-y: auto;
+    max-height: 50%;
+}
+
+
+.ui-datepicker-calendar a.ui-state-active {
+  background: #bedcf0 !important;
+  background-repeat: no-repeat !important;
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#bedcf0), color-stop(25%, #bedcf0), to(#bedcf0)) !important;
+  background-image: -webkit-linear-gradient(#bedcf0, #bedcf0 25%, #bedcf0) !important;
+  background-image: -moz-linear-gradient(top, #bedcf0, #bedcf0 25%, #bedcf0) !important;
+  background-image: -ms-linear-gradient(#bedcf0, #bedcf0 25%, #bedcf0) !important;
+  background-image: -o-linear-gradient(#bedcf0, #bedcf0 25%, #bedcf0) !important;
+  background-image: linear-gradient(#bedcf0, #bedcf0 25%, #bedcf0) !important;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#bedcf0', endColorstr='#bedcf0', GradientType=0) !important;
+}

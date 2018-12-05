@@ -1,0 +1,18 @@
+{% if (range.length > 1) { %}
+    <ul>
+        {% if(previous) { %}
+            <li><a class="previous" data-target="{{ previous }}">«</a></li>
+        {%  } %}
+        {%  for(page in range) { %}
+            {% if (range[page] == current) { %}
+                <li class="active"><a>{{ range[page] }}</a></li>
+            {%  } %}
+            {%  if (range[page] != current) { %}
+                <li><a data-target="{{ range[page] }}">{{ range[page] }}</a></li>
+            {% } %}
+        {%  } %}
+        {%  if(next) { %}
+            <li><a class="next" data-target="{{ next }}">»</a></li>
+        {%  } %}
+    </ul>
+{% } %}

@@ -1,0 +1,71 @@
+/* 
+    Document   : head.css
+    Created on : 30-sep-2013, 13:47:16
+    Author     : rhdominguez
+    Description:
+        Purpose of the stylesheet follows.
+*/
+#fondoc{
+    /*background-image: url(../images/head.jpg);*/
+
+    background:  url(../images/head1.jpg);
+    width: 970px;
+    height: 65px;
+    position:relative;
+    left: 2%;
+    top: 0%; 
+
+}
+
+#menu-collapse{
+    background: #F7F7F9;
+    width: 280px;
+    height: 65px; 
+    position: relative;
+    left: 2%;
+    top: 160%;
+}
+
+#fecha{
+    position: relative;
+    left: 5%;
+    top: 180%;
+}
+
+
+#titulo {    
+    background: #F7F7F9;
+    width: 280px;  
+    position: relative;
+    left: 300px;
+    top: -85px;
+}
+
+.contenido1{
+    height: 600px;   
+    background: #F7F7F9; 
+    border-left: 0.5px solid #cccccc;
+}
+
+.contenido2{
+    position:relative;
+    top: 5%;
+    left: 15%;
+
+}
+
+.form-inline{
+    position:relative;
+    top: 10%;
+    left: 25%;
+
+
+}
+
+#mensaje{
+    position:relative;
+    top: 15%;
+    left: 25%;
+
+}
+

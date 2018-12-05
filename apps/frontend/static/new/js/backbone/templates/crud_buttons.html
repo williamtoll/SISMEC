@@ -1,0 +1,12 @@
+
+{% comment %}{% if (add) { %}
+    <a class="btn btn-primary add" rel="tooltip" title="Adicionar"><i class="icon-plus"></i></a>
+{% } %}
+{% if (edit && model) { %}
+    <a class="btn btn-warning edit" rel="tooltip" title="Modificar"><i class="icon-pencil"></i></a>
+{% } %}
+{% if (remove && model) { %}
+    <a class="btn btn-danger remove" rel="tooltip" title="Eliminar"><i class="icon-remove"></i></a>
+{% } %}
+
+{% endcomment %}
