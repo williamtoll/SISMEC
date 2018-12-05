@@ -1,0 +1,359 @@
+/* 
+    Document   : menu
+    Created on : 08-dic-2013, 11:42:02
+    Author     : rainer
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+
+
+.spora_menu
+{
+        position:relative;
+        float:left;
+        /*margin-top: 0px;*/
+        /*padding: 0px 0px 0px 0px;*/
+      
+        
+/*        border-right: 1px solid #ccc;*/
+        
+/*position: relative;
+	
+	margin-top: 6px;
+	margin-bottom: 18px;
+	padding: 0px 0px 10px 0px;
+	width: 19%;
+	-moz-border-radius: 10px 10px 10px 10px;
+	-webkit-border-radius: 10px 10px 10px 10px;
+	border-radius: 10px 10px 10px 10px;
+	border-top: 1px solid #0000;
+	border-left: 1px solid #aaa;
+	border-right: 1px solid #999;
+	border-bottom: 1px solid #999;
+	-moz-box-shadow: 2px 2px 1px rgb(180,180,180); 
+	-webkit-box-shadow: 2px 2px 1px rgb(180,180,180); */
+}
+#spora_menu_head
+{
+    
+	
+	/*border-right: 1px solid #999;
+	border-bottom: 1px solid #999;
+	-moz-box-shadow: 2px 2px 1px rgb(180,180,180); 
+	-webkit-box-shadow: 2px 2px 1px rgb(180,180,180); 
+        background-color: #DFE5E7;
+    margin-top: 1%;*/
+    margin-top: 6px;
+	margin-bottom: 18px;
+	padding: 0px 0px 10px 0px;
+    -moz-border-radius: 10px 10px 10px 10px;
+	-webkit-border-radius: 10px 10px 10px 10px;
+	border-radius: 10px 10px 10px 10px;
+	border-top: 1px solid #aaa;
+	border-left: 1px solid #aaa;
+	border-right: 1px solid #999;
+	border-bottom: 1px solid #999;
+	-moz-box-shadow: 2px 2px 1px rgb(180,180,180);
+	-webkit-box-shadow: 2px 2px 1px rgb(180,180,180);
+    background:url("../images/3menubgtop.png") repeat-x top #f0f0f0;
+    font-family: 10px 'Helvetica', Arial, sans-serif;
+
+
+                
+}
+li label
+{
+   
+}
+#spora_menu_head li
+{
+     border-bottom:1px solid #ced8df;
+/*     margin-left: 2%;*/
+     
+    
+}
+
+
+#spora_menu_head ul li, #spora_menu_head li:last-child
+{
+  	border:none;
+}
+
+#spora_menu_head a:hover
+{
+	color:#003399;
+	-webkit-transition: color 0.2s linear;
+}
+
+#spora_menu_head a
+{
+	cursor: pointer;
+	
+	text-decoration:none;
+	font-family: 10px 'Helvetica', Arial, sans-serif;
+
+	padding:3px 5px;
+	
+}
+li a label
+{
+
+    font: 12px Verdana, Arial,Helvetica,sans-serif;
+}
+
+#spora_menu_head ul a:hover
+{
+	/*background-color:#FFF;*/
+	color:#2961A9;
+	text-shadow:inherit;
+        /*font-size: 13.5px;*/
+	-webkit-transition: color, background-color 0.2s linear;
+}
+ul#spora_menu_head, ul#spora_menu_head2, ul#spora_menu_head1  
+{
+    /*display:block;*/
+    
+	/*background-color:#000000;*/
+    margin:0;
+    padding:0;
+	
+    
+   list-style:none;
+        
+}
+
+ul#spora_menu_head2 li
+{
+   /* background-color: #000033;*/
+    
+}
+
+
+
+#spora_menu_head li ul li#spora-li-on
+{
+
+   /* background-color:  #f4f4f4;*/
+    font: 10px Verdana, Arial,Helvetica,sans-serif;
+    color: #F9B855;
+    text-shadow: 1px 1px #ddd;
+    text-align:left;
+
+   
+}
+#spora_menu_head li ul li#spora-li-on a label, #spora_menu_head li#spora-li-on a label
+{
+    /* color: #0069aa;*/
+}
+i#spora-arrow-rigth
+{
+  /*  float: right;
+    width: 20px;
+    color: #000;*/
+}
+#spora_menu_head li ul li
+{
+    
+        
+    /*
+	padding: 8px 0px 0px 12px;
+
+	color: #000033;
+	text-shadow: 1px 1px #ddd;
+	text-align:left;
+    height: 26px;*/
+}
+
+#spora_menu_head1 li ul li
+{
+/*    background-color: #fff;
+    background-image: url(../images/bgsubmit.png);
+    border-bottom: 1px solid #ccc;
+    box-shadow: inset 0 5px 5px -5px #000;*/
+    
+}
+
+li#no-selected
+{
+	/*display:none;*/
+    height: 26px;
+	padding: 8px 0px 0px 12px;
+	background: url("../images/3menubg.png") no-repeat bottom;
+
+    font: 12px Verdana, Arial,Helvetica,sans-serif;
+	color: #555;
+	text-shadow: 1px 1px #eee;
+	text-align:left;
+}
+
+li#no-selected-last
+{
+	/*display:none;*/
+    height: 26px;
+	padding: 8px 0px 0px 12px;
+	background: url("../images/3menubg_last.png") no-repeat bottom;
+
+    font: 12px Verdana, Arial,Helvetica,sans-serif;
+	color: #555;
+	text-shadow: 1px 1px #eee;
+	text-align:left;
+}
+
+img.spora_image_menu
+{
+    float: right;
+    margin-right: 2%;
+    margin-top: 2%;
+    cursor: pointer;
+}
+
+li.li-h
+{
+    height: 26px;
+}
+li.li-h a label
+{
+    position: relative;
+    top: 5px;
+    left: 5px;
+}
+
+a label
+{
+    margin-left: 5px;
+}
+
+li#spora-li-on a label, li#spora-li-on-last a label, li#li-on a label
+{
+    color: #0069aa;
+
+}
+li#li-on {
+       background: #ffffff !important;
+}
+
+a
+{
+    cursor: pointer;
+}
+
+li.menu-select a
+{
+    /*background: -ms-linear-gradient(top,#BACEFF, #4094d0);
+    background: -moz-linear-gradient(top,#BACEFF, #4094d0);
+    background: -webkit-gradient(linear, left top, left bottom, from(#BACEFF),to(#4094d0));*/
+    /*-moz-border-radius: 10px 10px 10px 10px;
+	-webkit-border-radius: 10px 10px 10px 10px;
+	border-radius: 10px 10px 10px 10px;
+    /*border: 1px solid #0a82be;*/
+    border-radius: 4px;
+    background: #FCFCFC;
+    border: 1px solid #A0A0A0;
+  /*box-shadow: 0 1px 0 #D3D3D3 inset, 0 -1px 0 #D3D3D3 inset, 1px 0 0 #D3D3D3 inset, -1px 0 0 #D3D3D3 inset;*/
+    box-shadow: 0 0 1px rgba(50, 50, 50, 0.4);
+
+    color:#0069aa !important;
+    font-weight: bold;
+    opacity: 10%;
+
+    
+}
+
+li.menu-select a span
+{
+
+    font: 12px Verdana, Arial,Helvetica,sans-serif;
+}
+
+
+li#spora-li div a
+{
+
+
+}
+
+li#spora-li div, li#spora-li-on
+{
+    /*-moz-border-radius: 10px 10px 10px 10px;
+	-webkit-border-radius: 10px 10px 10px 10px;
+	border-radius: 10px 10px 10px 10px;*/
+
+    height: 26px;
+    padding: 8px 0px 0px 12px;
+    margin-left: 1px;
+    text-shadow: 1px 1px #ddd;
+	/*border-top: 0 solid #aaa;
+	border-left: 0 solid #aaa;
+	border-right: 0 solid #999;
+	border-bottom: 0 solid #999;
+	-moz-box-shadow: 2px 2px 1px rgb(180,180,180);
+	-webkit-box-shadow: 2px 2px 1px rgb(180,180,180);
+	box-shadow: 2px 2px 1px rgb(180,180,180);*/
+    background: url("../images/3menubg_on.png") no-repeat bottom;
+    font: 13px Verdana, Arial,Helvetica,sans-serif;
+    /*background-color: #999999;*/
+
+}
+
+li#spora-li-on-last
+{
+   height: 26px;
+    padding: 8px 0px 0px 12px;
+    margin-left: 1px;
+    text-shadow: 1px 1px #ddd;
+    background: url("../images/3menubg_on_last.png") no-repeat bottom;
+    font: 13px Verdana, Arial,Helvetica,sans-serif;
+}
+
+li#spora-li div a label
+{
+    font: 12px Verdana, Arial,Helvetica,sans-serif;
+	/*color: #555;*/
+	text-shadow: 1px 1px #eee;
+    color: #0069aa;
+    font-weight: bold;
+
+}
+/*Mensajes*/
+
+/*.plataforma-error-mensaje, .plataforma-exito-mensaje, .plataforma-info-mensaje
+{
+
+   position:absolute;
+   top: 50%;
+   left: 50%;
+   font-size:14px;
+   width: auto;
+   border: 1px solid;
+   margin-left: 10px;
+   padding:15px 10px 15px 50px;
+   background-repeat: no-repeat;
+   background-position: 10px center;
+   -moz-border-radius: 2px;
+   -webkit-border-radius: 2px;
+   -moz-box-shadow: 2px 2px 5px rgb(0,0,0);
+   border-radius: 6px 6px 6px 6px;
+   display:none;
+}
+
+.plataforma-error-mensaje
+{
+    color: #D8000C;
+    background-color: #FFBABA;
+    background-image: url('../images/mensajes/error.png')
+}
+
+.plataforma-exito-mensaje
+{
+    color: #4F8A10;
+    background-color: #DFF2BF;
+    background-image:url('../images/mensajes/exito.png');
+}
+
+.plataforma-info-mensaje
+{
+    color: #00529B;
+    background-color: #BDE5F8;
+    background-image: url('../images/mensajes/info.png');
+}*/

@@ -1,0 +1,101 @@
+body {
+  padding-bottom: 40px;
+  font-family: Arial;
+}
+
+.login-box {
+  color: #FFFFFF;
+  padding: 1px 1px;
+  width: 490px;
+  overflow: overlay;
+  margin: 20% auto;
+
+  background-color: #0093e5;
+  background-image: -moz-linear-gradient(top, #0094e5, #004fc2);
+  background-image: -ms-linear-gradient(top, #0094e5, #004fc2);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#0094e5), to(#004fc2));
+  background-image: -webkit-linear-gradient(top, #0094e5, #004fc2);
+  background-image: -o-linear-gradient(top, #0094e5, #004fc2);
+  background-image: linear-gradient(top, #0094e5, #004fc2);
+
+  -webkit-box-shadow: 0 6px 23px 7px rgba(0, 0, 0, 0.25), inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 0 6px 23px 7px rgba(0, 0, 0, 0.25), inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+  box-shadow: 0 6px 23px 7px rgba(0, 0, 0, 0.25), inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+}
+
+.welcome-region {
+  margin: 0 auto;
+  padding: 6px;
+}
+
+.welcome-box {
+  background-color: #0094e5;
+  text-transform: uppercase;
+  font-weight: bold;
+  border-radius: 0 0 5px 5px;
+  padding: 6px 17px;
+  margin-top: 6px;
+}
+
+.upper-login {
+  background-color: white;
+  text-align: center;
+  padding-bottom: 10px;
+}
+
+.lower-login {
+  padding: 22px;
+  font-size: 15px;
+}
+
+.hr {
+  margin-top: .7em;
+  border-bottom: 1px solid #FFFFFF;
+  width: 100%;
+}
+
+.entry {
+  float: left;
+  margin-right: 15px;
+  margin-top: 15px;
+}
+
+.entry label {
+  display: block;
+}
+
+.entry input {
+  width: 153px;
+  height: 20px;
+  border: 2px #8f949a solid;
+  margin-top: 8px;
+}
+
+fieldset {
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+input[type=submit] {
+  float: left;
+  background-color: #33a9ea;
+  border: 2px #8db7e7 solid;
+  color: #FFFFFF;
+  padding: 4px 28px;
+  font-size: 12px;
+  margin-top: 9%;
+  width: 100px;
+
+  background-color: #0093e5;
+  background-image: -moz-linear-gradient(top, #33a9ea, #0094e5);
+  background-image: -ms-linear-gradient(top, #33a9ea, #0094e5);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#33a9ea), to(#0094e5));
+  background-image: -webkit-linear-gradient(top, #33a9ea, #0094e5);
+  background-image: -o-linear-gradient(top, #33a9ea, #0094e5);
+  background-image: linear-gradient(top, #33a9ea, #0094e5);
+}
+
+.yellow {
+  color: yellow;
+}

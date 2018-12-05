@@ -96,17 +96,21 @@ $(document).ready(function() {
     $(".agregar").click(function () {
         es_repetido = itemRepetidos();
         if (es_repetido == false){
-           $('.detalle_pedido').append(item_detalle_pedido);
-            index = $('.item-detalle').length;
-            var inputs= $('.item-detalle')[index -1].children
-            descripcion = $('#id_producto_agregar :selected').text();
-            cantidad_item = $('#cantidad').val();
-            inputs[0].value=descripcion;
-            inputs[1].value=cantidad_item;
-            select_producto.find('option').remove().end();
-            select_producto.val('').trigger('change');
-            $('#cantidad').val('1');
-            idsum +=1;
+            if ($('#id_producto_agregar').val() == null){
+                alert("Favor seleccionar un producto")
+            }else{
+                $('.detalle_pedido').append(item_detalle_pedido);
+                index = $('.item-detalle').length;
+                var inputs= $('.item-detalle')[index -1].children
+                descripcion = $('#id_producto_agregar :selected').text();
+                cantidad_item = $('#cantidad').val();
+                inputs[0].value=descripcion;
+                inputs[1].value=cantidad_item;
+                select_producto.find('option').remove().end();
+                select_producto.val('').trigger('change');
+                $('#cantidad').val('1');
+                idsum +=1;
+            }
         }else{
             select_producto.find('option').remove().end();
             select_producto.val('').trigger('change');

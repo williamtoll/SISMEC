@@ -12,14 +12,17 @@ class OrdenCompraCab(models.Model):
     CONFIRMADO = 'CONFIRMADO'
     FACTURADO = 'FACTURADO'
     RECHAZADO = 'RECHAZADO'
+    ANULADO = 'ANULADO'
     ESTADO_CHOICES = (
         (PENDIENTE, 'Pendiente'),
         (CONFIRMADO, 'Confirmado'),
         (FACTURADO, 'Facturado'),
         (RECHAZADO, 'Rechazado'),
+        (ANULADO, 'Anulado'),
     )
     estado = models.CharField(max_length=200)
     presupuesto_compra = models.CharField(max_length=255, blank=True, null=True)
+    motivo_anulacion = models.CharField(max_length=255, blank=True, null=True)
     class Meta:
         """Establece las configuraciones del modelo de base de datos"""
         managed = True

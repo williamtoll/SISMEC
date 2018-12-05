@@ -67,6 +67,7 @@
                                     <th width="8%">Nro.</th>
                                     <th width="10%">Fecha de Presupuesto</th>
                                     <th width="10%">Código de Recepción</th>
+                                    <th width="10%">Cliente</th>
                                     <th width="10%">Estado</th>
                                     <th width="10%">Acciones</th>
                                 </tr>
@@ -77,6 +78,7 @@
                                     <td>{{ ob.id }}</td>
                                     <td>{{ ob.fecha_presupuesto }}</td>
                                     <td>{{ ob.codigo_recepcion }}</td>
+                                    <td>{{ ob.nombre }}</td>
                                     <td>{{ ob.estado }}</td>
                                     <td><center>
                                         <form id="form_add_oc" action="{% url 'eliminar_pre' %}" method="post">

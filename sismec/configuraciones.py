@@ -1,5 +1,5 @@
 # Direccion de archivos estaticos
-PATH_ESTATICO='E:\\Lourdes\\Projects\\SISMEC\\apps\\frontend\\static'
+PATH_ESTATICO='G:\\PROJECTS\\Personnel\\Lourdes\\SISMEC\\apps\\frontend\\static'
 PRESUPUESTO_DIR = 'C:\\presupuestos\\'
 
 # Tiempo logout

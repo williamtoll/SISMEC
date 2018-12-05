@@ -18,6 +18,15 @@ $(document).ready(function() {
         $(this).val(formatearNumeros_convalor($(this).val()));
         console.log(formatearNumeros_convalor($(this).val()))
     });
+
+    $('#condicion_compra').on('change', function () {
+        if ($('#condicion_compra').val() == "ANULADO") {
+            $(".motivo_anulacion").removeClass("ocultar");
+        }else{
+            $(".motivo_anulacion").addClass("ocultar");
+        }
+
+    });
     inicializarSelectGenerales();
     function inicializarSelectGenerales() {
         select_proveedor.select2({

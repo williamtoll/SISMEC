@@ -1,32 +1,121 @@
-{% extends "login_base.html" %}
-{% load static %}
-{% block content %}
-    <div class="wrapper">
-        <form name="form-signin" class="form-signin" id="login-form" class="form-horizontal" enctype="multipart/form-data" method="post" action="{{ app_path }}">
-            <h2 class="form-signin-heading">Please login</h2>
-              {% csrf_token %}
-              <div class="input-group">
-                  <span class="input-group-addon"><i class="glyphicon glyphicon-user"> </i></span>
-                  <input id="id_username" maxlength="254" name="username" type="text" class="form-control" value=""
-                           placeholder="Usuario">
-              </div>
-              <br>
-              <div class="input-group">
-                  <span class="input-group-addon"><i class="glyphicon glyphicon-lock"> </i></span>
-                  <input id="id_password" name="password" type="password" class="form-control" name="password"
-                           placeholder="Contraseña">
-              </div>
-              <br>
-              <div class="form-group">
-                  <!-- Button -->
-                  <div class="form-actions clearfix controls">
-                      <button type="submit" class="btn btn-outline-primary pull-right btn-block"><i
-                                    class="glyphicon glyphicon-log-in"> </i> Login
-                      </button>
-                  </div>
-              </div>
-        </form>
-        <!-- /.container-fluid -->
-        <footer class="footer text-center"> 2018 &copy; Lourdes Escurra </footer>
-     </div>
-{% endblock %}
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<html>
+<head>
+    {% load static %}
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link href="{% static 'new/css/singular/theme1.css' %}" rel="stylesheet">
+    <link href="{% static 'new/css/singular/datatables.css' %}" rel="stylesheet">
+    <link href="{% static 'new/css/singular/grids.css' %}" rel="stylesheet">
+    <link href="{% static 'new/css/singular/forms.css' %}" rel="stylesheet">
+    <link href="{% static 'new/css/login.css' %}" rel="stylesheet" type="text/css"/>
+    <link href="{% static 'new/css/base.css' %}" rel="stylesheet" type="text/css"/>
+    <title>SISMEC - Sistema Mecánico</title>
+    <style type="text/css">
+        #logo {
+            background-image: url("{% static 'new/images/fondo/logo_1.png' %}");
+            height: 130px;
+            margin: 0 auto;
+            position: relative;
+            top: 10px;
+            width: 230px;
+            background-size: 230px 130px;
+        }
+    </style>
+    <script type="text/javascript" src="{% static 'new/js/libs/jquery-1.9.1.js' %}"></script>
+    <script type="text/javascript" src="{% static 'new/js/libs/jquery-ui.js' %}"></script>
+    <script type="text/javascript" src="{% static 'new/js/libs/layoutManager/jquery.layout-latest.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'new/js/libs/jquery.ui.menubar.js' %}"></script>
+    <script type="text/javascript" src="{% static 'new/js/libs/jquery.ui.combobox.js' %}"></script>
+
+    <link href="{% static 'new/images/fondo/logo_1.png' %}" type="image/x-icon" rel="icon">
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $("#select-domain").combobox();
+
+            $("#button1").button();
+
+        });
+    </script>
+
+
+</head>
+<body>
+<div id="wrapper">
+    <div id="login_box">
+        <div id="login_top">
+            <div id="logo">
+            </div>
+        </div>
+        <div id="login_bottom">
+            <div id="grafica_login"></div>
+            <div id="form_position">
+
+                <form id="tooltip_form" action="" method="post">
+                    {% csrf_token %}
+                    <div>
+                        <input id="id_username" maxlength="254" name="username" type="text" class="form-control"
+                               value=""
+                               placeholder="Usuario">
+                        {#                                <input id="usuario" type="text" name="username" value="{{ last_username }}" placeholder="{%   trans "User"  %}" title="Rianer">#}
+                    </div>
+
+                    <div>
+                        <input id="id_password" name="password" type="password" class="form-control" name="password"
+                               placeholder="Contraseña">
+                        {#                                <input id="password" type="password" name="password" placeholder="{% trans "Password" %}">#}
+                    </div>
+
+
+                    <div>
+                        <button id="button1" type="submit" class="ui-button">Entrar</button>
+
+                    </div>
+
+
+                </form>
+
+
+            </div>
+        </div>
+
+
+    </div>
+</div>
+<p id="footer-log" align="center" style="font-size: 10px;">SISMEC<br>
+    <strong>Version 1.0</strong>
+</p>
+<div id="message"></div>
+{% if form.errors %}
+
+    <input type="hidden" id="value_error" value="Su nombre de usuario y contraseña no coinciden. Por favor,
+                                    inténtelo de
+                                    nuevo." name="value_error"/>
+
+
+    <script>
+        $(document).ready(function () {
+            var message = document.getElementById("value_error").value;
+            $("#message").removeClass('msg-error msg');
+            $('#message').addClass('msg-error msg')
+                .html("<div class='msg-content msg-content-error'>" + message + ".</div>");
+            $('#message').show().fadeOut(10000);
+
+
+        });
+    </script>
+{% else %}
+    <script>
+        $(document).ready(function () {
+            $('#login_box').show().fadeOut(10);
+            $('#footer-log').show().fadeOut(10);
+            $('#login_box').show().fadeIn(5000);
+            $('#footer-log').show().fadeIn(5000);
+        });
+    </script>
+{% endif %}
+
+</body>
+</html>
+

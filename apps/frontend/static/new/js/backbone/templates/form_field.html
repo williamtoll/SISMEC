@@ -1,0 +1,42 @@
+<div class="control-group">
+    <style type="text/css">
+        label.asterisk {
+            color: #be0000;
+        }
+    </style>
+    <script type="text/javascript">
+        query = $('#'+'{{ id }}');
+        attributes = query.get(0).attributes
+        for (var i in attributes)
+            if(attributes[i].name == 'asterisk')
+                $('#label_'+'{{ id }}').addClass("asterisk").html("*");
+
+        nodeName = query.get(0).nodeName;
+        if (nodeName == 'SELECT') {
+           /* if(!query.get(0).multiple)
+                query.combobox();*/
+
+        } else if (nodeName == 'INPUT') {
+
+              for (var i = 0; i < attributes.length; i++) {
+                  if (attributes[i].name == 'type') {
+                      nodeValue = attributes[i].nodeValue;
+                      if (nodeValue == 'checkbox') {
+                          //query.
+                      } else if (nodeValue == 'radio') {
+
+                      }
+                  } else if (attributes[i].name == 'number') {
+                      query.spinner();
+                  }
+
+              }
+        }
+
+        //console.log(query.get(0).nodeName)
+   </script>
+    <label class="control-label" for="{{ id }}" >{{ title }}:<label id="label_{{ id }}"></label></label>
+    <div class="controls">
+        {{ editor }}
+    </div>
+</div>

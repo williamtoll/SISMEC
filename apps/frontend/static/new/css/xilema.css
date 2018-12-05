@@ -1,0 +1,252 @@
+/** 
+    Document   : xilema
+    Created on : 11-dic-2013, 16:01:32
+    Author     : rsegura
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+
+ /**
+             *	Basic Layout Theme
+             * 
+             *	This theme uses the default layout class-names for all classes
+             *	Add any 'custom class-names', from options: paneClass, resizerClass, togglerClass
+            */
+
+.ui-layout-pane { /* all 'panes' */ 
+    background: #FFF; 
+    /*  padding-bottom: 5px;
+      padding-left:5px;
+      padding-right: 5px;*/
+    /*  border: 1px solid #BBB; */
+    /*  padding: 10px; */
+    overflow: auto;
+} 
+
+.ui-layout-resizer { /* all 'resizer-bars' */ 
+    background: #ECECEC; 
+} 
+
+.ui-layout-toggler { /* all 'toggler-buttons' */ 
+    background: #AAA; 
+} 
+
+
+
+
+/*Mios*/
+
+body {
+    font-size: 75%;
+    font-family: "Arial";
+    background-color: #EBEBEB;
+
+}
+
+*:focus {
+    outline: 0 !important;
+}
+
+h3 {
+    font-size: 1em;
+}
+
+table {
+    font-size: 1em;
+}
+
+/*Esto siempre va, reglas de jLayout ;) */
+html, body {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+
+}
+
+
+
+
+
+div#action_menu {
+    /* z-index: 1;*/
+    position: absolute;
+    top: 61px;
+    width: 100%;
+    /*height: 34px;*/
+    /* height: 2.916em;*/
+    /*Bordes de las rayitas de arriba*/
+    /*  border-top: solid 1px #1D8F07;*/
+    border-bottom: solid 1px #0a82be;
+    background: #EBEBEB;
+    box-shadow: 0px 2px 3px #D2D2D2;
+
+}
+
+#action-button ul {
+    position: absolute;
+    width: 80px;
+}
+
+#tabs .ui-tabs-panel {
+    min-height: 280px;
+    overflow: auto;
+}
+
+
+
+.header {
+    border-bottom: 1px solid #0a82be;
+    height: 60px;
+    background: white;
+}
+
+.logo_grafica {
+    height: 60px;
+    display: inline;
+}
+
+.logo {
+    height: 60px;
+
+    background: #ffffff; /* Old browsers */
+
+    background: -moz-linear-gradient(top, #ffffff 0%, #ffffff 10%, #dedede 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ffffff), color-stop(32%, #ffffff), color-stop(100%, #dedede)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #ffffff 0%, #ffffff 10%, #dedede 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #ffffff 0%, #ffffff 10%, #dedede 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, #ffffff 0%, #ffffff 10%, #dedede 100%); /* IE10+ */
+    background: linear-gradient(to bottom, #ffffff 0%, #ffffff 10%, #dedede 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#dedede', GradientType=0); /* IE6-9 */
+
+    float: left;
+}
+
+.img_logo {
+    margin: 8px 0 8px 1em;
+}
+
+.grafica {
+    height: 60px;
+    float: left;
+}
+
+/*.grafica_xavia {
+    background-image: url("singular_personalizado/images/grafica_xavia.jpg");
+    width: 242px;
+}*/
+
+.usuario {
+    background: #d6d6d6;
+    height: 60px;
+    float: right;
+    padding: 0 12px 0 0;
+}
+
+.content_avatar {
+    padding: 3px;
+    height: 46px;
+    width: 46px;
+    background: #FFFFFF;
+    margin: 4px 6px;
+    border-radius: 4px;
+    float: left;
+}
+
+.avatar {
+    height: 46px;
+    width: 46px;
+    overflow: hidden;
+}
+
+.user-opt {
+    margin-top:12px;
+    display: inline-block;
+}
+
+.other-opt{
+    background: none repeat scroll 0 0 white;
+    float: left;
+    height: 60px;
+    padding: 0 12px 0 0;
+
+}
+
+.other-opt ul.ui-menubar {
+    margin-top:12px;
+
+}
+
+/**
+*	ALL CSS below is only for cosmetic and demo purposes
+*	Nothing here affects the appearance of the layout
+*/
+
+.ui-layout-north{
+    padding: 0;
+    background: #D6D6D6;
+
+}
+.ui-layout-west{
+    padding:5px;
+    background: #D6D6D6;
+
+}
+
+.ui-layout-south{
+    z-index: 20 !important;
+    /*background: #0a82be;*/
+    background: -webkit-gradient(linear, left top, left bottom, from(#0a82be), to(#0a82be), color-stop(0.7, #003399));
+    background: -moz-linear-gradient(top, #0a82be, #003399);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#0a82be', endColorstr='#003399');
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#0a82be', endColorstr='#003399')";
+    background: -o-linear-gradient(top, #0a82be, #003399);
+    overflow: hidden;
+
+}
+.ui-layout-south p{
+    color: white;
+    margin-top:10px;
+    /* margin-top: 8px;*/
+
+}
+
+
+
+.ui-layout-center{
+    padding: 5px;
+    background: #EBEBEB;
+
+}
+/*Este es el handler Visible al hacer resizable un área*/
+.ui-layout-resizer-west {
+    border-left: solid 1px #ADADAD;
+    border-right: solid 1px #ADADAD ;
+    background: #ECECEC;
+    width: 4px;
+    text-align: center;
+}
+
+.ui-toolbar
+{
+    background-color: #fff; 
+}
+
+
+
+.ui-layout-toggler-south{
+    visibility: hidden !important;
+}
+
+.label-title
+{
+    font-size: 1.18em;
+    color: #0a82be;
+}
+
+a
+{
+    cursor: pointer;
+}

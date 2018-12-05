@@ -49,7 +49,16 @@ $(document).ready(function() {
         }else{
             $(".cantidad_cuotas").addClass("ocultar");
         }
-
+    });
+    $('#fecha').on('change', function () {
+        if ($('#fecha').val() < $('#fecha_oc').val()) {
+            alert("Debe de seleccionar una fecha superior o igual a la fecha de la Orden de Compra");
+            var fecha_oc = $('#fecha_oc').val()
+            $("input[type=date]").val("")
+			$("#guardar").prop('disabled', true);
+        }else{
+            $("#guardar").prop('disabled', false);
+        }
     });
     $(".precio_uni").each(function(data) {
         var id = this.dataset.id;
@@ -196,6 +205,7 @@ $(document).ready(function() {
                 fecha_fin_timbrado: $('#fecha_fin_timbrado').val(),
                 fecha: $('#fecha').val(),
                 numero_factura: $('#numero_factura').val(),
+                nro_cuota: parseInt($('#cantidad_cuotas').val()) || 0,
                 sub_exentas: parseInt($('.sub_exentas').val().replace(".","")) || 0,
                 sub_iva5: parseInt($('.sub_iva5').val().replace(".","")) || 0,
                 sub_iva10: parseInt($('.sub_iva10').val().replace(".","")) || 0,
