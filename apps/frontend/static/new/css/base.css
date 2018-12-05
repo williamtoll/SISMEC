@@ -7,7 +7,7 @@
 */
 div#message {
     position: absolute;
-    top: 35%;
+    top: 190px;
     left: 42%;
     z-index: 1060;
     min-width: 200px;

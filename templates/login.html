@@ -112,39 +112,9 @@
             $('#footer-log').show().fadeOut(10);
             $('#login_box').show().fadeIn(5000);
             $('#footer-log').show().fadeIn(5000);
-
-
         });
     </script>
 {% endif %}
-
-{% comment %}	{% if error %}
-           {% if error.message == "error_administracion" %}
-                <input type="hidden" id="value_error" value="{% trans "error_administracion"  %}" name="value_error" />
-
-           {% else %}
-
-               <input type="hidden" id="value_error" value="{{ error }}" name="value_error" />
-       {% endif %}
-       {% endcomment %}
-{% comment %}
-            {% if form.errors %}
-                      <input type="hidden" id="value_error" value="{% trans "Please insert a correct user/password to login. No empty fields." %}" name="value_error" />
-                    {% else %}
-                        <input type="hidden" id="value_error" value="{% trans "Start session" %}" name="value_error" />
-
-            {% endif %}
-
-           <script>
-                 $(document).ready(function(){
-                     var mensaje = document.getElementById("value_error").value;
-                     $("#mensaje_error").removeClass('spora_login_error');
-                     $('#mensaje_error').addClass('spora_login_error')
-                                        .html("<p>"+mensaje+"</p>");
-                     $('#mensaje_error').show().fadeOut(10000);
-
-                 });
-           </script> {% endcomment %}
 
 </body>
 </html>
