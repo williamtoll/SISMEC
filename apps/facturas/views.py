@@ -14,7 +14,7 @@ from datetime import datetime
 import json
 from django.views.decorators.csrf import csrf_exempt
 # Agregar un factura Compra
-from apps.facturas.models import MovimientoCabecera, MovimientoDetalle, CobroPagomodels
+from apps.facturas.models import MovimientoCabecera, MovimientoDetalle, CobroPagomodels, Timbrado
 from apps.productos.models import Producto
 from apps.proveedores.models import Proveedor
 from apps.ventas.models import PresupuestoCab, PresupuestoDet
@@ -141,6 +141,10 @@ def generarFacturaVenta(request, id):
     t = loader.get_template('facturas/agregar_venta.html')
     cabPresupuesto = PresupuestoCab.objects.get(pk=id)
     detPresupuesto = PresupuestoDet.objects.filter(presupuesto_cab__id=cabPresupuesto.id)
+    timbrado_bd = Timbrado.objects.latest('id')
+    fecha_ini_tim = datetime.strptime(str(timbrado_bd.fecha_inicio),'%Y-%m-%d').strftime('%Y-%m-%d')
+    fecha_fin_tim = datetime.strptime(str(timbrado_bd.fecha_fin),'%Y-%m-%d').strftime('%Y-%m-%d')
+    nro_fact = timbrado_bd.ultima_factura + 1
     if request.method == 'POST':
         cabPresupuesto.estado = "FACTURADO"
         cabPresupuesto.save()
@@ -193,10 +197,12 @@ def generarFacturaVenta(request, id):
                 movimiento.estado = MovimientoCabecera.COMPLETADO
                 movimiento.saldo = 0
                 recepcion.estado = RecepcionVehiculo.FACTURADO
+                recepcion.save()
             else:
                 movimiento.estado = MovimientoCabecera.PENDIENTE
                 movimiento.saldo = movimiento.monto_total
                 recepcion.estado = RecepcionVehiculo.PENDIENTEDEPAGO
+                recepcion.save()
                 #movimiento.fecha_vencimiento = fecha_vencimiento
 
             movimiento.grav10_total = sub_iva10 - total_iva10
@@ -208,6 +214,9 @@ def generarFacturaVenta(request, id):
             movimiento.fecha_fin = fecha_fin_timbrado
             movimiento.presupuesto = cabPresupuesto
             movimiento.save()
+            # se actualiza ultimo numero de factura del timbrado
+            timbrado_bd.ultima_factura = int(numero_factura)
+            timbrado_bd.save()
             #agregar detalles de la factura
             lista_detalles = json.loads(request.POST.get('detalle_factura', ''))
             for key in lista_detalles:
@@ -247,7 +256,11 @@ def generarFacturaVenta(request, id):
     else:
         c = {
             'cabecera_pre': cabPresupuesto,
-            'detalles_pre': detPresupuesto
+            'detalles_pre': detPresupuesto,
+            'timbrado': timbrado_bd,
+            'fecha_ini_tim': fecha_ini_tim,
+            'fecha_fin_tim': fecha_fin_tim,
+            'nro_fact': nro_fact
         }
     return HttpResponse(t.render(c, request))
 

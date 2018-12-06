@@ -101,3 +101,17 @@ class CobroPagomodels(models.Model):
         """Establece las configuraciones del modelo de base de datos"""
         managed = True
         db_table = 'cobro_pago'
+
+class Timbrado(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    timbrado = models.IntegerField(blank=True, null=True)
+    fecha_inicio = models.DateField(blank=True, null=True)
+    fecha_fin = models.DateField(blank=True, null=True)
+    numero_inicio_factura = models.IntegerField(blank=True, null=True)
+    numero_fin_factura = models.IntegerField(blank=True, null=True)
+    ultima_factura = models.IntegerField(blank=True, null=True)
+
+    class Meta:
+        """Establece las configuraciones del modelo de base de datos"""
+        managed = True
+        db_table = 'timbrado'
