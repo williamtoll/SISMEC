@@ -16,31 +16,45 @@
                 </div>
                 <div class="panel-body">
                     {% csrf_token %}
-                    <div>
-                        <div class="col-md-12">
-                            <label class="col-lg-2">Fecha:</label>
-                            <div class="col-lg-2"><input type="date" id="fecha" name="fecha"></div>
-                            <label class="col-lg-2">Recepcion de Vehiculo:</label>
-                            <div class="col-lg-3"><select id="id_recepcion_select" name="id_recepcion_select" class="form-control"></select></div>
-                            <input id="detalle" type="hidden" name="detalle" />
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="recepcion_vehiculo">Recepcion de Vehiculo:</label>
+                                <div>
+                                    <select id="id_recepcion_select" name="id_recepcion_select" class="form-control"></select>
+                                </div>
+                            </div>
                         </div>
-                        <br><br>
-{#                        <div class="col-md-12">#}
-{#                            <div class="col-md-4">#}
-{#                                    <label for="prov_client">Cliente:</label>#}
-{#                                    <div><input id="id_cliente" disabled></div>#}
-{#                            </div>#}
-{#                            <div class="col-md-4">#}
-{#                                <div class="form-group">#}
-{#                                    <label for="marca-modelo">Marca - Modelo:</label>#}
-{#                                    <div<<input id="id_marca" disabled></div>#}
-{#                                </div>#}
-{#                            </div>#}
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="fecha_presupuesto">Fecha de Presupuesto:</label>
+                                <div>
+                                    <input type="date" id="fecha" name="fecha">
+                                </div>
+                            </div>
+                        </div>
+                        <input id="detalle" type="hidden" name="detalle" />
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 fecha_recepcion ocultar">
+                            <div class="form-group">
+                                <label for="fecha">Fecha de Recepción:</label>
+                                <div><input type="date" id="fecha_recepcion" name="fecha_recepcion" disabled></div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 detalle_problema ocultar">
+                            <div>
+                                <label for="detalle_problema">Detalle del Problema:</label>
+                                <div>
+                                    <input type="text" id="detalle_problema" class="form-control" name="detalle_problema" disabled>
+                                </div>
+                            </div>
                         </div>
                     </div>
-
                 </div>
             </div>
+        </div>
 
             <div class="panel panel-info">
                 <div class="panel-heading">
@@ -53,7 +67,7 @@
                             <select id="id_producto_agregar" name="id_producto_select_0" class="form-control"></select>
                         </div>
                         <div class="col-lg-4">
-                            <input type="number" id= "cantidad" placeholder="Cantidad" value="1">
+                            <input type="number" id= "cantidad" placeholder="Cantidad" value="1" min="1">
                         </div>
                         <span class="input-group-btn">
                             <button type="button" class="btn btn-sm btn-warning agregar" style="height: 30px;"><i

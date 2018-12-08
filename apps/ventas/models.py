@@ -12,6 +12,7 @@ class PresupuestoCab(models.Model):
     fecha_presupuesto = models.DateField(blank=True, null=True)
     recepcion_vehiculo = models.ForeignKey(RecepcionVehiculo,on_delete=models.PROTECT, blank=True, null=True )
     #monto_total = models.IntegerField(blank=True, null=True)
+    motivo_anulacion = models.CharField(max_length=255, blank=True, null=True)
     class Meta:
         """Establece las configuraciones del modelo de base de datos"""
         managed = True

@@ -163,6 +163,10 @@ function validarDetalle(){
 	console.log('validando');
 	detalle_valido = true;
 	var len = $('.item-detalle').length;
+	if (len == 0){
+	    alert("Debe seleccionar al menos un item");
+        detalle_valido =false;
+    }
 	$(".item-detalle").each(function(index, element ){
 		cantidad = $(this).find(".cantidad-item").val();
 		cantidad = parseInt(cantidad) || 0;

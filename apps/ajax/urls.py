@@ -11,4 +11,6 @@ urlpatterns = [
     url(r'^sismec/ajax/modelo_vehiculo_autocomplete/$', ajax_views.getModeloAutocomplete),
     url(r'^sismec/ajax/getClienteAutocomplete/$', ajax_views.getClienteAutocomplete),
     url(r'^sismec/ajax/getRecepcionAutocomplete/$', ajax_views.getRecepcionAutocomplete),
+    url(r'^sismec/ajax/getRecepcionById/$', ajax_views.getRecepcionById),
+
 ]

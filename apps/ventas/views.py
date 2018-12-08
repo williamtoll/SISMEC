@@ -103,8 +103,13 @@ def detallePresupuesto(request, id):
         # Obtener fecha
         fecha = datetime.strptime(request.POST.get('fecha', ''), "%Y-%m-%d")
         recepcion = RecepcionVehiculo.objects.get(id=recepcion_list)
-        recepcion.estado = estado_presupuesto
-        recepcion.save()
+        if estado_presupuesto != "ANULADO":
+            recepcion.estado = estado_presupuesto
+            recepcion.save()
+        else:
+            recepcion.estado = "RECIBIDO"
+            recepcion.save()
+            cabPresupuesto.motivo_anulacion = request.POST.get('anulacion','')
         cabPresupuesto.recepcion_vehiculo = recepcion
         cabPresupuesto.fecha_presupuesto = fecha
         cabPresupuesto.save()

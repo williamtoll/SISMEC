@@ -1,3 +1,4 @@
+import datetime
 from django.shortcuts import render
 
 # Create your views here.
@@ -6,6 +7,7 @@ import traceback
 from django.views.decorators.http import require_http_methods
 
 from apps.productos.models import TipoProducto
+from apps.recepcion.models import RecepcionVehiculo
 from sismec.dao import producto_dao, proveedor_dao, recepcion_dao, cliente_dao
 from django.http import HttpResponse, HttpResponseServerError, HttpResponseRedirect
 from django.template import loader
@@ -115,6 +117,10 @@ def getClienteAutocomplete(request):
             traceback.print_exc(e.args)
             return HttpResponseServerError('No se ha podido obtener un resultado')
 
+def default(o):
+  if type(o) is datetime.date or type(o) is datetime.datetime:
+    return o.isoformat()
+
 @require_http_methods(["GET"])
 def getRecepcionAutocomplete(request):
     if request.method == 'GET':
@@ -123,8 +129,22 @@ def getRecepcionAutocomplete(request):
             codigo = data.get('codigo', '')
             filtros = {'codigo': codigo}
             object_list = recepcion_dao.getRecepcionAutocomplete(filtros)
-            json_response = json.dumps(object_list)
+            json_response = json.dumps(object_list, default=default)
             return HttpResponse(json_response, content_type='application/json')
+        except Exception as e:
+            traceback.print_exc(e.args)
+            return HttpResponseServerError('No se ha podido obtener un resultado')
+
+@require_http_methods(["GET"])
+def getRecepcionById(request):
+    if request.method == 'GET':
+        try:
+            data = request.GET
+            id_recepcion = int(data.get('codigo', ''))
+            recepcion= RecepcionVehiculo()
+            recepcion = RecepcionVehiculo.objects.filter(id=id_recepcion);
+            data = serializers.serialize('json', list(recepcion))
+            return HttpResponse(data, content_type="application/json")
         except Exception as e:
             traceback.print_exc(e.args)
             return HttpResponseServerError('No se ha podido obtener un resultado')

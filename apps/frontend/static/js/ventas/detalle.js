@@ -1,7 +1,7 @@
 item_detalle_pedido = '<div class="item-detalle">'
             + '<input type="text" class="id_detalle col-xs-2" id="id_detalle" name="id_detalle_item" disabled value="0">'
 			+ '<input type="text" class="producto_desc col-xs-4" id="id_producto_select" name="id_producto_select" disabled>'
-            + '<input type="number" class= "cantidad-item item col-xs-2" placeholder="Cantidad" value="" style="left: 5px;">'
+            + '<input type="number" class= "cantidad-item item col-xs-2" placeholder="Cantidad" value="" min="1" style="left: 5px;">'
             + '<input type="number" class= "monto-item item col-xs-2" placeholder="Monto" value="" style="left: 5px;" onkeyup="formatearNumeros(this)" onchange="formatearNumeros(this)">'
 			+ '<a href="#" class="btn btn-sm btn-danger rm-btn" style="height: 35px;margin-left: 10px;"><span class="glyphicon glyphicon-minus"></span></a>'
 		    + ' <br><br></div>';
@@ -17,6 +17,14 @@ $(document).ready(function() {
         console.log($(this).val());
         $(this).val(formatearNumeros_convalor($(this).val()));
         console.log(formatearNumeros_convalor($(this).val()))
+    });
+    $('#condicion_presupuesto').on('change', function () {
+        if ($('#condicion_presupuesto').val() == "ANULADO") {
+            $(".motivo_anulacion").removeClass("ocultar");
+        }else{
+            $(".motivo_anulacion").addClass("ocultar");
+        }
+
     });
     inicializarSelectGenerales();
     function inicializarSelectGenerales() {

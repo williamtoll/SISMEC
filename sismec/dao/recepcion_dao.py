@@ -122,7 +122,7 @@ def getRecepcionFiltro(filtros):
 def getRecepcionAutocomplete(filtros):
     object_list = []
     query_var = []
-    query = '''SELECT rv.id, rv.codigo_recepcion, rv.chapa,  
+    query = '''SELECT rv.id, rv.codigo_recepcion, rv.chapa, rv.fecha_recepcion, 
                rv.detalle_problema, m.descripcion, mod.descripcion, c.nombres
                FROM recepcion_vehiculo rv, marca m, modelo mod, cliente c
                where rv.marca_id = m.id and rv.modelo_id = mod.id and rv.cliente_id = c.id and UPPER(rv.estado) LIKE UPPER('RECIBIDO')'''
@@ -138,10 +138,11 @@ def getRecepcionAutocomplete(filtros):
             data = {'id': i[0],
                     'codigo_recepcion': i[1],
                     'chapa': i[2] if i[2] is not None else '-',
-                    'detalle_problema': i[3] if i[3] is not None else '-',
-                    'marca': i[4] if i[4] is not None else '-',
-                    'modelo': i[5] if i[5] is not None else '-',
-                    'cliente': i[6] if i[6] is not None else '-',
+                    'fecha_recepcion': i[3] if i[3] is not None else '-',
+                    'detalle_problema': i[4] if i[4] is not None else '-',
+                    'marca': i[5] if i[5] is not None else '-',
+                    'modelo': i[6] if i[6] is not None else '-',
+                    'cliente': i[7] if i[7] is not None else '-',
                     }
             object_list.append(data)
 
