@@ -26,6 +26,10 @@ $(document).ready(function() {
         }
 
     });
+    obtenerFechaRecepcion();
+    $('#id_recepcion_select').on('change', function () {
+        obtenerFechaRecepcion();
+    });
     inicializarSelectGenerales();
     function inicializarSelectGenerales() {
         select_recepcion.select2({
@@ -148,6 +152,12 @@ $(document).ready(function() {
             alert("Debe seleccionar una recepción válida");
             return false;
         }
+        fecha_recepcion = new Date($("#fecha_recepcion").val());
+        fecha_presupuesto =  new Date($("#fecha").val());
+        if(fecha_recepcion > fecha_presupuesto){
+            alert("Debe seleccionar una fecha superior a la fecha de recepcion");
+            return false;
+        }
         return true;
     }
 });
@@ -218,13 +228,11 @@ function generarDetalleJSON(){
 			JSON.stringify(objeto);
 
 		});
-
 		detalle_json = JSON.stringify(objeto);
 		return detalle_json;
 }
 
 function getBase64(file) {
-
    reader.onload = function () {
      console.log(reader.result);
 
@@ -234,6 +242,21 @@ function getBase64(file) {
      console.log('Error: ', error);
      return error;
    };
-
     return reader.result;
+}
+function obtenerFechaRecepcion(){
+    var request = $.ajax({
+        type : "GET",
+        url : "/sismec/ajax/getRecepcionById/",
+        dataType: "json",
+        data : {
+            codigo: $("#id_recepcion_select option:selected").val()
+        },
+        dataType : "json"
+    });
+    // Obtenemos la fecha de la recepcion
+    request.done(function(msg) {
+        $("#fecha_recepcion").val(msg[0].fields.fecha_recepcion);
+        $("#detalle_problema").val(msg[0].fields.detalle_problema);
+    });
 }
