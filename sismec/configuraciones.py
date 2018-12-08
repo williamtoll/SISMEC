@@ -6,6 +6,8 @@ PATH_ESTATICO=PATH_GLOBAL+'/apps/frontend/static'
 
 #PRESUPUESTO_DIR = 'C:\\presupuestos\\'
 PRESUPUESTO_DIR = PATH_GLOBAL+'/presupuestos/'
+REPORTES_DIR = PATH_GLOBAL+'/reportes/'
+
 
 # Tiempo logout
 TIEMPO_LOGOUT = 600
