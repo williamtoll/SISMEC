@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block header_scripts %}
+    {% load staticfiles %}
+    <script src="{% static "js/reportes/reportes.js" %}" type="text/javascript"></script>
+    <script src="//mozilla.github.io/pdf.js/build/pdf.js"></script>
+
+
+{% endblock %}
+{% block content %}
+{% csrf_token %}
+    <div id="page-wrapper">
+        <div class="container-fluid">
+            <div class="row">
+                <form action="" method="POST">
+                        <input type="text" name="cod-cliente" value="1">
+                        <button class="btn btn-primary" type="submit" >Obtener Reporte</button>
+                </form>                 
+
+                <button type="button" class="btn btn-default" onClick="mostrarPDF()">Mostrar reporte</button>
+                <input type="hidden" id="reporte-base64" value="{{reporte_pdf}}" >
+                <span>{{reporte_pdf}}</span>
+                <canvas id="the-canvas"></canvas>
+            </div>
+        </div>
+        <div class="card-footer small text-muted"></div>
+        <!-- /.container-fluid -->
+        <footer class="footer text-center"> 2018 &copy; Lourdes Escurra </footer>
+    </div>
+{% endblock %}        
+
+

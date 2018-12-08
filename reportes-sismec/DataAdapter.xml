@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<jdbcDataAdapter class="net.sf.jasperreports.data.jdbc.JdbcDataAdapterImpl"><name>sismecdb</name><driver>org.postgresql.Driver</driver><username>postgres</username><password>postgres</password><savePassword>true</savePassword><url>jdbc:postgresql://localhost:5432/sismecdb</url><database></database><serverAddress></serverAddress></jdbcDataAdapter>

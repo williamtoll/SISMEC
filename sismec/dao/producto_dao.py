@@ -1,4 +1,3 @@
-import cx_Oracle
 from django.db import connection
 
 from apps.productos.models import TipoProducto
