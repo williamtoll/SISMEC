@@ -1,6 +1,11 @@
 # Direccion de archivos estaticos
-PATH_ESTATICO='G:\\PROJECTS\\Personnel\\Lourdes\\SISMEC\\apps\\frontend\\static'
-PRESUPUESTO_DIR = 'C:\\presupuestos\\'
+
+#PATH_ESTATICO='E:\\Lourdes\\Projects\\SISMEC\\apps\\frontend\\static'
+PATH_GLOBAL='/Users/wtoledo/repo/elon/python/sysmec/SISMEC/'
+PATH_ESTATICO=PATH_GLOBAL+'/apps/frontend/static'
+
+#PRESUPUESTO_DIR = 'C:\\presupuestos\\'
+PRESUPUESTO_DIR = PATH_GLOBAL+'/presupuestos/'
 
 # Tiempo logout
 TIEMPO_LOGOUT = 600
