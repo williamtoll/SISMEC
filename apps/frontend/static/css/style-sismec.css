@@ -1,5 +1,5 @@
 .wrapper {
-	margin-top: 80px;
+    margin-top: 80px;
     margin-bottom: 80px;
 }
 
@@ -10,33 +10,77 @@
     background-color: #fff;
     border: 1px solid rgba(0, 0, 0, 0.1);
 }
+
 .form-signin-heading,
-	.checkbox {
-	  margin-bottom: 30px;
+.checkbox {
+    margin-bottom: 30px;
 }
 
-.cabecera_pedido{
-	margin: 10px;
-	padding:8px;
+.cabecera_pedido {
+    margin: 10px;
+    padding: 8px;
 }
 
-.detalle_pedido{
-	/*margin: 0px 10px;*/
-	/*padding: 10px 0px; margin: 12px; border: 2px solid #CCC; display: inline-block;*/
+.detalle_pedido {
+    /*margin: 0px 10px;*/
+    /*padding: 10px 0px; margin: 12px; border: 2px solid #CCC; display: inline-block;*/
 }
 
-.item-detalle{
-	/*margin: 20px 0px;*/
-	/*padding: 0px 5px;*/
+.item-detalle {
+    /*margin: 20px 0px;*/
+    /*padding: 0px 5px;*/
 }
+
 .item-detalle input {
-	margin: 5px !important;
+    margin: 5px !important;
 }
 
 .add-btn {
-	top: 10px;
+    top: 10px;
 }
 
-.ocultar{
-	display: none;
+.ocultar {
+    display: none;
 }
+
+.logo .light-logo {
+    position: absolute;
+    width: 200px;
+}
+
+.menuVertical .nav {
+    margin-top: 40px;
+}
+
+.top-left-part {
+    height: 60px;
+}
+
+.navbar-header {
+    background: #2A579A !important;
+}
+
+.sidebar .fa-fw {
+    color: #2A579A !important;
+}
+
+#side-menu > li > a.active {
+    background: rgba(47, 138, 202, 0.2);
+}
+
+#page-wrapper {
+    background: #EDF0F5;
+    margin-top: 30px !important;
+}
+.two-part li {
+    width: 100%;
+}
+
+.text-right i {
+    float: left;
+    font-size: 35px !important;
+}
+
+
+
+

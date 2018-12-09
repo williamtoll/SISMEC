@@ -21,11 +21,11 @@ from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    #url(r'^sismec/login/$', auth_views.LoginView.as_view(template_name="login.html"), name="login"),
-    url(r'^sismec/login/$', auth_views.login, {'template_name': 'login.html'}, name='login'),
-    #url(r'^sismec/logout /$', auth_views.LogoutView.as_view(template_name="logout.html"), name="logout"),
+    url(r'^sismec/login/$', auth_views.LoginView.as_view(template_name="login.html"), name="login"),
     #url(r'^sismec/login/$', auth_views.login, {'template_name': 'login.html'}, name='login'),
-    url(r'^sismec/logout/$', auth_views.logout, {'template_name': 'logout.html'}, name='logout'),
+    url(r'^sismec/logout /$', auth_views.LogoutView.as_view(template_name="logout.html"), name="logout"),
+    #url(r'^sismec/login/$', auth_views.login, {'template_name': 'login.html'}, name='login'),
+    #url(r'^sismec/logout/$', auth_views.logout, {'template_name': 'logout.html'}, name='logout'),
     url(r'^', include('apps.frontend.urls')),
     url(r'^', include('apps.productos.urls')),
     url(r'^', include('apps.ajax.urls')),
