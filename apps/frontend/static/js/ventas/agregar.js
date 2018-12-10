@@ -15,6 +15,7 @@ item_detalle_pedido = '<div class="item-detalle">'
 
 var detalle_valido = true;
 var es_repetido = false;
+
 $(document).ready(function() {
     var select_recepcion = $('#id_recepcion_select');
     var select_producto = $('#id_producto_agregar');
@@ -26,7 +27,7 @@ $(document).ready(function() {
     var cantidad_item= 0;
     var fecha_recepcion = new Date();
     var fecha_presupuesto = new Date();
-
+    var precio = 0;
     function inicializarSelectGenerales() {
         select_recepcion.select2({
                 tags: true,
@@ -97,6 +98,10 @@ $(document).ready(function() {
         $(".detalle_problema").removeClass("ocultar");
 
     });
+
+    $('#id_producto_agregar').on('change', function () {
+       obtenerPrecioVenta();
+    });
     //para agregar un item
     $(".agregar").click(function () {
         es_repetido = itemRepetidos();
@@ -109,8 +114,10 @@ $(document).ready(function() {
                 var inputs= $('.item-detalle')[index -1].children
                 descripcion = $('#id_producto_agregar :selected').text();
                 cantidad_item = $('#cantidad').val();
+                precio = $("#precio_venta").val();
                 inputs[0].value=descripcion;
                 inputs[1].value=cantidad_item;
+                inputs[2].value = precio;
                 select_producto.find('option').remove().end();
                 select_producto.val('').trigger('change');
                 $('#cantidad').val('1');
@@ -140,7 +147,6 @@ $(document).ready(function() {
             return false;
         }
     });
-
 });
 
 function itemRepetidos(){
@@ -244,5 +250,26 @@ function obtenerFechaRecepcion(){
     request.done(function(msg) {
         $("#fecha_recepcion").val(msg[0].fields.fecha_recepcion);
         $("#detalle_problema").val(msg[0].fields.detalle_problema);
+    });
+}
+
+function obtenerPrecioVenta() {
+    var producto_id = $('#id_producto_agregar').val();
+    var precio_venta = 0;
+    var request = $.ajax({
+        type : "GET",
+        url : "/sismec/ajax/getProductoById/",
+        dataType: "json",
+        data : {
+            id_producto: producto_id
+        },
+        dataType : "json"
+    });
+    // Obtenemos la fecha de la recepcion
+    request.done(function(msg) {
+        if (msg != null){
+            precio_venta = msg[0].fields.precio_venta;
+            $("#precio_venta").val(precio_venta);
+        }
     });
 }

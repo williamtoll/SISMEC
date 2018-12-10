@@ -6,7 +6,7 @@ import json
 import traceback
 from django.views.decorators.http import require_http_methods
 
-from apps.productos.models import TipoProducto
+from apps.productos.models import TipoProducto, Producto
 from apps.recepcion.models import RecepcionVehiculo
 from sismec.dao import producto_dao, proveedor_dao, recepcion_dao, cliente_dao
 from django.http import HttpResponse, HttpResponseServerError, HttpResponseRedirect
@@ -144,6 +144,22 @@ def getRecepcionById(request):
             recepcion= RecepcionVehiculo()
             recepcion = RecepcionVehiculo.objects.filter(id=id_recepcion);
             data = serializers.serialize('json', list(recepcion))
+            return HttpResponse(data, content_type="application/json")
+        except Exception as e:
+            traceback.print_exc(e.args)
+            return HttpResponseServerError('No se ha podido obtener un resultado')
+
+@require_http_methods(["GET"])
+def getProductoById(request):
+    if request.method == 'GET':
+        try:
+            data = request.GET
+            if (data.get('id_producto', '') == ''):
+                id_producto = 0
+            else:
+                id_producto = int(data.get('id_producto', ''))
+            producto = Producto.objects.filter(id=id_producto)
+            data = serializers.serialize('json', list(producto))
             return HttpResponse(data, content_type="application/json")
         except Exception as e:
             traceback.print_exc(e.args)
