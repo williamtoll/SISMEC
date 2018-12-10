@@ -15,7 +15,7 @@
                         </div>
                         <div class="panel-body">
                             {% csrf_token %}
-                            <div class="col-md-4">
+                                <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="tipo_movimiento">Tipo de Movimiento:</label>
                                     <div>
@@ -41,49 +41,6 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="prov_client">Proveedor</label>
-                                    <div>
-                                        <select id="id_prov_client_select" name="id_prov_client_select" class="form-control">
-                                            {% if cabecera_oc.proveedor != None %}
-                                                <option value="{{ cabecera_oc.proveedor.id }}"
-                                                        selected> {{ cabecera_oc.proveedor.nombres }}</option>
-                                            {% endif %}
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="prov_client_dir">Dirección:</label>
-                                    <div><span>{{ cabecera_oc.proveedor.direccion }}</span></div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="prov_client_tel">Teléfono:</label>
-                                    <div><span>{{ cabecera_oc.proveedor.telefono }}</span></div>
-                                </div>
-                            </div>
-                            <br>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="prov_client_ruc">Ruc:</label>
-                                    <div><span>{{ cabecera_oc.proveedor.ruc }}</span></div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="condicion_compra">Condición de Compra:</label>
-                                    <div>
-                                        <select id="condicion_compra" name="condicion_compra">
-                                          <option value="Contado">CONTADO</option>
-                                          <option value="Credito">CREDITO</option>
-                                      </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
                                     <label for="timbrado">Número de Timbrado:</label>
                                     <div><input type="text" id="timbrado" name="timbrado"></div>
                                 </div>
@@ -100,24 +57,63 @@
                                     <div><input type="date" id="fecha_fin_timbrado" name="fecha_fin_timbrado"></div>
                                 </div>
                             </div>
-
-                            <div class="col-md-4">
+                            <div class="row">
+                                <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="prov_client">Proveedor</label>
+                                    <div>
+                                        <select id="id_prov_client_select" name="id_prov_client_select" class="form-control">
+                                            {% if cabecera_oc.proveedor != None %}
+                                                <option value="{{ cabecera_oc.proveedor.id }}"
+                                                        selected> {{ cabecera_oc.proveedor.nombres }}</option>
+                                            {% endif %}
+                                        </select>
+                                    </div>
+                                </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="prov_client_dir">Dirección:</label>
+                                        <div><span>{{ cabecera_oc.proveedor.direccion }}</span></div>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="prov_client_ruc">Ruc:</label>
+                                        <div><span>{{ cabecera_oc.proveedor.ruc }}</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                 <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="numero_oc">Número Orden de Compra:</label>
                                     <div><input type="text" id="numero_oc" disabled name="numero-oc" value="{{ cabecera_oc.id }}"></div>
                                 </div>
-                            </div>
-                            <div class="col-md-4 fecha_vencimiento ocultar">
-                                <div class="form-group">
-                                    <label for="fecha_vencimiento">Fecha de Vencimiento:</label>
-                                    <div><input type="date" id="fecha_vencimiento" name="fecha_vencimiento"></div>
                                 </div>
-                            </div>
-
-                            <div class="col-md-4 cantidad_cuotas ocultar" >
-                                <div class="form-group">
-                                    <label for="numero_pre">Plazo en Dias:</label>
-                                    <div><input type="number" id="cantidad_cuotas" name="cantidad_cuotas"></div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="condicion_compra">Condición de Compra:</label>
+                                        <div>
+                                            <select id="condicion_compra" name="condicion_compra">
+                                              <option value="Contado">CONTADO</option>
+                                              <option value="Credito">CREDITO</option>
+                                          </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 fecha_vencimiento ocultar">
+                                    <div class="form-group">
+                                        <label for="fecha_vencimiento">Fecha de Vencimiento:</label>
+                                        <div><input type="date" id="fecha_vencimiento" name="fecha_vencimiento"></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 cantidad_cuotas ocultar" >
+                                    <div class="form-group">
+                                        <label for="numero_pre">Plazo en Dias:</label>
+                                        <div><input type="number" id="cantidad_cuotas" name="cantidad_cuotas"></div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
