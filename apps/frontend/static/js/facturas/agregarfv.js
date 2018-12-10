@@ -12,6 +12,7 @@ $(document).ready(function() {
     var total_iva10 = 0;
     var total_iva5= 0;
     var total_iva = 0;
+    currentDate();
     $(".precio_uni").focusout(function(data) {
         var id = this.dataset.id;
         precio_uni = $('#id_precio_' + id).val().replace(".","");

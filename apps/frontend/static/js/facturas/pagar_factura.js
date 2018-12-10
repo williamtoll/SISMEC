@@ -5,7 +5,7 @@ $(document).ready(function() {
         $("#saldo").val(saldo_nuevo);
         $("#saldo").prop("readonly", true);
     });
-
+    currentDate();
      $('#forma_pago').on('change', function () {
         if ($('#forma_pago').val() == "TARJETA") {
             $(".forma-pago-tarjeta").removeClass("ocultar");
@@ -21,6 +21,9 @@ $(document).ready(function() {
     });
 
      $('.guardar').on("click", function(e){
+         if(validarDatos() == false){
+             return false;
+         };
          var dato_adicional = {}
           if ($('#forma_pago').val() == "TARJETA") {
             dato_adicional.nro_cupon = $('#nro_cupon').val();
@@ -56,3 +59,16 @@ $(document).ready(function() {
         })
      });
 });
+
+function validarDatos(){
+    console.log('validando cabecera');
+    if ($("#fecha").val() == ""){
+        alert("Debe seleccionar una fecha valida");
+        return false;
+    }
+    if ($("#saldo").val() < 0 ){
+        alert("El saldo es inferior a cero");
+        return false;
+    }
+    return true;
+}
