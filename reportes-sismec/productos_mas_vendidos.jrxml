@@ -26,36 +26,70 @@ order by sum(md.cantidad) desc]]>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="79" splitType="Stretch">
+		<band height="80" splitType="Stretch">
 			<staticText>
-				<reportElement x="100" y="20" width="360" height="30" uuid="d00ff7b9-6a6f-4852-9a1a-5a25868fec2f"/>
+				<reportElement x="90" y="40" width="360" height="30" uuid="d00ff7b9-6a6f-4852-9a1a-5a25868fec2f"/>
 				<textElement textAlignment="Center">
-					<font size="22" isBold="true"/>
+					<font size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Productos más Vendidos]]></text>
 			</staticText>
+			<staticText>
+				<reportElement x="223" y="0" width="100" height="30" uuid="97318dff-76cf-447c-b400-8123b3ae0d16"/>
+				<textElement textAlignment="Center">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SISMEC]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy HH:mm">
+				<reportElement x="460" y="50" width="90" height="30" uuid="1d84de6a-9d6f-4bdc-a0d7-b3cb1fa47ebc"/>
+				<textFieldExpression><![CDATA[new Date();]]></textFieldExpression>
+			</textField>
 		</band>
 	</title>
 	<pageHeader>
-		<band height="35" splitType="Stretch"/>
+		<band height="40" splitType="Stretch">
+			<staticText>
+				<reportElement x="10" y="0" width="70" height="40" uuid="79dd7a56-c936-424b-96bc-f4e7f4215878"/>
+				<textElement textAlignment="Justified">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha Inicio:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="90" y="0" width="90" height="40" uuid="d13039af-126a-4085-8741-d9be28079089"/>
+				<textFieldExpression><![CDATA[$P{fecha_inicio}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="190" y="0" width="60" height="38" uuid="93a3c414-ab16-4dc5-b35c-56e28078a987"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha Fin:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="260" y="0" width="90" height="40" uuid="a6111bf4-1a46-4e92-9b5b-5f87d789a7d3"/>
+				<textFieldExpression><![CDATA[$P{fecha_fin}]]></textFieldExpression>
+			</textField>
+		</band>
 	</pageHeader>
 	<columnHeader>
 		<band height="32" splitType="Stretch">
 			<staticText>
-				<reportElement x="50" y="0" width="100" height="30" uuid="24441d1b-9e35-4d88-b29a-5af855b98c07">
+				<reportElement x="40" y="0" width="100" height="30" uuid="24441d1b-9e35-4d88-b29a-5af855b98c07">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="505240b5-77bf-4142-981d-34a8a9fe8226"/>
 				</reportElement>
 				<textElement>
-					<font size="14" isBold="true"/>
+					<font size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Producto]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="380" y="0" width="100" height="30" uuid="5417a20c-7531-4aaf-8c2b-97e8221879e6">
+				<reportElement x="380" y="0" width="120" height="30" uuid="5417a20c-7531-4aaf-8c2b-97e8221879e6">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="647618fc-09ec-499d-98ab-1f5292901257"/>
 				</reportElement>
 				<textElement>
-					<font size="14" isBold="true"/>
+					<font size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Cantidad Vendida]]></text>
 			</staticText>
@@ -64,13 +98,13 @@ order by sum(md.cantidad) desc]]>
 	<detail>
 		<band height="47" splitType="Stretch">
 			<textField>
-				<reportElement x="50" y="10" width="260" height="30" uuid="0b330322-2b33-49e1-8c1a-28adbcd2c466">
+				<reportElement x="40" y="0" width="260" height="30" uuid="0b330322-2b33-49e1-8c1a-28adbcd2c466">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="505240b5-77bf-4142-981d-34a8a9fe8226"/>
 				</reportElement>
 				<textFieldExpression><![CDATA[$F{descripcion}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="380" y="10" width="100" height="30" uuid="9ebb7e2a-0dd0-45c2-9523-a31212b947f3">
+				<reportElement x="380" y="0" width="100" height="30" uuid="9ebb7e2a-0dd0-45c2-9523-a31212b947f3">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="647618fc-09ec-499d-98ab-1f5292901257"/>
 				</reportElement>
 				<textFieldExpression><![CDATA[$F{sum}]]></textFieldExpression>
