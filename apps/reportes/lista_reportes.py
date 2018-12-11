@@ -22,6 +22,7 @@ def estado_cuenta_cliente(cod_cliente):
         'schema': 'public',
         'port': '5432'
     }
+    
     jasper = JasperPy()
 
     #compilamos el reporte

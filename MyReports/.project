@@ -26,5 +26,10 @@
 			<type>1</type>
 			<location>/Users/wtoledo/JaspersoftWorkspace/sismec/reporte_estado_cuenta.jrxml</location>
 		</link>
+		<link>
+			<name>ticket_venta.jrxml</name>
+			<type>1</type>
+			<location>/Users/wtoledo/repo/teckel/teckel-confiteria/bar-constitucion/BarConstitucion/src/py/com/constitucion/reportes/ticket_venta.jrxml</location>
+		</link>
 	</linkedResources>
 </projectDescription>
