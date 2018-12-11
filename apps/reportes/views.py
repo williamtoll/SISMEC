@@ -5,8 +5,9 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.views.decorators.http import require_http_methods
 from django.template import loader
 from django.views.decorators.csrf import csrf_exempt
+from datetime import datetime
+from apps.reportes.lista_reportes import estado_cuenta_cliente, productos_mas_vendidos
 
-from apps.reportes.lista_reportes import estado_cuenta_cliente
 
 @csrf_exempt
 @require_http_methods(["GET","POST"])
@@ -15,7 +16,6 @@ from apps.reportes.lista_reportes import estado_cuenta_cliente
 def estadoCuentacliente(request):
     t = loader.get_template('reportes/estado_cuenta_cliente.html')
     c = {}
-
     if request.method=='POST':
         cod_cliente=request.POST.get('cod-cliente','')
         reporte_generado = estado_cuenta_cliente(cod_cliente)
@@ -31,8 +31,24 @@ def estadoCuentacliente(request):
         params={
             'reporte_pdf': reporte_generado
         }
-
         return HttpResponse(t.render(params,request))
+    return HttpResponse(t.render(c, request))
 
-    
+
+@csrf_exempt
+@require_http_methods(["GET", "POST"])
+@login_required(login_url='/sismec/login/')
+# Reporte de Compras por meses
+def productosMasVendidos(request):
+    t = loader.get_template('reportes/productos_mas_vendidos.html')
+    c = {}
+    if request.method == 'POST':
+        fecha_ini = datetime.strptime(request.POST.get('fecha_ini', ''),'%Y-%m-%d').strftime('%Y-%m-%d')
+        fecha_fin = datetime.strptime(request.POST.get('fecha_fin', ''),'%Y-%m-%d').strftime('%Y-%m-%d')
+        reporte_generado = productos_mas_vendidos(fecha_ini,fecha_fin)
+
+        params = {
+            'reporte_pdf': reporte_generado
+        }
+        return HttpResponse(t.render(params, request))
     return HttpResponse(t.render(c, request))
