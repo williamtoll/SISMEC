@@ -19,6 +19,7 @@ from apps.productos.models import Producto
 from apps.proveedores.models import Proveedor
 from apps.ventas.models import PresupuestoCab, PresupuestoDet
 from apps.recepcion.models import RecepcionVehiculo
+from apps.facturas.factura_venta_reporte import imprimir_factura_venta_jasper
 from sismec.configuraciones import ROW_PER_PAGE
 
 
@@ -263,6 +264,19 @@ def generarFacturaVenta(request, id):
             'nro_fact': nro_fact
         }
     return HttpResponse(t.render(c, request))
+
+@require_http_methods(["GET"])
+@login_required(login_url='/sismec/login/')
+def imprimirFacturaVenta(request):
+    nro_movimiento=request.GET.get("nro_movimiento",'')
+    factura_generada=imprimir_factura_venta_jasper(nro_movimiento)
+    params={
+        'reporte_pdf': reporte_generado
+    }
+
+    return HttpResponse(t.render(params,request))
+
+
 
 
 @require_http_methods(["GET"])

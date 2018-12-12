@@ -5,10 +5,11 @@ from pyreportjasper import JasperPy
 from django.http import HttpResponse, HttpResponseRedirect
 
 from sismec.configuraciones import REPORTES_DIR
+from apps.facturas.models import MovimientoCabecera
+from num2words import num2words
 
-
-def estado_cuenta_cliente(cod_cliente):
-    input_file = REPORTES_DIR + '/reporte_estado_cuenta.jrxml'
+def imprimir_factura_venta_jasper(nro_movimiento):
+    input_file = REPORTES_DIR + '/factura_venta.jrxml'
 
     #la carpeta donde se genera el pdf
     output = REPORTES_DIR + '/output'
@@ -31,21 +32,33 @@ def estado_cuenta_cliente(cod_cliente):
     #listamos todos los parametros que permite el reporte
     lista_parametros=jasper.list_parameters(input_file)
     print(lista_parametros)
-    
-    #enviamos el codigo del cliente 
-    parametros='and c.id='+cod_cliente
-    #parametros='and c.id=1'
+    print("el nro de movimiento es: ")
+    print(nro_movimiento)
+    if nro_movimiento:
+        #enviamos el codigo del cliente 
+        parametros='and cab.id='+nro_movimiento
+
+    print("parametros")
+    print(parametros)
+
+    #generamos el monto en letras
+    movimientoCab = MovimientoCabecera.objects.get(pk=nro_movimiento)
+
+    #total_en_letras=convertirNumeroALetras(movimientoCab.monto_total)
+    total_en_letras=num2words(int(movimientoCab.monto_total),lang='es')
+    print("total en letras")
+    print(total_en_letras)
 
     jasper.process(
         input_file,
         output_file=output,
-        parameters={'parametros': parametros},
+        parameters={'parametros': parametros,'total_en_letras': total_en_letras},
         format_list=["pdf"],
         db_connection=con,
         locale='es_PY'  # LOCALE Ex.:(en_US, de_GE)
     )
 
-    reporte_generado=output + '/reporte_estado_cuenta.pdf' 
+    reporte_generado=output + '/factura_venta.pdf' 
 
     print('Reporte generado')
     print(reporte_generado)
@@ -55,11 +68,8 @@ def estado_cuenta_cliente(cod_cliente):
     reporte_codificado = base64.b64encode(reporte_leido)
 
     return reporte_codificado.decode()
-    
 
 
 
 
-
-        
-
+  
