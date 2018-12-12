@@ -6,4 +6,5 @@ urlpatterns = [
     url(r'^sismec/reportes/productos_mas_vendidos/$', reportes_views.productosMasVendidos, name='productos_mas_vendidos'),
     url(r'^sismec/reportes/reporte_compras/$', reportes_views.movimientosCompras, name='movimientos_compras'),
     url(r'^sismec/reportes/reporte_ventas/$', reportes_views.movimientosVentas, name='movimientos_ventas'),
+    url(r'^sismec/reportes/cuentas_a_pagar/$', reportes_views.cuentasAPagar, name='cuentas_a_pagar'),
 ]
