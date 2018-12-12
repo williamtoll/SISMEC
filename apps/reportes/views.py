@@ -7,7 +7,7 @@ from django.template import loader
 from django.views.decorators.csrf import csrf_exempt
 from datetime import datetime
 from apps.reportes.lista_reportes import estado_cuenta_cliente, productos_mas_vendidos, movimientos_compras, \
-    movimientos_ventas, cuentas_a_pagar
+    movimientos_ventas, cuentas_a_pagar, ventas_mensuales
 
 
 @csrf_exempt
@@ -102,6 +102,22 @@ def cuentasAPagar(request):
         fecha_ini = datetime.strptime(request.POST.get('fecha_ini', ''),'%Y-%m-%d').strftime('%Y-%m-%d')
         fecha_fin = datetime.strptime(request.POST.get('fecha_fin', ''),'%Y-%m-%d').strftime('%Y-%m-%d')
         reporte_generado = cuentas_a_pagar(fecha_ini,fecha_fin)
+
+        params = {
+            'reporte_pdf': reporte_generado
+        }
+        return HttpResponse(t.render(params, request))
+    return HttpResponse(t.render(c, request))
+
+@csrf_exempt
+@require_http_methods(["GET", "POST"])
+@login_required(login_url='/sismec/login/')
+# Reporte de Cuentas a Pagar
+def ventasPorMes(request):
+    t = loader.get_template('reportes/ventas_por_mes.html')
+    c = {}
+    if request.method == 'POST':
+        reporte_generado = ventas_mensuales()
 
         params = {
             'reporte_pdf': reporte_generado

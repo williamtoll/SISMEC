@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="compras_mensuales" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7d04a27c-b210-4be6-955c-addf4ae86de7">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="sismecdb"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<queryString>
+		<![CDATA[select tabla.*, 
+case when tabla.mes =1 then 'ENERO' 
+ when  tabla.mes =2 then 'FEBRERO' 
+ when  tabla.mes =3 then 'MARZO' 
+ when  tabla.mes =4 then 'ABRIL' 
+ when  tabla.mes =5 then 'MAYO' 
+ when  tabla.mes =6 then 'JUNIO' 
+ when tabla.mes =7 then 'JULIO' 
+ when tabla.mes =8 then 'AGOSTO' 
+ when tabla.mes =9 then 'SETIEMBRE' 
+ when tabla.mes =10 then 'OCTUBRE' 
+ when tabla.mes =11 then 'NOVIEMBRE' 
+ when tabla.mes =12 then 'DICIEMBRE' end 
+ from 
+(
+select 
+sum(mc.monto_total) as monto_total,
+extract ('month' from mc.fecha_emision) as mes
+from movimiento_cabecera  mc
+where  1=1
+and mc.tipo_movimiento='VENTA' 
+--and mc.estado='COMPLETADO'
+group by extract ('month' from mc.fecha_emision)
+) as tabla
+order by tabla.mes]]>
+	</queryString>
+	<field name="monto_total" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.label" value="monto_total"/>
+	</field>
+	<field name="mes" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.label" value="mes"/>
+	</field>
+	<field name="case" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="case"/>
+	</field>
+	<variable name="monto_total_sum" class="java.lang.Long" calculation="Sum">
+		<variableExpression><![CDATA[$F{monto_total}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="80" splitType="Stretch">
+			<staticText>
+				<reportElement x="223" y="0" width="100" height="30" uuid="8f6c7e59-dcad-49b1-93c0-22ac0eb848e6"/>
+				<textElement textAlignment="Center">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SISMEC]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy HH:mm">
+				<reportElement x="460" y="50" width="90" height="30" uuid="a1e67f7b-6049-44f7-becb-a7062388c394"/>
+				<textFieldExpression><![CDATA[new Date();]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="40" splitType="Stretch">
+			<staticText>
+				<reportElement x="120" y="-10" width="307" height="30" uuid="db7d89c5-ae06-4126-82a9-53b3723a8826"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Reporte de Ventas por Mes]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="28" splitType="Stretch">
+			<staticText>
+				<reportElement x="140" y="0" width="100" height="20" uuid="85b3aee5-9e10-40de-b35f-a14823333afc">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="96fdaec8-5ee6-4b78-b96c-cebb16355231"/>
+				</reportElement>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Mes]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="410" y="0" width="100" height="20" uuid="8d0cb1ff-944b-451b-8122-62113fbafe3d">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="710ae9c5-2861-46fb-9308-ff52a13c0736"/>
+				</reportElement>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Monto Total]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="35" splitType="Stretch">
+			<textField>
+				<reportElement x="410" y="0" width="100" height="30" uuid="2adba39a-0001-4eaa-8780-0b448b9c9a02">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="26f0823c-4f4f-4cc2-885b-1d28137b81c4"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{monto_total}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="140" y="0" width="100" height="30" uuid="6da0e7f8-8a7f-4681-bd3f-26eaab859ce5">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c50008ff-efb1-4f53-8886-ed01cc36fd84"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{case}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="42" splitType="Stretch">
+			<textField pattern="#,##0">
+				<reportElement positionType="Float" x="410" y="5" width="100" height="30" uuid="8e201cd9-b97c-47aa-bc1c-1a258cda6cb4"/>
+				<textFieldExpression><![CDATA[$V{monto_total_sum}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="280" y="5" width="80" height="30" uuid="fe3baa12-dc75-4172-8812-4258a171697f"/>
+				<text><![CDATA[Total:]]></text>
+			</staticText>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
