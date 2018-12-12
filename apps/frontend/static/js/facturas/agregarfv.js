@@ -210,7 +210,8 @@ $(document).ready(function() {
             dataType : "json"
         });
         request.done(function(msg) {
-            window.location.replace("/sismec/principal_ventas?mensajes=" + msg.mensajes +"&status=" + msg.status);
+            //window.location.replace("/sismec/principal_ventas?mensajes=" + msg.mensajes +"&status=" + msg.status);
+            window.location.replace("/sismec/imprimir_factura?nro_movimiento=22");
         });
         request.error(function (msg) {
             window.location.replace("/sismec/principal_ventas?mensajes=" + msg.mensajes +"&status=" + msg.status);
