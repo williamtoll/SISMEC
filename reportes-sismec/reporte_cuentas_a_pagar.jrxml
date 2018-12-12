@@ -12,7 +12,7 @@ WHERE mc.proveedor_id = p.id
 AND mc.tipo_factura = 'CREDITO' 
 AND mc.tipo_movimiento = 'COMPRA'
 AND mc.saldo > 0
-and mc.fecha_emision between  $P!{fecha_inicio} and  $P!{fecha_fin} ]]>
+and mc.fecha_emision between  $P!{fecha_inicio} and  $P!{fecha_fin}]]>
 	</queryString>
 	<field name="numero_factura" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.label" value="numero_factura"/>
@@ -35,6 +35,13 @@ and mc.fecha_emision between  $P!{fecha_inicio} and  $P!{fecha_fin} ]]>
 	<field name="saldo" class="java.lang.Integer">
 		<property name="com.jaspersoft.studio.field.label" value="saldo"/>
 	</field>
+	<variable name="sum_montototal" class="java.lang.Long" calculation="Sum">
+		<variableExpression><![CDATA[$F{monto_total}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="sum_saldo" class="java.lang.Long" calculation="Sum">
+		<variableExpression><![CDATA[$F{saldo}]]></variableExpression>
+	</variable>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -188,13 +195,13 @@ and mc.fecha_emision between  $P!{fecha_inicio} and  $P!{fecha_fin} ]]>
 				</reportElement>
 				<textFieldExpression><![CDATA[$F{fecha_vencimiento}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="#,##0">
 				<reportElement x="440" y="20" width="70" height="30" uuid="05312b6e-a382-43a3-b167-0ed656c9dbad">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="adebf34d-faea-4d40-907c-02841ca4d3f8"/>
 				</reportElement>
 				<textFieldExpression><![CDATA[$F{monto_total}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="#,##0">
 				<reportElement x="510" y="20" width="50" height="30" uuid="d57f07a4-e365-4cfc-bb13-e0f7314283cf">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="6066f8ba-ecd0-4590-b8e6-7a9b55451700"/>
 				</reportElement>
@@ -203,7 +210,23 @@ and mc.fecha_emision between  $P!{fecha_inicio} and  $P!{fecha_fin} ]]>
 		</band>
 	</detail>
 	<columnFooter>
-		<band height="45" splitType="Stretch"/>
+		<band height="51" splitType="Stretch">
+			<staticText>
+				<reportElement x="300" y="7" width="70" height="30" uuid="61cce8ee-1f94-4f2a-8230-6bd39a8e245b"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Monto Total:]]></text>
+			</staticText>
+			<textField pattern="#,##0">
+				<reportElement x="440" y="0" width="70" height="30" uuid="14049e3f-6295-4b30-8166-45af57665fdf"/>
+				<textFieldExpression><![CDATA[$V{sum_montototal}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement x="510" y="0" width="50" height="30" uuid="dacd8b3a-1803-47dd-b565-9bf6a8e2e2c2"/>
+				<textFieldExpression><![CDATA[$V{sum_saldo}]]></textFieldExpression>
+			</textField>
+		</band>
 	</columnFooter>
 	<pageFooter>
 		<band height="54" splitType="Stretch"/>
