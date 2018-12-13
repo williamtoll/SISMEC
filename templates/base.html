@@ -69,11 +69,14 @@
                          <!--This is light logo icon--><img src="{% static "new/images/fondo/logo_1.png"%}" alt="home" class="light-logo" />
                     </a>
                 </div>
-                <ul class="nav navbar-top-links navbar-right pull-right">
-                    <li>
-                        <a class="nav-link" href="{% url 'logout' %}"><i class="fa fa-sign-out fa-fw"> </i> Salir</a>
-                    </li>
-                </ul>
+                <div>
+                    <ul class="nav navbar-top-links navbar-right pull-right">
+                        <li>
+                            <a class="nav-link" href="{% url 'logout' %}"><i class="fa fa-sign-out fa-fw"> </i> Salir</a>
+                        </li>
+                    </ul>
+                 </div>
+
             </div>
         </nav>
         {% block header %}
@@ -113,7 +116,15 @@
                         <a href="{% url 'factura_compra_listado' %}" class="waves-effect"><i class="fa fa-sellsy fa-fw" aria-hidden="true"></i>Factura Compra</a>
                     </li>
                     <li>
-                        <a href="{% url 'estado_cuenta_cliente' %}" class="waves-effect"><i class="fa fa-table fa-fw" aria-hidden="true"></i>Reportes</a>
+                        <a href="" class="waves-effect"><i class="fa fa-table fa-fw" aria-hidden="true"></i>Reportes <span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level collapse" style="height: 0px;">
+                            <li> <a href="{% url 'estado_cuenta_cliente' %}" ><i class=" fa-fw"></i><span class="hide-menu"> Estado de cuenta </span></a> </li>
+                            <li> <a href="{% url 'cuentas_a_pagar' %}" ><i class=" fa-fw"></i><span class="hide-menu"> Cuentas a pagar </span></a> </li>
+                            <li> <a href="{% url 'movimientos_compras' %}" ><i class=" fa-fw"></i><span class="hide-menu"> Informe de Compras </span></a> </li>
+                            <li> <a href="{% url 'movimientos_ventas' %}" ><i class=" fa-fw"></i><span class="hide-menu"> Informe de Ventas </span></a> </li>
+                            <li> <a href="{% url 'ventas_por_mes' %}" ><i class=" fa-fw"></i><span class="hide-menu"> Ventas por mes </span></a> </li>
+                            <li> <a href="{% url 'productos_mas_vendidos' %}" ><i class=" fa-fw"></i><span class="hide-menu"> Productos más vendidos </span></a> </li>
+                        </ul>
                     </li>
 
                 </ul>

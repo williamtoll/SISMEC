@@ -24,15 +24,16 @@ def estadoCuentacliente(request):
         # response = HttpResponse(pdf.read(), content_type='application/pdf')
         # response['Content-Disposition'] = 'inline;filename=reporte_estado_cuenta.pdf;charset=utf-8'
 
-            # response = HttpResponse(content_type='application/pdf')
-            # response['Content-Disposition'] = 'inline; filename="{}.pdf"'.format("reporte_estado_cuenta")
-            # response.write(pdf)
+        # response = HttpResponse(content_type='application/pdf')
+        # response['Content-Disposition'] = 'inline; filename="{}.pdf"'.format("reporte_estado_cuenta")
+        # response.write(pdf)
 
-            #return response
+        # return response
         params={
             'reporte_pdf': reporte_generado
         }
-        return HttpResponse(t.render(params,request))
+        # return HttpResponse(t.render(params,request))
+        return HttpResponse(reporte_generado,content_type='application/pdf')
     return HttpResponse(t.render(c, request))
 
 
