@@ -1,7 +1,7 @@
 # Direccion de archivos estaticos
 
 #PATH_ESTATICO='E:\\Lourdes\\Projects\\SISMEC\\apps\\frontend\\static'
-PATH_GLOBAL='G:\\PROJECTS\\Personnel\\Lourdes\\SISMEC'
+PATH_GLOBAL='/Users/wtoledo/repo/elon/python/sismec'
 PATH_ESTATICO=PATH_GLOBAL+'/apps/frontend/static'
 
 #PRESUPUESTO_DIR = 'C:\\presupuestos\\'

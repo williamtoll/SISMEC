@@ -39,7 +39,7 @@ left join cliente cli on (cli.id=cab.cliente_id)
 left join movimiento_detalle det on (det.movimiento_cab_id=cab.id)
 left join producto p on(p.id=det.producto_id)
 where 1=1
-and cab.tipo_movimiento='VENTA'
+and cab.tipo_movimiento='VENTA' 
  $P!{parametros} ]]>
 	</queryString>
 	<field name="id" class="java.lang.Long">
