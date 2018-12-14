@@ -40,7 +40,7 @@ left join movimiento_detalle det on (det.movimiento_cab_id=cab.id)
 left join producto p on(p.id=det.producto_id)
 where 1=1
 and cab.tipo_movimiento='VENTA' 
- $P!{parametros} ]]>
+ $P!{parametros}]]>
 	</queryString>
 	<field name="id" class="java.lang.Long">
 		<property name="com.jaspersoft.studio.field.label" value="id"/>
@@ -144,7 +144,7 @@ and cab.tipo_movimiento='VENTA'
 				</textElement>
 				<text><![CDATA[EMPRESA]]></text>
 			</staticText>
-			<textField>
+			<textField pattern="dd/MM/yyyy">
 				<reportElement x="449" y="10" width="81" height="10" uuid="54b6806a-0250-45b8-bbfb-477c0704db9f"/>
 				<textElement>
 					<font size="7"/>
@@ -179,7 +179,7 @@ and cab.tipo_movimiento='VENTA'
 				</textElement>
 				<text><![CDATA[Fecha fin Vigencia:]]></text>
 			</staticText>
-			<textField>
+			<textField pattern="dd/MM/yyyy">
 				<reportElement x="449" y="23" width="81" height="10" uuid="61c11980-7025-487d-8343-ca622e8d9d1b"/>
 				<textElement>
 					<font size="7"/>
@@ -344,23 +344,23 @@ and cab.tipo_movimiento='VENTA'
 				<reportElement x="140" y="0" width="40" height="25" uuid="b34a8a07-ac08-4fde-8539-30bc3f9f0097"/>
 				<textFieldExpression><![CDATA[$F{cantidad}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="#,##0.###;(#,##0.###-)">
 				<reportElement x="180" y="0" width="100" height="25" uuid="935c7c31-5984-425f-8751-eb16ccf0c02d"/>
 				<textFieldExpression><![CDATA[$F{precio_unitario}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="#,##0.###;(#,##0.###-)">
 				<reportElement x="280" y="0" width="60" height="25" uuid="f5a7b99a-9050-4eb7-a011-a21314b50952"/>
 				<textFieldExpression><![CDATA[$F{exentas}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="#,##0.###;(#,##0.###-)">
 				<reportElement x="340" y="0" width="50" height="25" uuid="03100347-f63c-476e-9e69-b378d3d85bad"/>
 				<textFieldExpression><![CDATA[$F{iva5}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="#,##0.###;(#,##0.###-)">
 				<reportElement x="390" y="0" width="50" height="25" uuid="106d54eb-1e8f-4a29-b238-2c1f151b5060"/>
 				<textFieldExpression><![CDATA[$F{iva10}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="#,##0.###;(#,##0.###-)">
 				<reportElement x="450" y="0" width="70" height="25" uuid="19ff8bee-b2f6-4054-bea0-e1ffd9fb3d19"/>
 				<textFieldExpression><![CDATA[$F{total_linea}]]></textFieldExpression>
 			</textField>
@@ -375,22 +375,22 @@ and cab.tipo_movimiento='VENTA'
 				</textElement>
 				<text><![CDATA[SubTotal]]></text>
 			</staticText>
-			<textField>
+			<textField pattern="#,##0.###;(#,##0.###-)">
 				<reportElement x="280" y="0" width="60" height="27" uuid="00f4f7ea-4dd8-4abd-b546-f27f516a54dc"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$V{subtotal_exenta}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="#,##0.###;(#,##0.###-)">
 				<reportElement x="340" y="0" width="50" height="27" uuid="3d94554b-5daa-494c-8a4b-dbc6da064445"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$V{subtotal_iva5}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="#,##0.###;(#,##0.###-)">
 				<reportElement x="390" y="0" width="50" height="27" uuid="3b37b091-9f53-4ddc-8198-661d87edc27d"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$V{subtotal_iva10}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="#,##0.###;(#,##0.###-)">
 				<reportElement x="450" y="0" width="70" height="27" uuid="743593b9-da38-46a5-b552-88cb5d497d13"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{monto_total}]]></textFieldExpression>
@@ -399,7 +399,7 @@ and cab.tipo_movimiento='VENTA'
 	</columnFooter>
 	<pageFooter>
 		<band height="77" splitType="Stretch">
-			<textField>
+			<textField pattern="#,##0.###;(#,##0.###-)">
 				<reportElement x="430" y="0" width="100" height="30" uuid="e3b6e0f5-6c67-4dd5-a5bd-577023a28104"/>
 				<textFieldExpression><![CDATA[$F{monto_total}]]></textFieldExpression>
 			</textField>
@@ -435,7 +435,7 @@ and cab.tipo_movimiento='VENTA'
 				<reportElement x="300" y="31" width="50" height="26" uuid="e2de2639-2d89-4892-8ed4-d3a2b9f727ec"/>
 				<textFieldExpression><![CDATA[$F{iva10_total}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="#,##0.###;(#,##0.###-)">
 				<reportElement x="420" y="31" width="70" height="26" uuid="48e8fddd-f93d-489c-95fe-ff0288300c4f"/>
 				<textFieldExpression><![CDATA[$F{total_iva}]]></textFieldExpression>
 			</textField>

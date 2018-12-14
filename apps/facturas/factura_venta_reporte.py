@@ -9,10 +9,10 @@ from apps.facturas.models import MovimientoCabecera
 from num2words import num2words
 
 def imprimir_factura_venta_jasper(nro_movimiento):
-    input_file = REPORTES_DIR + '\\factura_venta.jrxml'
+    input_file = REPORTES_DIR + '/factura_venta.jrxml'
 
     #la carpeta donde se genera el pdf
-    output = REPORTES_DIR + '\\output'
+    output = REPORTES_DIR + '/output'
 
     con = {
         'driver': 'postgres',
@@ -58,7 +58,7 @@ def imprimir_factura_venta_jasper(nro_movimiento):
         locale='es_PY'  # LOCALE Ex.:(en_US, de_GE)
     )
 
-    reporte_generado=output + '\\factura_venta.pdf'
+    reporte_generado=output + '/factura_venta.pdf'
 
     print('Reporte generado')
     print(reporte_generado)
@@ -68,7 +68,7 @@ def imprimir_factura_venta_jasper(nro_movimiento):
     reporte_codificado = base64.b64encode(reporte_leido)
 
     ##return reporte_codificado.decode()
-    return reporte;
+    return reporte_generado;
 
 
 

@@ -212,7 +212,7 @@ $(document).ready(function() {
         });
         request.done(function(msg) {
             //window.location.replace("/sismec/principal_ventas?mensajes=" + msg.mensajes +"&status=" + msg.status);
-            window.location.replace("/sismec/imprimir_factura?nro_movimiento=22");
+            window.location.replace("/sismec/facturas/imprimir_factura?nro_movimiento="+msg.id);
         });
         request.error(function (msg) {
             window.location.replace("/sismec/principal_ventas?mensajes=" + msg.mensajes +"&status=" + msg.status);
