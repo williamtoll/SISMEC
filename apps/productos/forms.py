@@ -20,10 +20,12 @@ class TipoProductoForm(ModelForm):
 
 
 class ProductoForm(ModelForm):
-    # nombre = forms.CharField(widget=forms.TextInput(
-    #     attrs={'placeholder': 'Ingrese el nombre del autor',
-    #            'required': 'true'
-    #            }), validators=[MaxLengthValidator(100)])
+    descripcion = forms.CharField(widget=forms.Textarea(
+        attrs={'placeholder': 'Ingrese la descripcion del producto', 'required': 'true', 'cols': 40, 'rows': 3}),
+        validators=[MaxLengthValidator(255)])
+    marca = forms.CharField(widget=forms.Textarea(
+        attrs={'placeholder': 'Ingrese la marca del producto', 'required': 'true', 'cols': 40, 'rows': 3}),
+        validators=[MaxLengthValidator(255)])
 
     class Meta:
 
