@@ -271,10 +271,10 @@ def imprimirFacturaVenta(request):
     nro_movimiento=request.GET.get("nro_movimiento",'')
     factura_generada=imprimir_factura_venta_jasper(nro_movimiento)
     params={
-        'reporte_pdf': reporte_generado
+        'reporte_pdf': factura_generada
     }
-
-    return HttpResponse(t.render(params,request))
+    ##return HttpResponse(t.render(params,request))
+    return HttpResponse(factura_generada,content_type='application/pdf')
 
 
 

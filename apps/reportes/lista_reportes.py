@@ -7,13 +7,13 @@ from django.http import HttpResponse, HttpResponseRedirect
 from sismec.configuraciones import REPORTES_DIR
 
 
-def estado_cuenta_cliente(cod_cliente):
+def estado_cuenta_cliente(cod_cliente,tipo_visualizacion):
     #input_file = REPORTES_DIR + '/reporte_estado_cuenta.jrxml'
-    input_file = REPORTES_DIR + '\\reporte_estado_cuenta.jrxml'
+    input_file = REPORTES_DIR + '/reporte_estado_cuenta.jrxml'
 
     #la carpeta donde se genera el pdf
     #output = REPORTES_DIR + '/output'
-    output = REPORTES_DIR + '\\output'
+    output = REPORTES_DIR + '/output'
 
     con = {
         'driver': 'postgres',
@@ -47,16 +47,22 @@ def estado_cuenta_cliente(cod_cliente):
         locale='es_PY'  # LOCALE Ex.:(en_US, de_GE)
     )
 
-    reporte_generado=output + '/reporte_estado_cuenta.pdf' 
+    archivo_reporte=output + '/reporte_estado_cuenta.pdf' 
 
     print('Reporte generado')
-    print(reporte_generado)
+    print(archivo_reporte)
 
-    reporte = open(reporte_generado, 'rb')
+    reporte = open(archivo_reporte, 'rb')
     reporte_leido = reporte.read()
     reporte_codificado = base64.b64encode(reporte_leido)
 
-    return reporte_codificado.decode()
+
+    if tipo_visualizacion=='mostrar':
+        return reporte_codificado.decode()
+    else:
+        return archivo_reporte
+    
+
 
 
 def productos_mas_vendidos(fecha_ini, fecha_fin):

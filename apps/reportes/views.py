@@ -6,6 +6,8 @@ from django.views.decorators.http import require_http_methods
 from django.template import loader
 from django.views.decorators.csrf import csrf_exempt
 from datetime import datetime
+from django.core.files.storage import FileSystemStorage
+from django.http import HttpResponse, HttpResponseNotFound
 from apps.reportes.lista_reportes import estado_cuenta_cliente, productos_mas_vendidos, movimientos_compras, \
     movimientos_ventas, cuentas_a_pagar, ventas_mensuales
 
@@ -19,21 +21,30 @@ def estadoCuentacliente(request):
     c = {}
     if request.method=='POST':
         cod_cliente=request.POST.get('cod-cliente','')
-        reporte_generado = estado_cuenta_cliente(cod_cliente)
+        tipo_visualizacion=request.POST.get('tipo-visualizacion','')
 
-        # response = HttpResponse(pdf.read(), content_type='application/pdf')
-        # response['Content-Disposition'] = 'inline;filename=reporte_estado_cuenta.pdf;charset=utf-8'
+        archivo_reporte = estado_cuenta_cliente(cod_cliente,tipo_visualizacion)
 
-        # response = HttpResponse(content_type='application/pdf')
-        # response['Content-Disposition'] = 'inline; filename="{}.pdf"'.format("reporte_estado_cuenta")
-        # response.write(pdf)
+        if tipo_visualizacion=='mostrar':
+            params={
+                'reporte_pdf': archivo_reporte
+            }
+            # return HttpResponse(t.render(params,request))
+            return HttpResponse(archivo_reporte,content_type='application/pdf')
+        else:
+            fs = FileSystemStorage()
+            if fs.exists(archivo_reporte):
+                with fs.open(archivo_reporte) as pdf:
+                    response = HttpResponse(pdf, content_type='application/pdf')
+                    response['Content-Disposition'] = 'attachment;filename=reporte_estado_cuenta.pdf;charset=utf-8'
+                    ##response['Content-Disposition'] = 'inline;filename=reporte_estado_cuenta.pdf;charset=utf-8'
 
-        # return response
-        params={
-            'reporte_pdf': reporte_generado
-        }
-        # return HttpResponse(t.render(params,request))
-        return HttpResponse(reporte_generado,content_type='application/pdf')
+                    # response = HttpResponse(content_type='application/pdf')
+                    # response['Content-Disposition'] = 'inline; filename="{}.pdf"'.format("reporte_estado_cuenta")
+                    # response.write(pdf)
+                    
+                    return response
+        
     return HttpResponse(t.render(c, request))
 
 
