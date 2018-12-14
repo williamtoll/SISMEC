@@ -24,7 +24,7 @@ sum(mc.monto_total) as monto_total,
 extract ('month' from mc.fecha_emision) as mes
 from movimiento_cabecera  mc
 where  1=1
-and mc.tipo_movimiento='VENTA' 
+and mc.tipo_movimiento='COMPRA' 
 --and mc.estado='COMPLETADO'
 group by extract ('month' from mc.fecha_emision)
 ) as tabla
@@ -68,7 +68,7 @@ order by tabla.mes]]>
 				<textElement textAlignment="Center">
 					<font size="12" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Reporte de Ventas por Mes]]></text>
+				<text><![CDATA[Reporte de Compras por Mes]]></text>
 			</staticText>
 		</band>
 	</pageHeader>

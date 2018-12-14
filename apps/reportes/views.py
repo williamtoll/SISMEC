@@ -9,7 +9,7 @@ from datetime import datetime
 from django.core.files.storage import FileSystemStorage
 from django.http import HttpResponse, HttpResponseNotFound
 from apps.reportes.lista_reportes import estado_cuenta_cliente, productos_mas_vendidos, movimientos_compras, \
-    movimientos_ventas, cuentas_a_pagar, ventas_mensuales
+    movimientos_ventas, cuentas_a_pagar, ventas_mensuales, compras_mensuales
 
 
 @csrf_exempt
@@ -139,6 +139,22 @@ def ventasPorMes(request):
     c = {}
     if request.method == 'POST':
         reporte_generado = ventas_mensuales()
+
+        params = {
+            'reporte_pdf': reporte_generado
+        }
+        return HttpResponse(t.render(params, request))
+    return HttpResponse(t.render(c, request))
+
+@csrf_exempt
+@require_http_methods(["GET", "POST"])
+@login_required(login_url='/sismec/login/')
+# Reporte de Compras realizadas por mes
+def comprasPorMes(request):
+    t = loader.get_template('reportes/compras_por_mes.html')
+    c = {}
+    if request.method == 'POST':
+        reporte_generado = compras_mensuales()
 
         params = {
             'reporte_pdf': reporte_generado

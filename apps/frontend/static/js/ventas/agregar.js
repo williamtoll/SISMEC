@@ -1,6 +1,6 @@
 item_inicial_detalle_pedido =  '<div class="item-detalle">'
 			+ '<input type="text" class="producto_desc col-xs-4" id="id_producto_select" name="id_producto_select">'
-            + '<input type="number" class= "cantidad-item item col-xs-2" placeholder="Cantidad" value="1" min="1" style="left: 5px;">'
+            + '<input type="number" class= "cantidad-item item col-xs-2" placeholder="Cantidad" value="1" min="1" style="left: 5px;" disabled>'
             + '<input type="number" class= "monto-item item col-xs-2" placeholder="Monto" value="" onkeyup="formatearNumeros(this)" onchange="formatearNumeros(this)" style="left: 5px;">'
 			+ '<a href="#" class="btn btn-sm btn-danger rm-btn" style="height: 35px;margin-left: 10px;"><span class="glyphicon glyphicon-minus"></span></a>'
 		    + ' <br><br></div>';
@@ -8,14 +8,14 @@ item_inicial_detalle_pedido =  '<div class="item-detalle">'
 
 item_detalle_pedido = '<div class="item-detalle">'
 			+ '<input type="text" class="producto_desc col-xs-4" id="id_producto_select" name="id_producto_select">'
-            + '<input type="number" class= "cantidad-item item col-xs-2" placeholder="Cantidad" value="1" min="1" style="left: 5px;">'
+            + '<input type="number" class= "cantidad-item item col-xs-2" placeholder="Cantidad" value="1" min="1" style="left: 5px;" disabled>'
             + '<input type="number" class= "monto-item item col-xs-2" placeholder="Monto" onkeyup="formatearNumeros(this)" onchange="formatearNumeros(this)" value="" style="left: 5px;">'
 			+ '<a href="#" class="btn btn-sm btn-danger rm-btn" style="height: 35px;margin-left: 10px;"><span class="glyphicon glyphicon-minus"></span></a>'
 		    + ' <br><br></div>';
 
 var detalle_valido = true;
 var es_repetido = false;
-
+var stock_disponible = true;
 $(document).ready(function() {
     var select_recepcion = $('#id_recepcion_select');
     var select_producto = $('#id_producto_agregar');
@@ -102,12 +102,15 @@ $(document).ready(function() {
     $('#id_producto_agregar').on('change', function () {
        obtenerPrecioVenta();
     });
+    $('#cantidad').on('change', function () {
+       verificarStock();
+    });
     //para agregar un item
     $(".agregar").click(function () {
         es_repetido = itemRepetidos();
         if (es_repetido == false){
              if ($('#id_producto_agregar').val() == null){
-                alert("Favor seleccionar un producto")
+                alert("Favor seleccionar un producto");
             }else{
                $('.detalle_pedido').append(item_detalle_pedido);
                 index = $('.item-detalle').length;
@@ -270,6 +273,31 @@ function obtenerPrecioVenta() {
         if (msg != null){
             precio_venta = msg[0].fields.precio_venta;
             $("#precio_venta").val(precio_venta);
+        }
+    });
+}
+function verificarStock(){
+     var producto_id = $('#id_producto_agregar').val();
+     var cantidad = $('#cantidad').val();
+      var request = $.ajax({
+        type : "GET",
+        url : "/sismec/ajax/verificarStock/",
+        dataType: "json",
+        data : {
+            id_producto: producto_id
+        },
+        dataType : "json"
+    });
+    // Obtenemos la fecha de la recepcion
+    request.done(function(msg) {
+        if (msg != null){
+           cantidad_stock = msg[0].fields.cantidad;
+           if (cantidad_stock < cantidad){
+               alert("No se tiene disponible esa cantidad de producto");
+               $(".agregar").prop("disabled",true);
+           }else{
+               $(".agregar").prop("disabled",false);
+           }
         }
     });
 }

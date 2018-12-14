@@ -1,7 +1,7 @@
 import traceback
 
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, FileResponse
 from django.shortcuts import render
 from django.template import loader
 from django.views.decorators.http import require_http_methods
@@ -63,63 +63,77 @@ def agregarFacturaCompra(request, id):
         total_iva10 = int(request.POST.get('total_iva10', ''))
 
         plazo_dias = int(request.POST.get('nro_cuota', ''))
+
         try:
             for proveedor_id in proveedor_list:
                 proveedor = Proveedor.objects.get(id=proveedor_id)
-            movimiento = MovimientoCabecera()
-            movimiento.fecha_emision = fecha
-            movimiento.proveedor = proveedor
-            movimiento.numero_factura = numero_factura
-            movimiento.tipo_movimiento = tipo_movimiento
-            movimiento.tipo_factura = condicion_compra
-            movimiento.plazo_dias = plazo_dias
-            movimiento.monto_total = sub_exentas + sub_iva10 + sub_iva5
-            if movimiento.tipo_factura == 'Contado':
-                movimiento.estado = MovimientoCabecera.COMPLETADO
-                movimiento.saldo = 0
-            else:
-                movimiento.estado = MovimientoCabecera.PENDIENTE
-                movimiento.saldo = movimiento.monto_total
-                #movimiento.fecha_vencimiento = fecha_vencimiento
-            movimiento.grav10_total = sub_iva10 - total_iva10
-            movimiento.grav5_total = sub_iva5 - total_iva5
-            movimiento.iva10_total = sub_iva10
-            movimiento.iva5_total = sub_iva5
-            movimiento.timbrado = timbrado
-            movimiento.fecha_inicio = fecha_ini_timbrado
-            movimiento.fecha_fin = fecha_fin_timbrado
-            movimiento.orden_compra = cabeceraOc
-            movimiento.save()
-            #agregar detalles de la factura
-            lista_detalles = json.loads(request.POST.get('detalle_factura', ''))
-            for key in lista_detalles:
-                detalle = MovimientoDetalle()
-                id_producto = lista_detalles[key]['id_producto']
-                producto = Producto.objects.get(id=id_producto)
-                cantidad_item = int(lista_detalles[key]['cantidad_item'])
-                precio_uni = lista_detalles[key]['precio_uni']
-                exentas = lista_detalles[key]['exentas']
-                iva_5 = lista_detalles[key]['iva_5']
-                iva_10 = lista_detalles[key]['iva_10']
-                detalle.compra_cab = id
-                detalle.cantidad = cantidad_item
-                detalle.producto = producto
-                detalle.precio_unitario = precio_uni
-                detalle.exentas = exentas
-                detalle.iva5 = iva_5
-                detalle.iva10 = iva_10
-                detalle.movimiento_cab = movimiento
-                detalle.save()
-                #SE ACTUALIZA EL STOCK DE PRODUCTO
-                cantidad_producto = int(producto.cantidad) + int(detalle.cantidad)
-                producto.cantidad = cantidad_producto
-                producto.save()
-            #ACTUALIZAR ESTADO DE OC
 
-            status = 200
-            mensajes = 'Movimiento agregado exitosamente'
-            json_response = {'status' : status, 'mensajes' : mensajes}
-            return HttpResponse(json.dumps(json_response), content_type='application/json')
+            # Verificar si ya existe una fc con el mismo proveedor,numero de factura ytimbrado
+            object_list = MovimientoCabecera.objects.filter(timbrado__iexact=timbrado,
+                                                            numero_factura__iexact=numero_factura,
+                                                            proveedor_id=proveedor.id).count()
+            if(object_list > 0):
+                status = 500
+                mensajes = 'Ya existe una factura con el mismo proveedor, numero factura y timbrado'
+                json_response = {'status': status, 'mensajes': mensajes}
+                cabeceraOc.estado = "CONFIRMADO"
+                cabeceraOc.save()
+                return HttpResponse(json.dumps(json_response), content_type='application/json')
+            else:
+                movimiento = MovimientoCabecera()
+                movimiento.fecha_emision = fecha
+                movimiento.proveedor = proveedor
+                movimiento.numero_factura = numero_factura
+                movimiento.tipo_movimiento = tipo_movimiento
+                movimiento.tipo_factura = condicion_compra
+                movimiento.plazo_dias = plazo_dias
+                movimiento.monto_total = sub_exentas + sub_iva10 + sub_iva5
+                if movimiento.tipo_factura == 'Contado':
+                    movimiento.estado = MovimientoCabecera.COMPLETADO
+                    movimiento.saldo = 0
+                else:
+                    movimiento.estado = MovimientoCabecera.PENDIENTE
+                    movimiento.saldo = movimiento.monto_total
+                    #movimiento.fecha_vencimiento = fecha_vencimiento
+                movimiento.grav10_total = sub_iva10 - total_iva10
+                movimiento.grav5_total = sub_iva5 - total_iva5
+                movimiento.iva10_total = sub_iva10
+                movimiento.iva5_total = sub_iva5
+                movimiento.timbrado = timbrado
+                movimiento.fecha_inicio = fecha_ini_timbrado
+                movimiento.fecha_fin = fecha_fin_timbrado
+                movimiento.orden_compra = cabeceraOc
+                movimiento.save()
+                #agregar detalles de la factura
+                lista_detalles = json.loads(request.POST.get('detalle_factura', ''))
+                for key in lista_detalles:
+                    detalle = MovimientoDetalle()
+                    id_producto = lista_detalles[key]['id_producto']
+                    producto = Producto.objects.get(id=id_producto)
+                    cantidad_item = int(lista_detalles[key]['cantidad_item'])
+                    precio_uni = lista_detalles[key]['precio_uni']
+                    exentas = lista_detalles[key]['exentas']
+                    iva_5 = lista_detalles[key]['iva_5']
+                    iva_10 = lista_detalles[key]['iva_10']
+                    detalle.compra_cab = id
+                    detalle.cantidad = cantidad_item
+                    detalle.producto = producto
+                    detalle.precio_unitario = precio_uni
+                    detalle.exentas = exentas
+                    detalle.iva5 = iva_5
+                    detalle.iva10 = iva_10
+                    detalle.movimiento_cab = movimiento
+                    detalle.save()
+                    #SE ACTUALIZA EL STOCK DE PRODUCTO
+                    cantidad_producto = int(producto.cantidad) + int(detalle.cantidad)
+                    producto.cantidad = cantidad_producto
+                    producto.save()
+                #ACTUALIZAR ESTADO DE OC
+
+                status = 200
+                mensajes = 'Movimiento agregado exitosamente'
+                json_response = {'status' : status, 'mensajes' : mensajes}
+                return HttpResponse(json.dumps(json_response), content_type='application/json')
         except Exception as e:
             traceback.print_exc(e.args)
             status = 500
@@ -186,6 +200,7 @@ def generarFacturaVenta(request, id):
             #Recepcion de Vehiculo asociado
             recepcion = RecepcionVehiculo()
             recepcion = RecepcionVehiculo.objects.get(pk=cabPresupuesto.recepcion_vehiculo.id)
+
             movimiento = MovimientoCabecera()
             movimiento.fecha_emision = fecha
             movimiento.cliente = cliente
@@ -243,10 +258,10 @@ def generarFacturaVenta(request, id):
                 producto.cantidad = cantidad_producto
                 producto.save()
             #ACTUALIZAR ESTADO DE OC
-
+            mov_id = movimiento.id
             status = 200
             mensajes = 'Movimiento agregado exitosamente'
-            json_response = {'status' : status, 'mensajes' : mensajes}
+            json_response = {'status' : status, 'mensajes' : mensajes, 'id': mov_id}
             return HttpResponse(json.dumps(json_response), content_type='application/json')
         except Exception as e:
             traceback.print_exc(e.args)

@@ -20,8 +20,8 @@
                                     <label for="tipo_movimiento">Tipo de Movimiento:</label>
                                     <div>
                                         <select id="tipo_movimiento" name=tipo_movimiento">
-                                          <option value="Compra">COMPRA</option>
-                                          <option value="Venta">VENTA</option>
+                                          <option value="COMPRA">COMPRA</option>
+                                          <option value="VENTA">VENTA</option>
                                         </select>
                                     </div>
                             </div>
@@ -36,25 +36,25 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="numero_factura">Numero Factura:</label>
-                                    <div><input type="text" id="numero_factura" name="numero_factura"></div>
+                                    <div><input type="text" id="numero_factura" name="numero_factura" required></div>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="timbrado">Número de Timbrado:</label>
-                                    <div><input type="text" id="timbrado" name="timbrado"></div>
+                                    <div><input type="text" id="timbrado" name="timbrado" required></div>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="fecha_ini_timbrado">Fecha de Inicio de Vigencia:</label>
-                                    <div><input type="date" id="fecha_ini_timbrado" name="fecha_ini_timbrado"></div>
+                                    <div><input type="date" id="fecha_ini_timbrado" name="fecha_ini_timbrado" required></div>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="fecha_fin_timbrado">Fecha de Fin de Vigencia:</label>
-                                    <div><input type="date" id="fecha_fin_timbrado" name="fecha_fin_timbrado"></div>
+                                    <div><input type="date" id="fecha_fin_timbrado" name="fecha_fin_timbrado" required></div>
                                 </div>
                             </div>
                             <div class="row">
@@ -97,8 +97,8 @@
                                         <label for="condicion_compra">Condición de Compra:</label>
                                         <div>
                                             <select id="condicion_compra" name="condicion_compra">
-                                              <option value="Contado">CONTADO</option>
-                                              <option value="Credito">CREDITO</option>
+                                              <option value="CONTADO">CONTADO</option>
+                                              <option value="CREDITO">CREDITO</option>
                                           </select>
                                         </div>
                                     </div>
@@ -112,7 +112,7 @@
                                 <div class="col-md-4 cantidad_cuotas ocultar" >
                                     <div class="form-group">
                                         <label for="numero_pre">Plazo en Dias:</label>
-                                        <div><input type="number" id="cantidad_cuotas" name="cantidad_cuotas"></div>
+                                        <div><input type="number" id="cantidad_cuotas" name="cantidad_cuotas" required></div>
                                     </div>
                                 </div>
                             </div>
