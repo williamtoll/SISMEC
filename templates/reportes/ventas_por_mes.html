@@ -19,16 +19,21 @@
              <div class="row">
                  <div class="col-lg-10">
                      <form action="" method="POST">
-                         <div class="col-lg-2">
-                             <div class="form-group pull-right">
-                                 <button class="btn btn-primary" type="submit">Obtener Reporte</button>
-                             </div>
-                        </div>
+                         <div class="row">
+                            <div class="col-lg-4">
+                                    <!-- <input type="text" name="tipo-visualizacion" value="mostrar"> -->
+                                    <select id="tipo-visualizacion" name="tipo-visualizacion" class="form-control"  >
+                                        <option value="mostrar">Pantalla</option>
+                                        <option value="descargar">Descargar</option>
+                                    </select>
 
+                            </div>
+                            <div class="col-lg-4">
+                                <button class="btn btn-primary" type="submit" >Obtener Reporte</button>
+                            </div>
+                        </div>
                     </form>
-                    <button type="button" class="btn btn-default" onClick="mostrarPDF()">Mostrar reporte</button>
                     <input type="hidden" id="reporte-base64" value="{{reporte_pdf}}" >
-                    <span>{{reporte_pdf}}</span>
                     <canvas id="the-canvas"></canvas>
                  </div>
              </div>

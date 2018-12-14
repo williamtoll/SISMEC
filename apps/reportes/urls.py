@@ -9,4 +9,5 @@ urlpatterns = [
     url(r'^sismec/reportes/cuentas_a_pagar/$', reportes_views.cuentasAPagar, name='cuentas_a_pagar'),
     url(r'^sismec/reportes/ventas_mensuales/$', reportes_views.ventasPorMes, name='ventas_por_mes'),
     url(r'^sismec/reportes/compras_mensuales/$', reportes_views.comprasPorMes, name='compras_por_mes'),
+    url(r'^sismec/reportes/mejores_clientes/$', reportes_views.mejoresClientes, name='mejores_clientes'),
 ]

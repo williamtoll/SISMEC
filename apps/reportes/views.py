@@ -9,7 +9,7 @@ from datetime import datetime
 from django.core.files.storage import FileSystemStorage
 from django.http import HttpResponse, HttpResponseNotFound
 from apps.reportes.lista_reportes import estado_cuenta_cliente, productos_mas_vendidos, movimientos_compras, \
-    movimientos_ventas, cuentas_a_pagar, ventas_mensuales, compras_mensuales
+    movimientos_ventas, cuentas_a_pagar, ventas_mensuales, compras_mensuales, mejores_clientes
 
 
 @csrf_exempt
@@ -37,7 +37,7 @@ def estadoCuentacliente(request):
             if fs.exists(archivo_reporte):
                 with fs.open(archivo_reporte) as pdf:
                     response = HttpResponse(pdf, content_type='application/pdf')
-                    response['Content-Disposition'] = 'inline;filename=reporte_estado_cuenta.pdf;charset=utf-8'
+                    response['Content-Disposition'] = 'inline;filename=reporte_estado_cuenta_cliente.pdf;charset=utf-8'
                     return response
 
         else:
@@ -45,7 +45,7 @@ def estadoCuentacliente(request):
             if fs.exists(archivo_reporte):
                 with fs.open(archivo_reporte) as pdf:
                     response = HttpResponse(pdf, content_type='application/pdf')
-                    response['Content-Disposition'] = 'attachment;filename=reporte_estado_cuenta.pdf;charset=utf-8'
+                    response['Content-Disposition'] = 'attachment;filename=reporte_estado_cuenta_cliente.pdf;charset=utf-8'
                     ##response['Content-Disposition'] = 'inline;filename=reporte_estado_cuenta.pdf;charset=utf-8'
 
                     # response = HttpResponse(content_type='application/pdf')
@@ -67,12 +67,26 @@ def productosMasVendidos(request):
     if request.method == 'POST':
         fecha_ini = datetime.strptime(request.POST.get('fecha_ini', ''),'%Y-%m-%d').strftime('%Y-%m-%d')
         fecha_fin = datetime.strptime(request.POST.get('fecha_fin', ''),'%Y-%m-%d').strftime('%Y-%m-%d')
-        reporte_generado = productos_mas_vendidos(fecha_ini,fecha_fin)
-
-        params = {
-            'reporte_pdf': reporte_generado
-        }
-        return HttpResponse(t.render(params, request))
+        tipo_visualizacion = request.POST.get('tipo-visualizacion', '')
+        reporte_generado = productos_mas_vendidos(fecha_ini,fecha_fin, tipo_visualizacion)
+        if tipo_visualizacion == 'mostrar':
+            params = {
+                'reporte_pdf': reporte_generado
+            }
+            fs = FileSystemStorage()
+            if fs.exists(reporte_generado):
+                with fs.open(reporte_generado) as pdf:
+                    response = HttpResponse(pdf, content_type='application/pdf')
+                    response['Content-Disposition'] = 'inline;filename=reporte_productos_mas_vendidos.pdf;charset=utf-8'
+                    return response
+            return HttpResponse(t.render(params, request))
+        else:
+            fs = FileSystemStorage()
+            if fs.exists(reporte_generado):
+                with fs.open(reporte_generado) as pdf:
+                    response = HttpResponse(pdf, content_type='application/pdf')
+                    response['Content-Disposition'] = 'attachment;filename=reporte_productos_mas_vendidos.pdf;charset=utf-8'
+                    return response
     return HttpResponse(t.render(c, request))
 
 @csrf_exempt
@@ -85,12 +99,26 @@ def movimientosCompras(request):
     if request.method == 'POST':
         fecha_ini = datetime.strptime(request.POST.get('fecha_ini', ''),'%Y-%m-%d').strftime('%Y-%m-%d')
         fecha_fin = datetime.strptime(request.POST.get('fecha_fin', ''),'%Y-%m-%d').strftime('%Y-%m-%d')
-        reporte_generado = movimientos_compras(fecha_ini,fecha_fin)
-
-        params = {
-            'reporte_pdf': reporte_generado
-        }
-        return HttpResponse(t.render(params, request))
+        tipo_visualizacion = request.POST.get('tipo-visualizacion', '')
+        reporte_generado = movimientos_compras(fecha_ini,fecha_fin, tipo_visualizacion)
+        if tipo_visualizacion == 'mostrar':
+            params = {
+                'reporte_pdf': reporte_generado
+            }
+            fs = FileSystemStorage()
+            if fs.exists(reporte_generado):
+                with fs.open(reporte_generado) as pdf:
+                    response = HttpResponse(pdf, content_type='application/pdf')
+                    response['Content-Disposition'] = 'inline;filename=informe_compras.pdf;charset=utf-8'
+                    return response
+            return HttpResponse(t.render(params, request))
+        else:
+            fs = FileSystemStorage()
+            if fs.exists(reporte_generado):
+                with fs.open(reporte_generado) as pdf:
+                    response = HttpResponse(pdf, content_type='application/pdf')
+                    response['Content-Disposition'] = 'attachment;filename=informe_compras.pdf;charset=utf-8'
+                    return response
     return HttpResponse(t.render(c, request))
 
 @csrf_exempt
@@ -103,12 +131,26 @@ def movimientosVentas(request):
     if request.method == 'POST':
         fecha_ini = datetime.strptime(request.POST.get('fecha_ini', ''),'%Y-%m-%d').strftime('%Y-%m-%d')
         fecha_fin = datetime.strptime(request.POST.get('fecha_fin', ''),'%Y-%m-%d').strftime('%Y-%m-%d')
-        reporte_generado = movimientos_ventas(fecha_ini,fecha_fin)
-
-        params = {
-            'reporte_pdf': reporte_generado
-        }
-        return HttpResponse(t.render(params, request))
+        tipo_visualizacion = request.POST.get('tipo-visualizacion', '')
+        reporte_generado = movimientos_ventas(fecha_ini,fecha_fin, tipo_visualizacion)
+        if tipo_visualizacion == 'mostrar':
+            params = {
+                'reporte_pdf': reporte_generado
+            }
+            fs = FileSystemStorage()
+            if fs.exists(reporte_generado):
+                with fs.open(reporte_generado) as pdf:
+                    response = HttpResponse(pdf, content_type='application/pdf')
+                    response['Content-Disposition'] = 'inline;filename=informe_ventas.pdf;charset=utf-8'
+                    return response
+            return HttpResponse(t.render(params, request))
+        else:
+            fs = FileSystemStorage()
+            if fs.exists(reporte_generado):
+                with fs.open(reporte_generado) as pdf:
+                    response = HttpResponse(pdf, content_type='application/pdf')
+                    response['Content-Disposition'] = 'attachment;filename=informe_ventas.pdf;charset=utf-8'
+                    return response
     return HttpResponse(t.render(c, request))
 
 
@@ -122,12 +164,26 @@ def cuentasAPagar(request):
     if request.method == 'POST':
         fecha_ini = datetime.strptime(request.POST.get('fecha_ini', ''),'%Y-%m-%d').strftime('%Y-%m-%d')
         fecha_fin = datetime.strptime(request.POST.get('fecha_fin', ''),'%Y-%m-%d').strftime('%Y-%m-%d')
-        reporte_generado = cuentas_a_pagar(fecha_ini,fecha_fin)
-
-        params = {
-            'reporte_pdf': reporte_generado
-        }
-        return HttpResponse(t.render(params, request))
+        tipo_visualizacion = request.POST.get('tipo-visualizacion', '')
+        reporte_generado = cuentas_a_pagar(fecha_ini,fecha_fin, tipo_visualizacion)
+        if tipo_visualizacion == 'mostrar':
+            params = {
+                'reporte_pdf': reporte_generado
+            }
+            fs = FileSystemStorage()
+            if fs.exists(reporte_generado):
+                with fs.open(reporte_generado) as pdf:
+                    response = HttpResponse(pdf, content_type='application/pdf')
+                    response['Content-Disposition'] = 'inline;filename=reporte_cuentas_a_pagar.pdf;charset=utf-8'
+                    return response
+            return HttpResponse(t.render(params, request))
+        else:
+            fs = FileSystemStorage()
+            if fs.exists(reporte_generado):
+                with fs.open(reporte_generado) as pdf:
+                    response = HttpResponse(pdf, content_type='application/pdf')
+                    response['Content-Disposition'] = 'attachment;filename=reporte_cuentas_a_pagar.pdf;charset=utf-8'
+                    return response
     return HttpResponse(t.render(c, request))
 
 @csrf_exempt
@@ -138,12 +194,26 @@ def ventasPorMes(request):
     t = loader.get_template('reportes/ventas_por_mes.html')
     c = {}
     if request.method == 'POST':
-        reporte_generado = ventas_mensuales()
-
-        params = {
-            'reporte_pdf': reporte_generado
-        }
-        return HttpResponse(t.render(params, request))
+        tipo_visualizacion = request.POST.get('tipo-visualizacion', '')
+        reporte_generado = ventas_mensuales(tipo_visualizacion)
+        if tipo_visualizacion == 'mostrar':
+            params = {
+                'reporte_pdf': reporte_generado
+            }
+            fs = FileSystemStorage()
+            if fs.exists(reporte_generado):
+                with fs.open(reporte_generado) as pdf:
+                    response = HttpResponse(pdf, content_type='application/pdf')
+                    response['Content-Disposition'] = 'inline;filename=reporte_ventas_mensuales.pdf;charset=utf-8'
+                    return response
+            return HttpResponse(t.render(params, request))
+        else:
+            fs = FileSystemStorage()
+            if fs.exists(reporte_generado):
+                with fs.open(reporte_generado) as pdf:
+                    response = HttpResponse(pdf, content_type='application/pdf')
+                    response['Content-Disposition'] = 'attachment;filename=reporte_ventas_mensuales.pdf;charset=utf-8'
+                    return response
     return HttpResponse(t.render(c, request))
 
 @csrf_exempt
@@ -154,10 +224,56 @@ def comprasPorMes(request):
     t = loader.get_template('reportes/compras_por_mes.html')
     c = {}
     if request.method == 'POST':
-        reporte_generado = compras_mensuales()
+        tipo_visualizacion = request.POST.get('tipo-visualizacion', '')
+        reporte_generado = compras_mensuales(tipo_visualizacion)
+        if tipo_visualizacion == 'mostrar':
+            params = {
+                'reporte_pdf': reporte_generado
+            }
+            fs = FileSystemStorage()
+            if fs.exists(reporte_generado):
+                with fs.open(reporte_generado) as pdf:
+                    response = HttpResponse(pdf, content_type='application/pdf')
+                    response['Content-Disposition'] = 'inline;filename=reporte_ventas_mensuales.pdf;charset=utf-8'
+                    return response
+            return HttpResponse(t.render(params, request))
+        else:
+            fs = FileSystemStorage()
+            if fs.exists(reporte_generado):
+                with fs.open(reporte_generado) as pdf:
+                    response = HttpResponse(pdf, content_type='application/pdf')
+                    response['Content-Disposition'] = 'attachment;filename=reporte_ventas_mensuales.pdf;charset=utf-8'
+                    return response
+    return HttpResponse(t.render(c, request))
 
-        params = {
-            'reporte_pdf': reporte_generado
-        }
-        return HttpResponse(t.render(params, request))
+@csrf_exempt
+@require_http_methods(["GET", "POST"])
+@login_required(login_url='/sismec/login/')
+# Reporte de Mejores Clientes
+def mejoresClientes(request):
+    t = loader.get_template('reportes/mejores_clientes.html')
+    c = {}
+    if request.method == 'POST':
+        fecha_ini = datetime.strptime(request.POST.get('fecha_ini', ''),'%Y-%m-%d').strftime('%Y-%m-%d')
+        fecha_fin = datetime.strptime(request.POST.get('fecha_fin', ''),'%Y-%m-%d').strftime('%Y-%m-%d')
+        tipo_visualizacion = request.POST.get('tipo-visualizacion', '')
+        reporte_generado = mejores_clientes(fecha_ini,fecha_fin, tipo_visualizacion)
+        if tipo_visualizacion == 'mostrar':
+            params = {
+                'reporte_pdf': reporte_generado
+            }
+            fs = FileSystemStorage()
+            if fs.exists(reporte_generado):
+                with fs.open(reporte_generado) as pdf:
+                    response = HttpResponse(pdf, content_type='application/pdf')
+                    response['Content-Disposition'] = 'inline;filename=reporte_mejores_clientes.pdf;charset=utf-8'
+                    return response
+            return HttpResponse(t.render(params, request))
+        else:
+            fs = FileSystemStorage()
+            if fs.exists(reporte_generado):
+                with fs.open(reporte_generado) as pdf:
+                    response = HttpResponse(pdf, content_type='application/pdf')
+                    response['Content-Disposition'] = 'attachment;filename=reporte_mejores_clientes.pdf;charset=utf-8'
+                    return response
     return HttpResponse(t.render(c, request))
