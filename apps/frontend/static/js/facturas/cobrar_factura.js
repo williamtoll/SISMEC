@@ -52,7 +52,7 @@ $(document).ready(function() {
             dataType : "json"
         });
         request.done(function(msg) {
-            window.location.replace("/sismec/principal_cobros?mensajes=" + msg.mensajes +"&status=" + msg.status);
+            window.location.replace("/sismec/facturas/imprimir_recibo_cobro?id_cobro=" + msg.id_cobro );
         });
         request.error(function (msg) {
             window.location.replace("/sismec/principal_cobros?mensajes=" + msg.mensajes +"&status=" + msg.status);

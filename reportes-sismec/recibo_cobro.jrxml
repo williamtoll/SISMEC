@@ -1,9 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="recibo_cobro" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="04326af3-5c3c-4846-b2b2-fe812b812916">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="DataAdapter.xml"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<parameter name="parametros" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[]]>
+		<![CDATA[select 
+cp.*,
+c.nombres,
+c.ruc,
+mc.fecha_emision,
+mc.numero_factura
+from 
+cobro_pago cp 
+left join movimiento_cabecera mc on (mc.id=cp.movimiento_cab_id)
+left join cliente c on(c.id=mc.cliente_id)
+where 1=1
+ $P!{parametros} 
+--and movimiento_cab_id=22]]>
 	</queryString>
+	<field name="id" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.label" value="id"/>
+	</field>
+	<field name="fecha" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="fecha"/>
+	</field>
+	<field name="monto" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="monto"/>
+	</field>
+	<field name="nro_recibo" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="nro_recibo"/>
+	</field>
+	<field name="forma_pago" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="forma_pago"/>
+	</field>
+	<field name="tipo" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="tipo"/>
+	</field>
+	<field name="estado" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="estado"/>
+	</field>
+	<field name="dato_adicional" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="dato_adicional"/>
+	</field>
+	<field name="movimiento_cab_id" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.label" value="movimiento_cab_id"/>
+	</field>
+	<field name="nombres" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="nombres"/>
+	</field>
+	<field name="ruc" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="ruc"/>
+	</field>
+	<field name="fecha_emision" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="fecha_emision"/>
+	</field>
+	<field name="numero_factura" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="numero_factura"/>
+	</field>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -19,7 +73,15 @@
 		</band>
 	</title>
 	<pageHeader>
-		<band height="35" splitType="Stretch"/>
+		<band height="37" splitType="Stretch">
+			<staticText>
+				<reportElement x="31" y="7" width="232" height="30" uuid="5f0de86d-5313-4e97-bc6d-eb228b9f9584"/>
+				<textElement>
+					<font size="20" isBold="true"/>
+				</textElement>
+				<text><![CDATA[RECIBO ]]></text>
+			</staticText>
+		</band>
 	</pageHeader>
 	<columnHeader>
 		<band height="272" splitType="Stretch">
@@ -30,9 +92,61 @@
 				</textElement>
 				<text><![CDATA[Fecha]]></text>
 			</staticText>
+			<staticText>
+				<reportElement x="31" y="50" width="83" height="23" uuid="3de59e28-002b-4db9-a33e-e7d7f7974027"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Recibido de.:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="31" y="90" width="83" height="23" uuid="432e5bb1-a54f-448d-aa21-d448251bfc69"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Monto:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="31" y="140" width="83" height="23" uuid="ea8d1516-c05d-4cc6-8c92-7da0edeeeed3"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Concepto:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="31" y="230" width="100" height="30" uuid="27d00c3b-787d-4354-9eb1-e87e1951ce21"/>
+				<text><![CDATA[Recibido por]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="430" y="0" width="100" height="30" uuid="5fe20ee9-9006-435a-b854-c7874ee3c96f"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{nro_recibo}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="320" y="3" width="100" height="30" uuid="90a65f50-7bfe-4824-90be-9e6912413381"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nro. Recibo]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="120" y="6" width="100" height="30" uuid="ba15cd42-b134-483a-8921-a88689329fd6"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{fecha}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="120" y="46" width="410" height="30" uuid="059d371d-c26d-4d42-90cc-d5297362b222"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{nombres}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="120" y="140" width="410" height="30" uuid="e8b87f3a-448d-4a58-a275-97c9cf5fc33a"/>
+				<textFieldExpression><![CDATA["Pago de factura Nro.: "+$F{numero_factura}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,###">
+				<reportElement x="120" y="90" width="100" height="30" uuid="f5d334d0-6f34-4eff-868d-75b6957516fa"/>
+				<textFieldExpression><![CDATA[$F{monto}]]></textFieldExpression>
+			</textField>
 		</band>
 	</columnHeader>
-	<detail>
-		<band height="50"/>
-	</detail>
 </jasperReport>

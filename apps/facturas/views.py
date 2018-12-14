@@ -19,7 +19,7 @@ from apps.productos.models import Producto
 from apps.proveedores.models import Proveedor
 from apps.ventas.models import PresupuestoCab, PresupuestoDet
 from apps.recepcion.models import RecepcionVehiculo
-from apps.facturas.factura_venta_reporte import imprimir_factura_venta_jasper
+from apps.facturas.factura_venta_reporte import imprimir_factura_venta_jasper, imprimir_recibo_cobro_jasper
 
 from django.core.files.storage import FileSystemStorage
 from django.http import HttpResponse, HttpResponseNotFound
@@ -302,6 +302,23 @@ def imprimirFacturaVenta(request):
             return response
 
 
+@require_http_methods(["GET"])
+@login_required(login_url='/sismec/login/')
+def imprimirReciboCobro(request):
+    id_cobro=request.GET.get("id_cobro",'')
+    recibo_generado=imprimir_recibo_cobro_jasper(id_cobro)
+    params={
+        'reporte_pdf': recibo_generado
+    }
+    ##return HttpResponse(t.render(params,request))
+    ##return HttpResponse(factura_generada,content_type='application/pdf')
+    fs = FileSystemStorage()
+    if fs.exists(recibo_generado):
+        with fs.open(recibo_generado) as pdf:
+            response = HttpResponse(pdf, content_type='application/pdf')
+            response['Content-Disposition'] = 'inline;filename=recibo_cobro.pdf;charset=utf-8'
+            return response
+
 
 
 @require_http_methods(["GET"])
@@ -393,7 +410,10 @@ def cobrarFacturaVenta(request, id):
         # ACTUALIZAR ESTADO DE OC
         status = 200
         mensajes = 'Cobro agregado exitosamente'
-        json_response = {'status': status, 'mensajes': mensajes}
+        id_cobro=cobro_pago.id
+
+        json_response = {'status': status, 'mensajes': mensajes,'id_cobro': id_cobro}
+
         return HttpResponse(json.dumps(json_response), content_type='application/json')
     else:
         c = {

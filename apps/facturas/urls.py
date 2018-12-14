@@ -8,6 +8,6 @@ urlpatterns = [
    url(r'^sismec/facturas/listado/$', facturas_views.listarFV, name='factura_venta_listado'),
    url(r'^sismec/facturas/listado_compra/$', facturas_views.listarFC, name='factura_compra_listado'),
    url(r'^sismec/facturas/cobrar_factura/(?P<id>\d+)/$', facturas_views.cobrarFacturaVenta, name='cobrar_fv'),
-   url(r'^sismec/facturas/pagar_factura/(?P<id>\d+)/$', facturas_views.pagarFacturaCompra, name='pagar_fc'),
-   url(r'^sismec/facturas/imprimir_factura/$', facturas_views.imprimirFacturaVenta, name='imprimir_factura'),
+   url(r'^sismec/facturas/imprimir_recibo_cobro/$', facturas_views.imprimirReciboCobro, name='imprimir_recibo'),
+   
 ]

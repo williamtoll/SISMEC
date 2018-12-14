@@ -71,6 +71,58 @@ def imprimir_factura_venta_jasper(nro_movimiento):
     return reporte_generado;
 
 
+def imprimir_recibo_cobro_jasper(id_cobro):
+    input_file = REPORTES_DIR + '/recibo_cobro.jrxml'
+
+    #la carpeta donde se genera el pdf
+    output = REPORTES_DIR + '/output'
+
+    con = {
+        'driver': 'postgres',
+        'username': 'postgres',
+        'password': 'postgres',
+        'host': 'localhost',
+        'database': 'sismecdb',
+        'schema': 'public',
+        'port': '5432'
+    }
+    
+    jasper = JasperPy()
+
+    #compilamos el reporte
+    jasper.compile(input_file)
+
+    #listamos todos los parametros que permite el reporte
+    lista_parametros=jasper.list_parameters(input_file)
+    print(lista_parametros)
+    print("el id de cobro es: ")
+    print(id_cobro)
+
+    if id_cobro:
+        #enviamos el codigo del cliente 
+        parametros='and cp.id='+id_cobro
+
+    print("parametros")
+    print(parametros)
+
+
+    jasper.process(
+        input_file,
+        output_file=output,
+        parameters={'parametros': parametros},
+        format_list=["pdf"],
+        db_connection=con,
+        locale='es_PY'  # LOCALE Ex.:(en_US, de_GE)
+    )
+
+    reporte_generado=output + '/recibo_cobro.pdf'
+
+    print('Reporte generado')
+    print(reporte_generado)
+
+    return reporte_generado;
+
+
 
 
   
