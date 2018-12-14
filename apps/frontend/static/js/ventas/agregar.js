@@ -1,7 +1,7 @@
 item_inicial_detalle_pedido =  '<div class="item-detalle">'
 			+ '<input type="text" class="producto_desc col-xs-4" id="id_producto_select" name="id_producto_select">'
             + '<input type="number" class= "cantidad-item item col-xs-2" placeholder="Cantidad" value="1" min="1" style="left: 5px;" disabled>'
-            + '<input type="number" class= "monto-item item col-xs-2" placeholder="Monto" value="" onkeyup="formatearNumeros(this)" onchange="formatearNumeros(this)" style="left: 5px;">'
+            + '<input type="text" class= "monto-item item col-xs-2" placeholder="Monto" value="" onkeyup="formatearNumeros(this)" onchange="formatearNumeros(this)" style="left: 5px;">'
 			+ '<a href="#" class="btn btn-sm btn-danger rm-btn" style="height: 35px;margin-left: 10px;"><span class="glyphicon glyphicon-minus"></span></a>'
 		    + ' <br><br></div>';
 
@@ -9,7 +9,7 @@ item_inicial_detalle_pedido =  '<div class="item-detalle">'
 item_detalle_pedido = '<div class="item-detalle">'
 			+ '<input type="text" class="producto_desc col-xs-4" id="id_producto_select" name="id_producto_select">'
             + '<input type="number" class= "cantidad-item item col-xs-2" placeholder="Cantidad" value="1" min="1" style="left: 5px;" disabled>'
-            + '<input type="number" class= "monto-item item col-xs-2" placeholder="Monto" onkeyup="formatearNumeros(this)" onchange="formatearNumeros(this)" value="" style="left: 5px;">'
+            + '<input type="text" class= "monto-item item col-xs-2" placeholder="Monto" onkeyup="formatearNumeros(this)" onchange="formatearNumeros(this)" value="" style="left: 5px;">'
 			+ '<a href="#" class="btn btn-sm btn-danger rm-btn" style="height: 35px;margin-left: 10px;"><span class="glyphicon glyphicon-minus"></span></a>'
 		    + ' <br><br></div>';
 
@@ -201,9 +201,10 @@ function validarDetalle(){
 		cantidad = $(this).find(".cantidad-item").val();
 		cantidad = parseInt(cantidad) || 0;
 		concepto = $(this).find(".producto_desc").val();
-		monto = $(this).find(".monto-item").val();
-		monto = monto.replace(".","");
-		monto = parseInt(monto) || 0;
+        monto = $(this).find(".monto-item").val();
+        monto=monto.split('.').join('');
+		//monto = monto.replace("/.\s?/g",'');
+		//monto = parseInt(monto) || 0;
 		$(this).find(".monto-item").val(monto);
 		//indicador_validez = '#840A0A'; // Por defecto invalido (Rojo)
 		// Requerimieno minimo para un detalle valido

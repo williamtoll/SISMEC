@@ -15,8 +15,8 @@ $(document).ready(function() {
     currentDate();
     $(".precio_uni").focusout(function(data) {
         var id = this.dataset.id;
-        precio_uni = $('#id_precio_' + id).val().replace(".","");
-        cantidad = $('#id_cantidad_' + id).val().replace(".","");
+        precio_uni = $('#id_precio_' + id).val().split('.').join('');
+        cantidad = $('#id_cantidad_' + id).val().split('.').join('');
         if ($('#id_impuesto_' + id).val() == "IVA10") {
             iva10 = precio_uni * cantidad;
             $('#id_iva10_' + id).val(formatearNumeros_convalor("" + iva10));
@@ -55,8 +55,8 @@ $(document).ready(function() {
 
     $(".precio_uni").each(function(data) {
         var id = this.dataset.id;
-        precio_uni = $('#id_precio_' + id).val().replace(".","");
-        cantidad = $('#id_cantidad_' + id).val().replace(".","");
+        precio_uni = $('#id_precio_' + id).val().split('.').join('');
+        cantidad = $('#id_cantidad_' + id).val().split('.').join('');
         if ($('#id_impuesto_' + id).val() == "IVA10") {
             iva10 = precio_uni * cantidad;
             $('#id_iva10_' + id).val(formatearNumeros_convalor("" + iva10));
@@ -89,7 +89,7 @@ $(document).ready(function() {
     });
 
     if ($('#numero_pre').val() != ""){
-        $('#tipo_movimiento').val("Venta");
+        $('#tipo_movimiento').val("VENTA");
         $('#tipo_movimiento').attr("disabled", "disabled");
         $('#id_prov_client_select').attr("disabled", "disabled");
     }
@@ -133,7 +133,7 @@ $(document).ready(function() {
             //console.log("a y b")
             //console.log(a,b);
             $('.iva_10', this).each(function(){
-               var val = parseInt($(this).val().replace(".","")) ? parseInt($(this).val().replace(".","")) : 0;
+               var val = parseInt($(this).val().split('.').join('')) ? parseInt($(this).val().split('.').join('')) : 0;
                subtotal_iva10 += val;
                console.log(a,val);
             });
@@ -146,7 +146,8 @@ $(document).ready(function() {
             //console.log("a y b")
             //console.log(a,b);
             $('.iva_5', this).each(function(){
-               var val = parseInt($(this).val().replace(".","")) ? parseInt($(this).val().replace(".","")) : 0;
+
+               var val = parseInt($(this).val().split('.').join('')) ? parseInt($(this).val().split('.').join('')) : 0;
                subtotal_iva5 += val;
                console.log(a,val);
             });
@@ -157,7 +158,7 @@ $(document).ready(function() {
         subtotal_exentas = 0;
         $('.detalles_factura tr.data').each(function(a, b){
             $('.sub_exentas', this).each(function(){
-               var val = parseInt($(this).val().replace(".","")) ? parseInt($(this).val().replace(".","")) : 0;
+               var val = parseInt($(this).val().split('.').join('')) ? parseInt($(this).val().split('.').join('')) : 0;
                subtotal_exentas += val;
                console.log(a,val);
             });
@@ -172,10 +173,10 @@ $(document).ready(function() {
 			i = index + 1;
 			//Se obtienen los datos.
             cantidad_item = $(this).find(".cantidad-item").val();
-            precio_uni = $(this).find(".precio_uni").val().replace(".","");
-            exentas = $(this).find(".exentas").val().replace(".","");
-			iva_5 = $(this).find(".iva_5").val().replace(".","");
-			iva_10 = $(this).find(".iva_10").val().replace(".","");
+            precio_uni = $(this).find(".precio_uni").val().split('.').join('');
+            exentas = $(this).find(".exentas").val().split('.').join('');
+			iva_5 = $(this).find(".iva_5").val().split('.').join('');
+			iva_10 = $(this).find(".iva_10").val().split('.').join('');
 			id_producto = $(this).find(".id_producto").val();
 
 			key = 'item' + i;
@@ -200,11 +201,11 @@ $(document).ready(function() {
                 numero_factura: $('#numero_factura').val(),
                 nro_cuota: parseInt($('#cantidad_cuotas').val()) || 0,
                 fecha_vencimiento: $('#fecha_vencimiento').val(),
-                sub_exentas: parseInt($('.sub_exentas').val().replace(".","")) || 0,
-                sub_iva5: parseInt($('.sub_iva5').val().replace(".","")) || 0,
-                sub_iva10: parseInt($('.sub_iva10').val().replace(".","")) || 0,
-                total_iva5: parseInt($('.total_iva5').val().replace(".","")) || 0,
-                total_iva10: parseInt($('.total_iva10').val().replace(".","")) || 0,
+                sub_exentas: parseInt($('.sub_exentas').val().split('.').join('')) || 0,
+                sub_iva5: parseInt($('.sub_iva5').val().split('.').join('')) || 0,
+                sub_iva10: parseInt($('.sub_iva10').val().split('.').join('')) || 0,
+                total_iva5: parseInt($('.total_iva5').val().split('.').join('')) || 0,
+                total_iva10: parseInt($('.total_iva10').val().split('.').join('')) || 0,
                 detalle_factura : detalle_factura
             },
             dataType : "json"

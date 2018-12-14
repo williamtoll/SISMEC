@@ -67,10 +67,10 @@ def estado_cuenta_cliente(cod_cliente,tipo_visualizacion):
 
 
 def productos_mas_vendidos(fecha_ini, fecha_fin, tipo_visualizacion):
-    input_file = REPORTES_DIR + '\\productos_mas_vendidos.jrxml'
+    input_file = REPORTES_DIR + '/productos_mas_vendidos.jrxml'
 
     # la carpeta donde se genera el pdf
-    output = REPORTES_DIR + '\\output'
+    output = REPORTES_DIR + '/output'
 
     con = {
         'driver': 'postgres',
@@ -105,7 +105,7 @@ def productos_mas_vendidos(fecha_ini, fecha_fin, tipo_visualizacion):
         locale='es_PY'  # LOCALE Ex.:(en_US, de_GE)
     )
 
-    reporte_generado = output + '\\productos_mas_vendidos.pdf'
+    reporte_generado = output + '/productos_mas_vendidos.pdf'
 
     print('Reporte generado')
     print(reporte_generado)
@@ -121,10 +121,10 @@ def productos_mas_vendidos(fecha_ini, fecha_fin, tipo_visualizacion):
         return reporte_generado
 
 def movimientos_compras(fecha_ini, fecha_fin, tipo_visualizacion):
-    input_file = REPORTES_DIR + '\\reporte_compras.jrxml'
+    input_file = REPORTES_DIR + '/reporte_compras.jrxml'
 
     # la carpeta donde se genera el pdf
-    output = REPORTES_DIR + '\\output'
+    output = REPORTES_DIR + '/output'
 
     con = {
         'driver': 'postgres',
@@ -159,7 +159,7 @@ def movimientos_compras(fecha_ini, fecha_fin, tipo_visualizacion):
         locale='es_PY'  # LOCALE Ex.:(en_US, de_GE)
     )
 
-    reporte_generado = output + '\\reporte_compras.pdf'
+    reporte_generado = output + '/reporte_compras.pdf'
 
     print('Reporte generado')
     print(reporte_generado)
@@ -176,10 +176,10 @@ def movimientos_compras(fecha_ini, fecha_fin, tipo_visualizacion):
 
 
 def movimientos_ventas(fecha_ini, fecha_fin, tipo_visualizacion):
-    input_file = REPORTES_DIR + '\\reporte_ventas.jrxml'
+    input_file = REPORTES_DIR + '/reporte_ventas.jrxml'
 
     # la carpeta donde se genera el pdf
-    output = REPORTES_DIR + '\\output'
+    output = REPORTES_DIR + '/output'
 
     con = {
         'driver': 'postgres',
@@ -214,7 +214,7 @@ def movimientos_ventas(fecha_ini, fecha_fin, tipo_visualizacion):
         locale='es_PY'  # LOCALE Ex.:(en_US, de_GE)
     )
 
-    reporte_generado = output + '\\reporte_ventas.pdf'
+    reporte_generado = output + '/reporte_ventas.pdf'
 
     print('Reporte generado')
     print(reporte_generado)
@@ -231,10 +231,10 @@ def movimientos_ventas(fecha_ini, fecha_fin, tipo_visualizacion):
 
 
 def cuentas_a_pagar(fecha_ini, fecha_fin, tipo_visualizacion):
-    input_file = REPORTES_DIR + '\\reporte_cuentas_a_pagar.jrxml'
+    input_file = REPORTES_DIR + '/reporte_cuentas_a_pagar.jrxml'
 
     # la carpeta donde se genera el pdf
-    output = REPORTES_DIR + '\\output'
+    output = REPORTES_DIR + '/output'
 
     con = {
         'driver': 'postgres',
@@ -269,7 +269,7 @@ def cuentas_a_pagar(fecha_ini, fecha_fin, tipo_visualizacion):
         locale='es_PY'  # LOCALE Ex.:(en_US, de_GE)
     )
 
-    reporte_generado = output + '\\reporte_cuentas_a_pagar.pdf'
+    reporte_generado = output + '/reporte_cuentas_a_pagar.pdf'
 
     print('Reporte generado')
     print(reporte_generado)
@@ -287,11 +287,11 @@ def cuentas_a_pagar(fecha_ini, fecha_fin, tipo_visualizacion):
 
 def ventas_mensuales(tipo_visualizacion):
     # input_file = REPORTES_DIR + '/reporte_estado_cuenta.jrxml'
-    input_file = REPORTES_DIR + '\\reporte_ventas_mensuales.jrxml'
+    input_file = REPORTES_DIR + '/reporte_ventas_mensuales.jrxml'
 
     # la carpeta donde se genera el pdf
     # output = REPORTES_DIR + '/output'
-    output = REPORTES_DIR + '\\output'
+    output = REPORTES_DIR + '/output'
 
     con = {
         'driver': 'postgres',
@@ -319,7 +319,7 @@ def ventas_mensuales(tipo_visualizacion):
         locale='es_PY'  # LOCALE Ex.:(en_US, de_GE)
     )
 
-    reporte_generado = output + '\\reporte_ventas_mensuales.pdf'
+    reporte_generado = output + '/reporte_ventas_mensuales.pdf'
 
     print('Reporte generado')
     print(reporte_generado)
@@ -336,11 +336,11 @@ def ventas_mensuales(tipo_visualizacion):
 
 def compras_mensuales(tipo_visualizacion):
     # input_file = REPORTES_DIR + '/reporte_estado_cuenta.jrxml'
-    input_file = REPORTES_DIR + '\\reporte_compras_mensuales.jrxml'
+    input_file = REPORTES_DIR + '/reporte_compras_mensuales.jrxml'
 
     # la carpeta donde se genera el pdf
     # output = REPORTES_DIR + '/output'
-    output = REPORTES_DIR + '\\output'
+    output = REPORTES_DIR + '/output'
 
     con = {
         'driver': 'postgres',
@@ -368,7 +368,7 @@ def compras_mensuales(tipo_visualizacion):
         locale='es_PY'  # LOCALE Ex.:(en_US, de_GE)
     )
 
-    reporte_generado = output + '\\reporte_compras_mensuales.pdf'
+    reporte_generado = output + '/reporte_compras_mensuales.pdf'
 
     print('Reporte generado')
     print(reporte_generado)
@@ -384,10 +384,10 @@ def compras_mensuales(tipo_visualizacion):
         return reporte_generado
 
 def mejores_clientes(fecha_ini, fecha_fin, tipo_visualizacion):
-    input_file = REPORTES_DIR + '\\reporte_mejores_clientes.jrxml'
+    input_file = REPORTES_DIR + '/reporte_mejores_clientes.jrxml'
 
     # la carpeta donde se genera el pdf
-    output = REPORTES_DIR + '\\output'
+    output = REPORTES_DIR + '/output'
 
     con = {
         'driver': 'postgres',
@@ -422,7 +422,7 @@ def mejores_clientes(fecha_ini, fecha_fin, tipo_visualizacion):
         locale='es_PY'  # LOCALE Ex.:(en_US, de_GE)
     )
 
-    reporte_generado = output + '\\reporte_mejores_clientes.pdf'
+    reporte_generado = output + '/reporte_mejores_clientes.pdf'
 
     print('Reporte generado')
     print(reporte_generado)

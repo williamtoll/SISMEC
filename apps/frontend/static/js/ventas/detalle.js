@@ -187,8 +187,8 @@ function validarDetalle(){
 		cantidad = parseInt(cantidad) || 0;
 		concepto = $(this).find(".producto_desc").val();
 		monto = $(this).find(".monto-item").val();
-		monto = monto.replace(".","");
-		monto = parseInt(monto) || 0;
+        monto=monto.split('.').join('');
+
 		$(this).find(".monto-item").val(monto);
 		//indicador_validez = '#840A0A'; // Por defecto invalido (Rojo)
 		// Requerimieno minimo para un detalle valido

@@ -1,13 +1,13 @@
 item_inicial_detalle_pedido =  '<div class="item-detalle">'
 			+ '<input type="text" class="producto_desc col-xs-4" id="id_producto_select" name="id_producto_select">'
-            + '<input type="number" class= "cantidad-item item col-xs-2" placeholder="Cantidad" style="left: 5px;" min="1">'
+            + '<input type="text" class= "cantidad-item item col-xs-2" placeholder="Cantidad" style="left: 5px;" min="1">'
 			+ '<a href="#" class="btn btn-sm btn-danger rm-btn" style="height: 35px;margin-left: 10px;"><span class="glyphicon glyphicon-minus"></span></a>'
 		    + ' <br><br></div>';
 
 
 item_detalle_pedido = '<div class="item-detalle">'
 			+ '<input type="text" class="producto_desc col-xs-4" id="id_producto_select" name="id_producto_select">'
-            + '<input type="number" class= "cantidad-item item col-xs-2" placeholder="Cantidad" style="left: 5px;" min="1">'
+            + '<input type="text" class= "cantidad-item item col-xs-2" placeholder="Cantidad" style="left: 5px;" min="1">'
 			+ '<a href="#" class="btn btn-sm btn-danger rm-btn" style="height: 35px;margin-left: 10px;"><span class="glyphicon glyphicon-minus"></span></a>'
 		    + ' <br><br></div>';
 var detalle_valido = true;

@@ -281,6 +281,7 @@ def generarFacturaVenta(request, id):
             'fecha_fin_tim': fecha_fin_tim,
             'nro_fact': nro_fact
         }
+        
     return HttpResponse(t.render(c, request))
 
 @require_http_methods(["GET"])

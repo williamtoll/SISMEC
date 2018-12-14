@@ -130,10 +130,10 @@
                                                 <td>{{ detalle.id }}</td>
                                                 <td><input type="number" class= "cantidad-item" id="id_cantidad_{{ detalle.id }}" data-id="{{ detalle.id }}" value="{{ detalle.cantidad }}" disabled></td>
                                                 <td>{{ detalle.producto.descripcion }}</td>
-                                                <td><input type="number" class="precio_uni" id="id_precio_{{ detalle.id }}" data-id="{{ detalle.id }}" value="{{ detalle.precio_unitario }}" onkeyup="formatearNumeros(this)" onchange="formatearNumeros(this)"></td>
-                                                <td><input type="number" class="exentas" id="id_exentas_{{ detalle.id }}" data-id="{{ detalle.id }}" disabled></td>
-                                                <td><input type="number" class="iva_5" id="id_iva5_{{ detalle.id }}" data-id="{{ detalle.id }}" disabled></td>
-                                                <td><input type="number" class="iva_10" id="id_iva10_{{ detalle.id }}" data-id="{{ detalle.id }}" disabled></td>
+                                                <td><input type="text" class="precio_uni" id="id_precio_{{ detalle.id }}" data-id="{{ detalle.id }}" value="{{ detalle.precio_unitario }}" onkeyup="formatearNumeros(this)" onchange="formatearNumeros(this)"></td>
+                                                <td><input type="text" class="exentas" id="id_exentas_{{ detalle.id }}" data-id="{{ detalle.id }}" disabled></td>
+                                                <td><input type="text" class="iva_5" id="id_iva5_{{ detalle.id }}" data-id="{{ detalle.id }}" disabled></td>
+                                                <td><input type="text" class="iva_10" id="id_iva10_{{ detalle.id }}" data-id="{{ detalle.id }}" disabled></td>
                                                 <td><input type="hidden" class="tipo_impuesto" id="id_impuesto_{{ detalle.id }}" data-id="{{ detalle.id }}" value="{{ detalle.producto.tipo_impuesto }}" disabled></td>
                                                 <td><input type="hidden" class="id_producto" id="id_producto{{ detalle.id }}" data-id="{{ detalle.id }}" value="{{ detalle.producto.id }}" disabled></td>
                                             </tr>
