@@ -20,6 +20,9 @@ from apps.proveedores.models import Proveedor
 from apps.ventas.models import PresupuestoCab, PresupuestoDet
 from apps.recepcion.models import RecepcionVehiculo
 from apps.facturas.factura_venta_reporte import imprimir_factura_venta_jasper
+
+from django.core.files.storage import FileSystemStorage
+from django.http import HttpResponse, HttpResponseNotFound
 from sismec.configuraciones import ROW_PER_PAGE
 
 
@@ -289,7 +292,13 @@ def imprimirFacturaVenta(request):
         'reporte_pdf': factura_generada
     }
     ##return HttpResponse(t.render(params,request))
-    return HttpResponse(factura_generada,content_type='application/pdf')
+    ##return HttpResponse(factura_generada,content_type='application/pdf')
+    fs = FileSystemStorage()
+    if fs.exists(factura_generada):
+        with fs.open(factura_generada) as pdf:
+            response = HttpResponse(pdf, content_type='application/pdf')
+            response['Content-Disposition'] = 'inline;filename=reporte_estado_cuenta.pdf;charset=utf-8'
+            return response
 
 
 
