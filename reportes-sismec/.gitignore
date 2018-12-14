@@ -1,4 +1,8 @@
 /bin/
+<<<<<<< HEAD
+/reporte_estado_cuenta.jasper
+=======
 /productos_mas_vendidos.jasper
 /reporte_compras.jasper
 /reporte_cuentas_a_pagar.jasper
+>>>>>>> 59ad49846eb29c0ad734dbb5cbc74c684568df85

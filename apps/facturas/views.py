@@ -288,6 +288,9 @@ def imprimirFacturaVenta(request):
     params={
         'reporte_pdf': factura_generada
     }
+    ##return HttpResponse(t.render(params,request))
+    return HttpResponse(factura_generada,content_type='application/pdf')
+
 
 
 
