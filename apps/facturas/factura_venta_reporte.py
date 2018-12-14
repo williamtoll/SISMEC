@@ -67,7 +67,8 @@ def imprimir_factura_venta_jasper(nro_movimiento):
     reporte_leido = reporte.read()
     reporte_codificado = base64.b64encode(reporte_leido)
 
-    return reporte_codificado.decode()
+    ##return reporte_codificado.decode()
+    return reporte;
 
 
 
