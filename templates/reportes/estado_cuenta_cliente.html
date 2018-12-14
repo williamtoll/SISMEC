@@ -10,13 +10,31 @@
 {% csrf_token %}
     <div id="page-wrapper">
         <div class="container-fluid">
-            <div class="row">
                 <form action="" method="POST">
-                        <input type="text" name="cod-cliente" value="22">
-                        <input type="text" name="tipo-visualizacion" value="mostrar">
-                        <button class="btn btn-primary" type="submit" >Obtener Reporte</button>
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <label class="form-control">Cliente:</label>
+                            <!-- value="{{ filtros.proveedor }}" -->
+                            <select id="id_cliente_select" name="cliente_select" class="form-control"  ></select>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                            <div class="col-lg-4">
+                                    <!-- <input type="text" name="tipo-visualizacion" value="mostrar"> -->
+                                    <select id="tipo-visualizacion" name="tipo-visualizacion" class="form-control"  >
+                                        <option value="mostrar">Pantalla</option>
+                                        <option value="descargar">Descargar</option>
+                                    </select>
+        
+                            </div>
+                            <div class="col-lg-4">
+                                <button class="btn btn-primary" type="submit" >Obtener Reporte</button>
+                            </div>
+                    </div>    
+
                 </form>                 
-                <button type="button" class="btn btn-default" onClick="mostrarPDF()">Mostrar reporte</button>
+                <!-- <button type="button" class="btn btn-default" onClick="mostrarPDF()">Mostrar reporte</button> -->
                 <input type="hidden" id="reporte-base64" value="{{reporte_pdf}}" >
                 <!-- <span>{{reporte_pdf}}</span> -->
                 <canvas id="the-canvas"></canvas>

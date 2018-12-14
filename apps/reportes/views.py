@@ -20,17 +20,26 @@ def estadoCuentacliente(request):
     t = loader.get_template('reportes/estado_cuenta_cliente.html')
     c = {}
     if request.method=='POST':
-        cod_cliente=request.POST.get('cod-cliente','')
         tipo_visualizacion=request.POST.get('tipo-visualizacion','')
+        cliente=request.POST.get('cliente_select','');
+        print("cliente")
+        print(cliente)
 
-        archivo_reporte = estado_cuenta_cliente(cod_cliente,tipo_visualizacion)
+        archivo_reporte = estado_cuenta_cliente(cliente,tipo_visualizacion)
 
         if tipo_visualizacion=='mostrar':
             params={
                 'reporte_pdf': archivo_reporte
             }
             # return HttpResponse(t.render(params,request))
-            return HttpResponse(archivo_reporte,content_type='application/pdf')
+            ##return HttpResponse(archivo_reporte,content_type='application/pdf')
+            fs = FileSystemStorage()
+            if fs.exists(archivo_reporte):
+                with fs.open(archivo_reporte) as pdf:
+                    response = HttpResponse(pdf, content_type='application/pdf')
+                    response['Content-Disposition'] = 'inline;filename=reporte_estado_cuenta.pdf;charset=utf-8'
+                    return response
+
         else:
             fs = FileSystemStorage()
             if fs.exists(archivo_reporte):

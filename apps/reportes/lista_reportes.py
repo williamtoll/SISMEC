@@ -58,7 +58,8 @@ def estado_cuenta_cliente(cod_cliente,tipo_visualizacion):
 
 
     if tipo_visualizacion=='mostrar':
-        return reporte_codificado.decode()
+        ##return reporte_codificado.decode()
+        return archivo_reporte
     else:
         return archivo_reporte
     
