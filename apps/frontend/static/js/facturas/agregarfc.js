@@ -12,6 +12,8 @@ $(document).ready(function() {
     var total_iva10 = 0;
     var total_iva5= 0;
     var total_iva = 0;
+    var movimiento_duplicado = false
+
     $(".precio_uni").focusout(function(data) {
         var id = this.dataset.id;
         precio_uni = $('#id_precio_' + id).val().replace(".","");
@@ -44,7 +46,7 @@ $(document).ready(function() {
 
     });
     $('#condicion_compra').on('change', function () {
-        if ($('#condicion_compra').val() == "Credito") {
+        if ($('#condicion_compra').val() == "CREDITO") {
             $(".cantidad_cuotas").removeClass("ocultar");
         }else{
             $(".cantidad_cuotas").addClass("ocultar");
@@ -96,7 +98,7 @@ $(document).ready(function() {
     });
 
     if ($('#numero_oc').val() != ""){
-        $('#tipo_movimiento').val("Compra");
+        $('#tipo_movimiento').val("COMPRA");
         $('#tipo_movimiento').attr("disabled", "disabled");
         $('#id_prov_client_select').attr("disabled", "disabled");
     }
@@ -173,6 +175,13 @@ $(document).ready(function() {
     }
 
     $('.guardar').on("click", function(e){
+        if(validar() == false){
+            return false;
+        }
+        if($('#fecha').val() < $('#fecha_ini_timbrado').val() || $('#fecha').val() > $('#fecha_fin_timbrado').val()){
+            alert("Debe seleccionar una fecha de factura entre la fecha inicio y fin del timbrado");
+            return false;
+        }
         objeto = {};
         $(".detalles_factura tr.data").each(function(index, element ){
 			// Agregamos el elemento mas externo
@@ -223,3 +232,13 @@ $(document).ready(function() {
         })
     });
 });
+function validar() {
+
+      if ($('#numero_factura').val() == "" || $('#timbrado').val() == "" || $('#fecha_ini_timbrado').val() == "" || $('#fecha_fin_timbrado').val() == ""){
+        alert("Favor completar todos los campos")
+        return false
+      }else {
+        return true;
+      }
+
+}
